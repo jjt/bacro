@@ -1,0 +1,34 @@
+$max-width: 48rem;
+//$visual-grid: true;
+@import 'bourbon/bourbon';
+@import "solarized/scss/solarized";
+@import 'neat/neat';
+@import 'type';
+@import 'grid';
+@import 'util';
+@include output-grid-classes;
+@import 'normalize';
+$link-color:$solarized-blue;
+$link-hover-color: darken($solarized-blue, 12%);
+
+body {
+  background: #f8f8f8;
+  font-family: sans-serif;
+  color: $body-color;
+}
+
+a {
+  color: $link-color;
+  text-decoration: none;
+  &:hover {
+    color: $link-hover-color;
+  }
+}
+
+#container {
+  @include outer-container;
+}
+
+.body-top {
+  margin-top:2rem;
+}
