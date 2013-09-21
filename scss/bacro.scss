@@ -1,5 +1,6 @@
 $max-width: 48rem;
 //$visual-grid: true;
+
 @import 'bourbon/bourbon';
 @import "solarized/scss/solarized";
 @import 'neat/neat';
@@ -8,8 +9,12 @@ $max-width: 48rem;
 @import 'util';
 @include output-grid-classes;
 @import 'normalize';
+
+@import 'pure/buttons';
+
 $link-color:$solarized-blue;
 $link-hover-color: darken($solarized-blue, 12%);
+
 
 body {
   background: #f8f8f8;
@@ -22,6 +27,9 @@ a {
   text-decoration: none;
   &:hover {
     color: $link-hover-color;
+  }
+  &.pure-button-primary:hover {
+    color:white;
   }
 }
 
