@@ -1,8 +1,5 @@
+module.exports = (app) ->
 
-#
-# * GET home page.
-# 
-exports.index = (req, res) ->
-  res.render "index",
-    title: "Bacro"
-
+  app.get '/', (req, res) ->
+    res.render "index",
+      title: "Bacro"

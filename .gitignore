@@ -1,1 +1,3 @@
 bower_components
+config/config-local.coffee
+scss/pure
