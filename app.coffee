@@ -8,12 +8,7 @@ app = express()
 require('./config/config')(app)
 
 # Require routes
-fs = require 'fs'
-path = require 'path'
-routeDir = 'routes'
-for file in fs.readdirSync routeDir
-  routePath = path.resolve "./#{routeDir}", file
-  require(routePath)(app)
+require('./routes/all.coffee')(app)
 
 
 http.createServer(app).listen app.get('port'), ->
