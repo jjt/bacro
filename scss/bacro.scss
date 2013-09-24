@@ -1,6 +1,7 @@
 $max-width: 48rem;
 //$visual-grid: true;
 
+@import '_normalize.scss/normalize';
 @import 'bourbon/bourbon';
 @import "solarized/scss/solarized";
 @import 'neat/neat';
@@ -8,7 +9,6 @@ $max-width: 48rem;
 @import 'grid';
 @import 'util';
 @include output-grid-classes;
-@import 'normalize';
 
 @import 'pure/buttons';
 
@@ -39,4 +39,31 @@ a {
 
 .body-top {
   margin-top:2rem;
+}
+
+.site-title {
+  @extend .beta;
+  color: $solarized-red;
+  @extend .pull-left;
+  margin-bottom:0.4rem;
+}
+
+.site-header {
+  margin-bottom: 2.5rem;
+  padding-top:0.5rem;
+  @include clearfix;
+  border-bottom: 1px solid #ddd;
+}
+
+.auth-status {
+  @extend .pull-right;
+  @extend .epsilon;
+  margin-bottom:0;
+  color: lighten($body-color, 20%);
+}
+
+.play-now {
+  @extend .pure-button;
+  @extend .pure-button-primary;
+  margin-right:1rem;
 }

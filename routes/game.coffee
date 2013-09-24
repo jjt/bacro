@@ -1,9 +1,10 @@
 module.exports = (app) ->
 
   app.get '/game/lobby', (req, res) ->
-    res.send 'Game Lobby'
+    res.render 'lobby'
 
   app.get '/game/:id', (req, res) ->
     gameId = req.params.id
-    res.send "Game with id: #{gameId}"
+    res.render 'game',
+      gameId: gameId
   

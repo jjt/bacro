@@ -10,8 +10,13 @@ module.exports = (app) ->
   app.get '/auth/google/error', (req, res) ->
     res.send 'UH OH'
 
-  app.get '/login', (req, res) ->
+  app.get '/auth/login', (req, res) ->
     res.send 'Login from the <a href="/">front page</a>, champ'
 
-  app.get '/logout', (req, res) ->
-    res.send 'Logout? You\'re probably not even hardly logged in I bet!'
+  app.get '/auth/logout', (req, res) ->
+    req.logout()
+    res.redirect '/auth/loggedout'
+  app.get '/auth/loggedout', (req, res) ->
+    res.render 'page',
+      pageHeader: 'All logged out, champ'
+      content: 'Sorry to see you go &mdash; hope to see you again soon!'
