@@ -1,5 +1,6 @@
 extends layout
 
+
 block content
   .r.body-top
     .g-12.blurb
@@ -24,6 +25,11 @@ block content
         | bituaries 
   .r-pad-top
     .g-12
-      a.pure-button.pure-button-primary(href="/auth/google")
-        | Play now (log in with Google)
-
+      if user
+        playNowLink = "/game/lobby"
+      else
+        playNowLink = "/auth/google"
+      a.play-now(href=playNowLink) Play now
+      p.lighter.zeta.leading-tight
+        if !user
+          | Requires login with Google

@@ -172,3 +172,11 @@ p > code {
 .text-left {
   text-align: left;
 }
+
+.lighter {
+  color: lighten($body-color,40%);
+}
+
+.leading-tight {
+  line-height:1em;
+}

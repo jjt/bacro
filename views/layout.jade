@@ -6,4 +6,17 @@ html
     script(src='http://localhost:35729/livereload.js')
   body
     #container
+      if !suppressHeader
+        header.site-header
+          a.site-title(href="/") BACRO
+          if user
+            .auth-status
+              = user.email
+              | 
+              a(href='/auth/logout') logout
+          else
+            .auth-status
+              a(href='/auth/google') Google login
+            
+      
       block content
