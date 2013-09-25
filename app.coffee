@@ -5,7 +5,7 @@ passport = require 'passport'
 require('./config/passport')(passport)
 
 app = express()
-require('./config/config')(app)
+require('./config/config')(app, passport)
 
 # Require routes
 require('./routes/all.coffee')(app)

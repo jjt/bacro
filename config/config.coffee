@@ -1,6 +1,5 @@
-module.exports = (app) ->
+module.exports = (app, passport) ->
   express = require 'express'
-  passport = require 'passport'
   path = require 'path'
   middle = require '../middle'
 

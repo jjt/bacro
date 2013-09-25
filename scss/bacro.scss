@@ -1,10 +1,13 @@
+@import '_normalize.scss/normalize';
+@import 'fira/fira';
+
 $max-width: 48rem;
+$body-font-family: 'Fira Sans';
 //$visual-grid: true;
 
-@import '_normalize.scss/normalize';
 @import 'bourbon/bourbon';
-@import "solarized/scss/solarized";
 @import 'neat/neat';
+@import "solarized/scss/solarized";
 @import 'type';
 @import 'grid';
 @import 'util';
@@ -12,13 +15,13 @@ $max-width: 48rem;
 
 @import 'pure/buttons';
 
+
 $link-color:$solarized-blue;
 $link-hover-color: darken($solarized-blue, 12%);
 
 
 body {
   background: #f8f8f8;
-  font-family: sans-serif;
   color: $body-color;
 }
 
@@ -37,33 +40,52 @@ a {
   @include outer-container;
 }
 
-.body-top {
-  margin-top:2rem;
+.pure-button {
+  text-transform: uppercase;
 }
 
-.site-title {
-  @extend .beta;
-  color: $solarized-red;
+h1,h2,h3 {
+  @extend .header-fancy;
+}
+
+a.site-title {
+  @extend .hecto;
   @extend .pull-left;
+  @extend .leading-tight;
+  color: lighten($body-color, 60%);
+  font-weight:700;
+  font-style:italic;
   margin-bottom:0.4rem;
+  &:hover {
+    color: lighten($body-color, 50%); 
+  }
 }
 
 .site-header {
   margin-bottom: 2.5rem;
-  padding-top:0.5rem;
+  padding:0.5rem 1rem 0; 
   @include clearfix;
-  border-bottom: 1px solid #ddd;
 }
 
 .auth-status {
   @extend .pull-right;
   @extend .epsilon;
+  text-align:right;
+  color:lighten($body-color, 45%);
   margin-bottom:0;
-  color: lighten($body-color, 20%);
+  @extend .leading-tight;
 }
 
 .play-now {
   @extend .pure-button;
   @extend .pure-button-primary;
+  float: left;
   margin-right:1rem;
+}
+
+
+.action-tiny {
+  @extend .zeta;
+  margin:0;
+  padding:0;
 }
