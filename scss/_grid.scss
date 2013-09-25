@@ -15,15 +15,18 @@
 
 .container {
   @include outer-container;
-  padding:0 1rem;
 }
 
 .r {
   @include row;
+  padding:0 1rem;
 }
 
 .r-pad-top {
+  @include row;
+  @extend .r;
   padding-top: 1.5rem;
+
 }
 
 

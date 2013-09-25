@@ -10,12 +10,13 @@ $bfs: $base-font-size;
 $base-leading-factor: 1;
 $base-vertical-unit: $base-line-height * $base-leading-factor;
 $bvu: $base-vertical-unit;
-$header-color: #666;
 $body-color:#333;
+$header-color: lighten($body-color, 30%);
+$body-font-family: $helvetica !default;
 $hilight-color: $solarized-red;
 
 html {
-  font: #{em($base-font-size-num)}/#{em($base-line-height-num)} $helvetica;
+  font: #{em($base-font-size-num)}/#{em($base-line-height-num)} $body-font-family;
 }
 
 .body-color {
@@ -97,8 +98,11 @@ h5, .epsilon {
   margin-bottom: rem(18);
 }
 
-h6, .zeta {
+.zeta {
   font-size: rem(14);
+} 
+h6 {
+  @extend .zeta;
   line-height: 1.5rem;
   padding-top: rem(9);
   margin-bottom: rem(18);
@@ -179,4 +183,20 @@ p > code {
 
 .leading-tight {
   line-height:1em;
+}
+
+.cap {
+  text-transform: uppercase;
+}
+
+.ital {
+  font-style: italic;
+}
+
+
+
+.header-fancy {
+  @extend .cap;
+  @extend .ital;
+  color: lighten($body-color, 50%);
 }

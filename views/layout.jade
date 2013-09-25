@@ -5,18 +5,17 @@ html
     link(rel='stylesheet', href='/css/bacro.css')
     script(src='http://localhost:35729/livereload.js')
   body
-    #container
-      if !suppressHeader
-        header.site-header
+    if !suppressHeader
+      header.site-header
+        .container.r
           a.site-title(href="/") BACRO
           if user
-            .auth-status
+            .auth-status A hoy hoy, 
               = user.email
-              | 
-              a(href='/auth/logout') logout
+              br
+              a.action-tiny(href='/auth/logout') LOGOUT
           else
             .auth-status
-              a(href='/auth/google') Google login
-            
-      
+              a.action-tiny(href='/auth/google') LOGIN
+    .container
       block content
