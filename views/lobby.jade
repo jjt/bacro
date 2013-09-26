@@ -2,5 +2,10 @@ extends layout
 
 block content
   .r
-    h1 Hey there, this is the lobby
-    p!= content
+    h1.pull-left Games  
+    a.new-game(href="/game/new")
+      i.icon-plus
+      | New Game
+  .r
+    if !gameList
+      p.beta No games found 

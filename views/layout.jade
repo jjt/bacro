@@ -2,6 +2,7 @@ doctype 5
 html
   head
     title= title
+    link(rel='stylesheet', href='/fontello/css/fontello.css')
     link(rel='stylesheet', href='/css/bacro.css')
     script(src='http://localhost:35729/livereload.js')
   body
@@ -10,7 +11,7 @@ html
         .container.r
           a.site-title(href="/") BACRO
           if user
-            .auth-status A hoy hoy, 
+            .auth-status 
               = user.email
               br
               a.action-tiny(href='/auth/logout') LOGOUT
@@ -19,3 +20,5 @@ html
               a.action-tiny(href='/auth/google') LOGIN
     .container
       block content
+
+    script(src='/js/bacro.js')

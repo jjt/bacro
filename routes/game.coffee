@@ -1,10 +1,11 @@
+GameController = require '../controllers/game.coffee'
 module.exports = (app) ->
 
   app.get '/game/lobby', (req, res) ->
     res.render 'lobby'
 
-  app.get '/game/:id', (req, res) ->
-    gameId = req.params.id
-    res.render 'game',
-      gameId: gameId
-  
+  app.get '/game/new', GameController.newGame.bind GameController
+
+  app.post '/game/:id/post/', GameController.post.bind GameController
+
+  app.get '/game/:id/:action?', GameController.gameAction.bind GameController

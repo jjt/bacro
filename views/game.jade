@@ -1,4 +1,9 @@
 extends layout
 
 block content
-  h1 This is game !{gameId}. Sweet! 
+  .r
+    h1 This is game !{gameId}. Sweet! 
+
+  form.bacronym-form(action="/", method="POST")
+    input#bacronym-input(type="text",name="bacronym-input")
+

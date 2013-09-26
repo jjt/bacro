@@ -35,11 +35,18 @@ module.exports = (grunt) ->
           script: 'app.coffee'
           cmd: 'coffee'
     
+    coffee:
+      compile:
+        options:
+          join: true
+        files:
+          'public/js/bacro.js': 'coffee/**/*.coffee'
+
     watch:
       options:
         livereload: true
       express:
-        files: ['**/*.coffee']
+        files: ['!coffee/**/*.coffee','**/*.coffee']
         tasks: ['express:dev']
         options:
           nospawn: true
@@ -52,11 +59,15 @@ module.exports = (grunt) ->
         files: ['public/css/*.css']
       jade:
         files: ['views/**/*.jade']
+      coffee:
+        files: ['coffee/**/*.coffee']
+        tasks: ['coffee:compile']
 
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-express-server'
   grunt.loadNpmTasks 'grunt-contrib-compass'
   grunt.loadNpmTasks 'grunt-contrib-copy'
+  grunt.loadNpmTasks 'grunt-contrib-coffee'
 
   grunt.registerTask 'fira', 'Creates a _fira.scss file with corrected font paths', () ->
     firacss = grunt.file.read bower 'fira/fira.css'
