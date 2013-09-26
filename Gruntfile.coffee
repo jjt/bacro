@@ -32,7 +32,7 @@ module.exports = (grunt) ->
     express:
       dev:
         options:
-          script: 'app.coffee'
+          script: 'server.coffee'
           cmd: 'coffee'
     
     coffee:
