@@ -1,9 +1,7 @@
 module.exports =
   setAuthLocals: (req, res, next) ->
     if req.session.passport.user?
-      console.log req.session.passport.user
       res.locals.user =
         email: req.session.passport.user.emails[0].value
         name: req.session.passport.user.displayName.split(' ')[0]
-      console.log res.locals.user
     next()

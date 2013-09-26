@@ -690,7 +690,12 @@ p > code {
   font-style: italic;
 }
 
-/* line 198, ../../scss/_type.scss */
+/* line 196, ../../scss/_type.scss */
+.inline-block {
+  display: inline-block;
+}
+
+/* line 201, ../../scss/_type.scss */
 .header-fancy, h1, h2, h3 {
   color: #b3b3b3;
 }
@@ -1005,7 +1010,7 @@ Licensed under the BSD License.
 https://github.com/yui/pure/blob/master/LICENSE.md
 */
 /* line 7, ../../scss/pure/_buttons.scss */
-.pure-button, .play-now {
+.pure-button, .btn-pri, .play-now {
   /* Structure */
   display: inline-block;
   *display: inline;
@@ -1025,14 +1030,14 @@ https://github.com/yui/pure/blob/master/LICENSE.md
 
 /* Firefox: Get rid of the inner focus border */
 /* line 25, ../../scss/pure/_buttons.scss */
-.pure-button::-moz-focus-inner, .play-now::-moz-focus-inner {
+.pure-button::-moz-focus-inner, .btn-pri::-moz-focus-inner, .play-now::-moz-focus-inner {
   padding: 0;
   border: 0;
 }
 
 /*csslint unqualified-attributes:false, outline-none:false*/
 /* line 32, ../../scss/pure/_buttons.scss */
-.pure-button, .play-now {
+.pure-button, .btn-pri, .play-now {
   font-size: 100%;
   *font-size: 90%;
   /*IE 6/7 - To reduce IE's oversized button text*/
@@ -1063,8 +1068,10 @@ https://github.com/yui/pure/blob/master/LICENSE.md
 /* line 55, ../../scss/pure/_buttons.scss */
 .pure-button-hover,
 .pure-button:hover,
+.btn-pri:hover,
 .play-now:hover,
 .pure-button:focus,
+.btn-pri:focus,
 .play-now:focus {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#1a000000',GradientType=0);
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(transparent), color-stop(40%, rgba(0, 0, 0, 0.05)), to(rgba(0, 0, 0, 0.1)));
@@ -1076,19 +1083,20 @@ https://github.com/yui/pure/blob/master/LICENSE.md
 }
 
 /* line 64, ../../scss/pure/_buttons.scss */
-.pure-button:focus, .play-now:focus {
+.pure-button:focus, .btn-pri:focus, .play-now:focus {
   outline: 0;
 }
 
 /* line 68, ../../scss/pure/_buttons.scss */
 .pure-button-active,
 .pure-button:active,
+.btn-pri:active,
 .play-now:active {
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15) inset, 0 0 6px rgba(0, 0, 0, 0.2) inset;
 }
 
 /* line 76, ../../scss/pure/_buttons.scss */
-.pure-button[disabled], [disabled].play-now,
+.pure-button[disabled], [disabled].btn-pri, [disabled].play-now,
 .pure-button-disabled,
 .pure-button-disabled:hover,
 .pure-button-disabled:focus,
@@ -1111,15 +1119,16 @@ https://github.com/yui/pure/blob/master/LICENSE.md
 
 /* Firefox: Get rid of the inner focus border */
 /* line 93, ../../scss/pure/_buttons.scss */
-.pure-button::-moz-focus-inner, .play-now::-moz-focus-inner {
+.pure-button::-moz-focus-inner, .btn-pri::-moz-focus-inner, .play-now::-moz-focus-inner {
   padding: 0;
   border: 0;
 }
 
 /* line 101, ../../scss/pure/_buttons.scss */
-.pure-button-primary, .play-now,
+.pure-button-primary, .btn-pri, .play-now,
 .pure-button-selected,
 a.pure-button-primary,
+a.btn-pri,
 a.play-now,
 a.pure-button-selected {
   background-color: #0078e7;
@@ -1130,23 +1139,24 @@ a.pure-button-selected {
 body {
   background: #f8f8f8;
   color: #333333;
+  font-weight: 300;
 }
 
-/* line 28, ../../scss/bacro.scss */
+/* line 29, ../../scss/bacro.scss */
 a {
   color: #268bd2;
   text-decoration: none;
 }
-/* line 31, ../../scss/bacro.scss */
+/* line 32, ../../scss/bacro.scss */
 a:hover {
   color: #1d699e;
 }
-/* line 34, ../../scss/bacro.scss */
-a.pure-button-primary:hover, a.play-now:hover {
+/* line 35, ../../scss/bacro.scss */
+a.pure-button-primary:hover, a.btn-pri:hover, a.play-now:hover {
   color: white;
 }
 
-/* line 39, ../../scss/bacro.scss */
+/* line 40, ../../scss/bacro.scss */
 #container {
   *zoom: 1;
   max-width: 48rem;
@@ -1163,24 +1173,33 @@ a.pure-button-primary:hover, a.play-now:hover {
   clear: both;
 }
 
-/* line 43, ../../scss/bacro.scss */
-.pure-button, .play-now {
+/* line 44, ../../scss/bacro.scss */
+.pure-button, .btn-pri, .play-now {
   text-transform: uppercase;
 }
 
-/* line 51, ../../scss/bacro.scss */
+/* line 48, ../../scss/bacro.scss */
+.pure-button-primary, .btn-pri, .play-now, a.pure-button-primary, a.btn-pri, a.play-now {
+  background-color: #268bd2;
+}
+
+/* line 52, ../../scss/bacro.scss */
+h1, h2, h3 {
+  font-weight: 300;
+}
+
+/* line 57, ../../scss/bacro.scss */
 a.site-title {
   color: #cccccc;
-  font-weight: 700;
   font-style: italic;
   margin-bottom: 0.4rem;
 }
-/* line 59, ../../scss/bacro.scss */
+/* line 64, ../../scss/bacro.scss */
 a.site-title:hover {
   color: #b3b3b3;
 }
 
-/* line 64, ../../scss/bacro.scss */
+/* line 69, ../../scss/bacro.scss */
 .site-header {
   margin-bottom: 2.5rem;
   padding: 0.5rem 1rem 0;
@@ -1196,20 +1215,27 @@ a.site-title:hover {
   clear: both;
 }
 
-/* line 70, ../../scss/bacro.scss */
+/* line 75, ../../scss/bacro.scss */
 .auth-status {
   text-align: right;
   color: #a6a6a6;
   margin-bottom: 0;
 }
 
-/* line 79, ../../scss/bacro.scss */
+/* line 88, ../../scss/bacro.scss */
 .play-now {
   float: left;
   margin-right: 1rem;
 }
 
-/* line 87, ../../scss/bacro.scss */
+/* line 94, ../../scss/bacro.scss */
+.new-game {
+  display: block;
+  margin: -0.2rem 0 0 1rem;
+  float: left;
+}
+
+/* line 100, ../../scss/bacro.scss */
 .action-tiny {
   margin: 0;
   padding: 0;

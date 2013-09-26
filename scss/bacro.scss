@@ -23,6 +23,7 @@ $link-hover-color: darken($solarized-blue, 12%);
 body {
   background: #f8f8f8;
   color: $body-color;
+  font-weight:300;
 }
 
 a {
@@ -44,8 +45,13 @@ a {
   text-transform: uppercase;
 }
 
+.pure-button-primary, a.pure-button-primary {
+  background-color:$solarized-blue;
+}
+
 h1,h2,h3 {
   @extend .header-fancy;
+  font-weight: 300;
 }
 
 a.site-title {
@@ -53,7 +59,6 @@ a.site-title {
   @extend .pull-left;
   @extend .leading-tight;
   color: lighten($body-color, 60%);
-  font-weight:700;
   font-style:italic;
   margin-bottom:0.4rem;
   &:hover {
@@ -76,13 +81,21 @@ a.site-title {
   @extend .leading-tight;
 }
 
-.play-now {
+.btn-pri {
   @extend .pure-button;
   @extend .pure-button-primary;
+}
+.play-now {
+  @extend .btn-pri;
   float: left;
   margin-right:1rem;
 }
 
+.new-game {
+  display: block;
+  margin:-0.2rem 0 0 1rem;
+  float: left;
+}
 
 .action-tiny {
   @extend .zeta;
