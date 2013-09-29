@@ -10,8 +10,8 @@ $bfs: $base-font-size;
 $base-leading-factor: 1;
 $base-vertical-unit: $base-line-height * $base-leading-factor;
 $bvu: $base-vertical-unit;
-$body-color:#333;
-$header-color: lighten($body-color, 30%);
+$body-color:#666;
+$header-color: #999;
 $body-font-family: $helvetica !default;
 $hilight-color: $solarized-red;
 
@@ -122,6 +122,11 @@ h6 {
   padding-top: rem(7);
 }
 
+.kilo {
+  font-size: rem(72);
+  line-height: 4.5rem;
+  padding-top: rem(2);
+}
 
 
 p {
@@ -177,8 +182,12 @@ p > code {
   text-align: left;
 }
 
+.light {
+  color: #999;
+}
+
 .lighter {
-  color: lighten($body-color,40%);
+  color: #bbb;
 }
 
 .leading-tight {
@@ -197,9 +206,12 @@ p > code {
   display:inline-block;
 }
 
+.case {
+  text-transform:none;
+}
 
 .header-fancy {
   @extend .cap;
   @extend .ital;
-  color: lighten($body-color, 50%);
+  color:#999;
 }

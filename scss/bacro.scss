@@ -8,97 +8,23 @@ $body-font-family: 'Fira Sans';
 @import 'bourbon/bourbon';
 @import 'neat/neat';
 @import "solarized/scss/solarized";
+@import 'pure/buttons';
+@import 'button';
 @import 'type';
 @import 'grid';
+@import 'form';
 @import 'util';
 @include output-grid-classes;
-
-@import 'pure/buttons';
-
 
 $link-color:$solarized-blue;
 $link-hover-color: darken($solarized-blue, 12%);
 
+@import 'global';
+@import 'site-header';
 
-body {
-  background: #f8f8f8;
-  color: $body-color;
-  font-weight:300;
-}
+@import 'shared/chat';
 
-a {
-  color: $link-color;
-  text-decoration: none;
-  &:hover {
-    color: $link-hover-color;
-  }
-  &.pure-button-primary:hover {
-    color:white;
-  }
-}
+@import 'views/index';
+@import 'views/gamelobby';
+@import 'views/game';
 
-#container {
-  @include outer-container;
-}
-
-.pure-button {
-  text-transform: uppercase;
-}
-
-.pure-button-primary, a.pure-button-primary {
-  background-color:$solarized-blue;
-}
-
-h1,h2,h3 {
-  @extend .header-fancy;
-  font-weight: 300;
-}
-
-a.site-title {
-  @extend .hecto;
-  @extend .pull-left;
-  @extend .leading-tight;
-  color: lighten($body-color, 60%);
-  font-style:italic;
-  margin-bottom:0.4rem;
-  &:hover {
-    color: lighten($body-color, 50%); 
-  }
-}
-
-.site-header {
-  margin-bottom: 2.5rem;
-  padding:0.5rem 1rem 0; 
-  @include clearfix;
-}
-
-.auth-status {
-  @extend .pull-right;
-  @extend .epsilon;
-  text-align:right;
-  color:lighten($body-color, 45%);
-  margin-bottom:0;
-  @extend .leading-tight;
-}
-
-.btn-pri {
-  @extend .pure-button;
-  @extend .pure-button-primary;
-}
-.play-now {
-  @extend .btn-pri;
-  float: left;
-  margin-right:1rem;
-}
-
-.new-game {
-  display: block;
-  margin:-0.2rem 0 0 1rem;
-  float: left;
-}
-
-.action-tiny {
-  @extend .zeta;
-  margin:0;
-  padding:0;
-}

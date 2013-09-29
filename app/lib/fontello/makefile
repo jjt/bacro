@@ -1,6 +1,11 @@
-# Edit here - set path to you directory with config.json & fonts
+### CONFIG OPTIONS ###
+# Build path
+BUILD_DIR ?= ../../../public/fontello
 
-FONT_DIR      ?= ../../public/fontello
+# Command line launching of browser - tweak to your own system
+BROWSER_COMMAND ?= x-www-browser
+# For OS X with Chrome:
+ BROWSER_COMMAND ?= open -a "Google Chrome" 
 
 ### Don't edit below ###
 
@@ -14,7 +19,7 @@ fontopen:
 	curl --show-error --fail --output .fontello \
 		--form "config=@config.json" \
 		${FONTELLO_HOST}
-	#x-www-browser ${FONTELLO_HOST}/`cat .fontello`
+	${BROWSER_COMMAND} ${FONTELLO_HOST}/`cat .fontello`	
 
 
 fontsave:
@@ -26,17 +31,17 @@ fontsave:
 		echo 'Run `make fontopen` first.' >&2 ; \
 		exit 128 ; \
 		fi
-	@if test ! -e ${FONT_DIR} ; then \
-		echo "Creating ${FONT_DIR}" ; \
-		mkdir ${FONT_DIR} ; \
+	@if test ! -e ${BUILD_DIR} ; then \
+		echo "Creating ${BUILD_DIR}" ; \
+		mkdir ${BUILD_DIR} ; \
 		fi
 	rm -rf .fontello.src .fontello.zip
 	curl --silent --show-error --fail --output .fontello.zip \
 		${FONTELLO_HOST}/`cat .fontello`/get
 	unzip .fontello.zip -d .
-	rm -rf ${FONT_DIR}/*
-	mv fontello-*/* ${FONT_DIR}
+	rm -rf ${BUILD_DIR}/*
+	mv fontello-*/* ${BUILD_DIR}
 	rm -rf fontello-* .fontello.zip
-	#rm -rf ${FONT_DIR}
-	#mv `find ./.fontello.src -maxdepth 1 -name 'fontello-*'` ${FONT_DIR}
+	#rm -rf ${BUILD_DIR}
+	#mv `find ./.fontello.src -maxdepth 1 -name 'fontello-*'` ${BUILD_DIR}
 	#rm -rf .fontello.src .fontello.zip

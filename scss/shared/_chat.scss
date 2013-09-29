@@ -1,0 +1,45 @@
+.Chat {
+}
+
+.Chat-chats {
+  width: 100%;
+  min-height: 5rem;
+  max-height: 12rem;
+  border-bottom: none;
+  padding: 0.6rem;
+}
+
+.Chat-msg {
+  line-height:1.2;
+  @extend .zeta;
+  font-weight:400;
+  margin-bottom:0;
+  padding-top:0;
+}
+
+.Chat-header {
+  margin-bottom:0;
+}
+
+.Chat-msg-sender {
+  font-weight: 500;
+}
+
+.Chat-input {
+  @extend .FlexInput-field;
+}
+
+#Chat-input {
+  @extend .Chat-input;
+}
+
+.Chat-button {
+  @extend .btn-pri;
+  @extend .FlexInput-item;
+}
+
+#Chat-button {
+  @extend .Chat-button;
+}
+
+
