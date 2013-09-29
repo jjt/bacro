@@ -1,9 +1,35 @@
 extends layout
 
 block content
+  .r.game-panel
+    .g-3
+      #game-status
+        #round ROUND 1
+        #time 3:00
+      #Players
+        ul.player-list 
+    .g-9
+      #Game
+        .acronym-lg(data-bind='text: acronym')
+        form.bacronym-form(data-bind="submit: bacronymSubmit", action="/", method="POST")
+          input#bacronym-input(data-bind="value: bacronymInput",type="text"
+            name="bacronym-input", placeholder="Type a bacronym and hit enter or press BACRO! -->")
+          button#bacronym-button(type="submit") Bacro!
+
   .r
-    h1 This is game !{gameId}. Sweet! 
+    .g-12
+      //form.Chat(data-bind="submit: chatViewModel.chatSubmit")
+      form#Chat.Chat
+        h2.Chat-header Chat 
+          span.delta.lighter but please don't be a dink
+        #Chat-chats.Chat-chats
+          p.Chat-msg
+            span.Chat-msg-sender Jason Trill: 
+            | Hey man, time to get some chats going Hey man, time to get some chats going Hey man, time to get some chats going Hey man, time to get some chats going ooooHey man, time to get some chats going on
+          p.Chat-msg
+            span.Chat-msg-sender Jason Trill: 
+            | Hey man, time to get some chats going Hey man, time to get some chats going Hey man, time to get some chats going Hey man, time to get some chats going ooooHey man, time to get some chats going on
 
-  form.bacronym-form(action="/", method="POST")
-    input#bacronym-input(type="text",name="bacronym-input")
-
+        .FlexInput
+          input#Chat-input(name="Chat-input",placeholder="Chat goes here!")
+          button#Chat-button(name="Chat-button") CHAT      

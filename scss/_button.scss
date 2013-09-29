@@ -1,0 +1,18 @@
+.pure-button {
+  text-transform: uppercase;
+}
+
+.pure-button-primary, a.pure-button-primary {
+  background-color:$solarized-blue;
+}
+
+.btn {
+  @extend .pure-button;
+  font-weight:300;
+}
+
+.btn-pri {
+  @extend .btn;
+  @extend .pure-button-primary;
+}
+

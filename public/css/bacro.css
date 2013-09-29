@@ -501,6 +501,171 @@ table {
   box-sizing: border-box;
 }
 
+/*!
+Pure v0.3.1-pre
+Copyright 2013 Yahoo! Inc. All rights reserved.
+Licensed under the BSD License.
+https://github.com/yui/pure/blob/master/LICENSE.md
+*/
+/* line 7, ../../scss/pure/_buttons.scss */
+.pure-button, .btn, .btn-pri, .Chat-button, #Chat-button, .play-now, #bacronym-button, .pure-button-primary {
+  /* Structure */
+  display: inline-block;
+  *display: inline;
+  /*IE 6/7*/
+  zoom: 1;
+  line-height: normal;
+  white-space: nowrap;
+  vertical-align: baseline;
+  text-align: center;
+  cursor: pointer;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Firefox: Get rid of the inner focus border */
+/* line 25, ../../scss/pure/_buttons.scss */
+.pure-button::-moz-focus-inner, .btn::-moz-focus-inner, .btn-pri::-moz-focus-inner, .Chat-button::-moz-focus-inner, #Chat-button::-moz-focus-inner, .play-now::-moz-focus-inner, #bacronym-button::-moz-focus-inner, .pure-button-primary::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+/*csslint unqualified-attributes:false, outline-none:false*/
+/* line 32, ../../scss/pure/_buttons.scss */
+.pure-button, .btn, .btn-pri, .Chat-button, #Chat-button, .play-now, #bacronym-button, .pure-button-primary {
+  font-size: 100%;
+  *font-size: 90%;
+  /*IE 6/7 - To reduce IE's oversized button text*/
+  *overflow: visible;
+  /*IE 6/7 - Because of IE's overly large left/right padding on buttons */
+  padding: 0.5em 1.5em 0.5em;
+  color: #444;
+  /* rgba not supported (IE 8) */
+  color: rgba(0, 0, 0, 0.8);
+  /* rgba supported */
+  *color: #444;
+  /* IE 6 & 7 */
+  border: 1px solid #999;
+  /*IE 6/7/8*/
+  border: none rgba(0, 0, 0, 0);
+  /*IE9 + everything else*/
+  background-color: #E6E6E6;
+  text-decoration: none;
+  border-radius: 2px;
+  /* Transitions */
+  -webkit-transition: 0.1s linear -webkit-box-shadow;
+  -moz-transition: 0.1s linear -moz-box-shadow;
+  -ms-transition: 0.1s linear box-shadow;
+  -o-transition: 0.1s linear box-shadow;
+  transition: 0.1s linear box-shadow;
+}
+
+/* line 55, ../../scss/pure/_buttons.scss */
+.pure-button-hover,
+.pure-button:hover,
+.btn:hover,
+.btn-pri:hover,
+.Chat-button:hover,
+#Chat-button:hover,
+.play-now:hover,
+#bacronym-button:hover,
+.pure-button-primary:hover,
+.pure-button:focus,
+.btn:focus,
+.btn-pri:focus,
+.Chat-button:focus,
+#Chat-button:focus,
+.play-now:focus,
+#bacronym-button:focus,
+.pure-button-primary:focus {
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#1a000000',GradientType=0);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(transparent), color-stop(40%, rgba(0, 0, 0, 0.05)), to(rgba(0, 0, 0, 0.1)));
+  background-image: -webkit-linear-gradient(transparent, rgba(0, 0, 0, 0.05) 40%, rgba(0, 0, 0, 0.1));
+  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.1));
+  background-image: -ms-linear-gradient(transparent, rgba(0, 0, 0, 0.05) 40%, rgba(0, 0, 0, 0.1));
+  background-image: -o-linear-gradient(transparent, rgba(0, 0, 0, 0.05) 40%, rgba(0, 0, 0, 0.1));
+  background-image: linear, false, transparent, rgba(0, 0, 0, 0.05) 40%, rgba(0, 0, 0, 0.1);
+}
+
+/* line 64, ../../scss/pure/_buttons.scss */
+.pure-button:focus, .btn:focus, .btn-pri:focus, .Chat-button:focus, #Chat-button:focus, .play-now:focus, #bacronym-button:focus, .pure-button-primary:focus {
+  outline: 0;
+}
+
+/* line 68, ../../scss/pure/_buttons.scss */
+.pure-button-active,
+.pure-button:active,
+.btn:active,
+.btn-pri:active,
+.Chat-button:active,
+#Chat-button:active,
+.play-now:active,
+#bacronym-button:active,
+.pure-button-primary:active {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15) inset, 0 0 6px rgba(0, 0, 0, 0.2) inset;
+}
+
+/* line 76, ../../scss/pure/_buttons.scss */
+.pure-button[disabled], [disabled].btn, [disabled].btn-pri, [disabled].Chat-button, [disabled]#Chat-button, [disabled].play-now, [disabled]#bacronym-button, [disabled].pure-button-primary,
+.pure-button-disabled,
+.pure-button-disabled:hover,
+.pure-button-disabled:focus,
+.pure-button-disabled:active {
+  border: none;
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  filter: alpha(opacity=40);
+  -khtml-opacity: 0.40;
+  -moz-opacity: 0.40;
+  opacity: 0.40;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* line 88, ../../scss/pure/_buttons.scss */
+.pure-button-hidden {
+  display: none;
+}
+
+/* Firefox: Get rid of the inner focus border */
+/* line 93, ../../scss/pure/_buttons.scss */
+.pure-button::-moz-focus-inner, .btn::-moz-focus-inner, .btn-pri::-moz-focus-inner, .Chat-button::-moz-focus-inner, #Chat-button::-moz-focus-inner, .play-now::-moz-focus-inner, #bacronym-button::-moz-focus-inner, .pure-button-primary::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+/* line 101, ../../scss/pure/_buttons.scss */
+.pure-button-primary, .btn-pri, .Chat-button, #Chat-button, .play-now, #bacronym-button,
+.pure-button-selected,
+a.pure-button-primary,
+a.btn-pri,
+a.Chat-button,
+a#Chat-button,
+a.play-now,
+a#bacronym-button,
+a.pure-button-selected {
+  background-color: #0078e7;
+  color: #fff;
+}
+
+/* line 1, ../../scss/_button.scss */
+.pure-button, .btn, .btn-pri, .Chat-button, #Chat-button, .play-now, #bacronym-button, .pure-button-primary {
+  text-transform: uppercase;
+}
+
+/* line 5, ../../scss/_button.scss */
+.pure-button-primary, .btn-pri, .Chat-button, #Chat-button, .play-now, #bacronym-button, a.pure-button-primary, a.btn-pri, a.Chat-button, a#Chat-button, a.play-now, a#bacronym-button {
+  background-color: #268bd2;
+}
+
+/* line 9, ../../scss/_button.scss */
+.btn, .btn-pri, .Chat-button, #Chat-button, .play-now, #bacronym-button {
+  font-weight: 300;
+}
+
 /* line 18, ../../scss/_type.scss */
 html {
   font: 1.125em/1.6875em "Fira Sans";
@@ -508,7 +673,7 @@ html {
 
 /* line 22, ../../scss/_type.scss */
 .body-color {
-  color: #333333;
+  color: #666666;
 }
 
 /* line 26, ../../scss/_type.scss */
@@ -525,7 +690,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* line 38, ../../scss/_type.scss */
 h1, h2, h3, h4, h5, h6 {
-  color: gray;
+  color: #999999;
   margin-top: 0;
   line-height: 1.5rem;
 }
@@ -542,7 +707,7 @@ h1, .alpha, .alpha-lh {
   line-height: 1.5rem;
   padding-top: 0.05556rem;
   margin-bottom: 1.44444rem;
-  color: gray;
+  color: #999999;
 }
 
 /* line 58, ../../scss/_type.scss */
@@ -556,16 +721,16 @@ h1, .alpha, .alpha-lh {
   line-height: 1.5rem;
   padding-top: 0.05556rem;
   margin-bottom: 1.44444rem;
-  color: gray;
+  color: #999999;
 }
 
 /* line 71, ../../scss/_type.scss */
-h2, .beta {
+h2, .beta, #round, #time {
   font-size: 1.55556rem;
   line-height: 1.5rem;
   padding-top: 0.22222rem;
   margin-bottom: 1.27778rem;
-  color: gray;
+  color: #999999;
 }
 
 /* line 79, ../../scss/_type.scss */
@@ -593,7 +758,7 @@ h5, .epsilon, .auth-status {
 }
 
 /* line 101, ../../scss/_type.scss */
-.zeta, h6, .action-tiny {
+.zeta, h6, .action-tiny, .Chat-msg {
   font-size: 0.77778rem;
 }
 
@@ -619,85 +784,102 @@ h6 {
   padding-top: 0.38889rem;
 }
 
-/* line 127, ../../scss/_type.scss */
+/* line 125, ../../scss/_type.scss */
+.kilo, .acronym-lg {
+  font-size: 4rem;
+  line-height: 4.5rem;
+  padding-top: 0.11111rem;
+}
+
+/* line 132, ../../scss/_type.scss */
 p {
   padding-left: 0.1em;
 }
 
-/* line 132, ../../scss/_type.scss */
+/* line 137, ../../scss/_type.scss */
 pre {
   padding-top: 0.5rem;
   margin-bottom: 1rem;
 }
 
-/* line 138, ../../scss/_type.scss */
+/* line 143, ../../scss/_type.scss */
 p > code {
   line-height: 0;
 }
 
-/* line 145, ../../scss/_type.scss */
+/* line 150, ../../scss/_type.scss */
 .list-gamma li {
   margin-bottom: -0.44444rem;
 }
 
-/* line 154, ../../scss/_type.scss */
+/* line 159, ../../scss/_type.scss */
 .list-delta li {
   margin-bottom: -0.38889rem;
 }
 
-/* line 159, ../../scss/_type.scss */
+/* line 164, ../../scss/_type.scss */
 .no-break {
   display: inline-block;
 }
 
-/* line 163, ../../scss/_type.scss */
+/* line 168, ../../scss/_type.scss */
 .round {
   border-radius: 50%;
 }
 
-/* line 168, ../../scss/_type.scss */
-.text-center {
+/* line 173, ../../scss/_type.scss */
+.text-center, .acronym-lg {
   text-align: center;
 }
 
-/* line 172, ../../scss/_type.scss */
+/* line 177, ../../scss/_type.scss */
 .text-right {
   text-align: right;
 }
 
-/* line 176, ../../scss/_type.scss */
+/* line 181, ../../scss/_type.scss */
 .text-left {
   text-align: left;
 }
 
-/* line 180, ../../scss/_type.scss */
-.lighter {
-  color: #999999;
+/* line 185, ../../scss/_type.scss */
+.light {
+  color: #999;
 }
 
-/* line 184, ../../scss/_type.scss */
+/* line 189, ../../scss/_type.scss */
+.lighter {
+  color: #bbb;
+}
+
+/* line 193, ../../scss/_type.scss */
 .leading-tight, a.site-title, .auth-status {
   line-height: 1em;
 }
 
-/* line 188, ../../scss/_type.scss */
+/* line 197, ../../scss/_type.scss */
 .cap, .header-fancy, h1, h2, h3 {
   text-transform: uppercase;
 }
 
-/* line 192, ../../scss/_type.scss */
+/* line 201, ../../scss/_type.scss */
 .ital, .header-fancy, h1, h2, h3 {
   font-style: italic;
 }
 
-/* line 196, ../../scss/_type.scss */
+/* line 205, ../../scss/_type.scss */
 .inline-block {
   display: inline-block;
 }
 
-/* line 201, ../../scss/_type.scss */
+/* line 209, ../../scss/_type.scss */
+.case {
+  text-transform: none;
+}
+
+/* line 213, ../../scss/_type.scss */
 .header-fancy, h1, h2, h3 {
-  color: #b3b3b3;
+  color: #999;
 }
 
 /* line 3, ../../scss/_grid.scss */
@@ -988,6 +1170,64 @@ p > code {
     float: none !important;
   }
 }
+/* line 8, ../../scss/bourbon/css3/_placeholder.scss */
+input::-webkit-input-placeholder {
+  font-style: italic;
+  font-weight: 300;
+  color: #aaa;
+}
+/* line 14, ../../scss/bourbon/css3/_placeholder.scss */
+input:-moz-placeholder {
+  font-style: italic;
+  font-weight: 300;
+  color: #aaa;
+}
+/* line 19, ../../scss/bourbon/css3/_placeholder.scss */
+input::-moz-placeholder {
+  font-style: italic;
+  font-weight: 300;
+  color: #aaa;
+}
+/* line 24, ../../scss/bourbon/css3/_placeholder.scss */
+input:-ms-input-placeholder {
+  font-style: italic;
+  font-weight: 300;
+  color: #aaa;
+}
+
+/* line 11, ../../scss/_form.scss */
+.FlexInput, .bacronym-form {
+  display: flex;
+  margin-bottom: 1em;
+}
+
+/* line 16, ../../scss/_form.scss */
+.FlexInput-field, .Chat-input, #Chat-input, #bacronym-input {
+  flex: 1;
+}
+/* line 18, ../../scss/_form.scss */
+.FlexInput-field:not(:first-child), .Chat-input:not(:first-child), #Chat-input:not(:first-child), #bacronym-input:not(:first-child) {
+  border-left: 0;
+}
+/* line 21, ../../scss/_form.scss */
+.FlexInput-field:not(:last-child), .Chat-input:not(:last-child), #Chat-input:not(:last-child), #bacronym-input:not(:last-child) {
+  border-right: 0;
+}
+
+/* line 29, ../../scss/_form.scss */
+.FlexInput-field, .Chat-input, #Chat-input, #bacronym-input, .FlexInput-item, .Chat-button, #Chat-button, #bacronym-button {
+  border: 1px solid rgba(147, 128, 108, 0.25);
+  padding: 0.5em 0.75em;
+}
+/* line 32, ../../scss/_form.scss */
+.FlexInput-field:first-child, .Chat-input:first-child, #Chat-input:first-child, #bacronym-input:first-child, .FlexInput-item:first-child, .Chat-button:first-child, #Chat-button:first-child, #bacronym-button:first-child {
+  border-radius: 2px 0 0 2px;
+}
+/* line 35, ../../scss/_form.scss */
+.FlexInput-field:last-child, .Chat-input:last-child, #Chat-input:last-child, #bacronym-input:last-child, .FlexInput-item:last-child, .Chat-button:last-child, #Chat-button:last-child, #bacronym-button:last-child {
+  border-radius: 0 2px 2px 0;
+}
+
 /* line 1, ../../scss/_util.scss */
 .clear {
   clear: both;
@@ -1003,160 +1243,28 @@ p > code {
   float: left;
 }
 
-/*!
-Pure v0.3.1-pre
-Copyright 2013 Yahoo! Inc. All rights reserved.
-Licensed under the BSD License.
-https://github.com/yui/pure/blob/master/LICENSE.md
-*/
-/* line 7, ../../scss/pure/_buttons.scss */
-.pure-button, .btn-pri, .play-now {
-  /* Structure */
-  display: inline-block;
-  *display: inline;
-  /*IE 6/7*/
-  zoom: 1;
-  line-height: normal;
-  white-space: nowrap;
-  vertical-align: baseline;
-  text-align: center;
-  cursor: pointer;
-  -webkit-user-drag: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-/* Firefox: Get rid of the inner focus border */
-/* line 25, ../../scss/pure/_buttons.scss */
-.pure-button::-moz-focus-inner, .btn-pri::-moz-focus-inner, .play-now::-moz-focus-inner {
-  padding: 0;
-  border: 0;
-}
-
-/*csslint unqualified-attributes:false, outline-none:false*/
-/* line 32, ../../scss/pure/_buttons.scss */
-.pure-button, .btn-pri, .play-now {
-  font-size: 100%;
-  *font-size: 90%;
-  /*IE 6/7 - To reduce IE's oversized button text*/
-  *overflow: visible;
-  /*IE 6/7 - Because of IE's overly large left/right padding on buttons */
-  padding: 0.5em 1.5em 0.5em;
-  color: #444;
-  /* rgba not supported (IE 8) */
-  color: rgba(0, 0, 0, 0.8);
-  /* rgba supported */
-  *color: #444;
-  /* IE 6 & 7 */
-  border: 1px solid #999;
-  /*IE 6/7/8*/
-  border: none rgba(0, 0, 0, 0);
-  /*IE9 + everything else*/
-  background-color: #E6E6E6;
-  text-decoration: none;
-  border-radius: 2px;
-  /* Transitions */
-  -webkit-transition: 0.1s linear -webkit-box-shadow;
-  -moz-transition: 0.1s linear -moz-box-shadow;
-  -ms-transition: 0.1s linear box-shadow;
-  -o-transition: 0.1s linear box-shadow;
-  transition: 0.1s linear box-shadow;
-}
-
-/* line 55, ../../scss/pure/_buttons.scss */
-.pure-button-hover,
-.pure-button:hover,
-.btn-pri:hover,
-.play-now:hover,
-.pure-button:focus,
-.btn-pri:focus,
-.play-now:focus {
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#1a000000',GradientType=0);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(transparent), color-stop(40%, rgba(0, 0, 0, 0.05)), to(rgba(0, 0, 0, 0.1)));
-  background-image: -webkit-linear-gradient(transparent, rgba(0, 0, 0, 0.05) 40%, rgba(0, 0, 0, 0.1));
-  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.1));
-  background-image: -ms-linear-gradient(transparent, rgba(0, 0, 0, 0.05) 40%, rgba(0, 0, 0, 0.1));
-  background-image: -o-linear-gradient(transparent, rgba(0, 0, 0, 0.05) 40%, rgba(0, 0, 0, 0.1));
-  background-image: linear, false, transparent, rgba(0, 0, 0, 0.05) 40%, rgba(0, 0, 0, 0.1);
-}
-
-/* line 64, ../../scss/pure/_buttons.scss */
-.pure-button:focus, .btn-pri:focus, .play-now:focus {
-  outline: 0;
-}
-
-/* line 68, ../../scss/pure/_buttons.scss */
-.pure-button-active,
-.pure-button:active,
-.btn-pri:active,
-.play-now:active {
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15) inset, 0 0 6px rgba(0, 0, 0, 0.2) inset;
-}
-
-/* line 76, ../../scss/pure/_buttons.scss */
-.pure-button[disabled], [disabled].btn-pri, [disabled].play-now,
-.pure-button-disabled,
-.pure-button-disabled:hover,
-.pure-button-disabled:focus,
-.pure-button-disabled:active {
-  border: none;
-  background-image: none;
-  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
-  filter: alpha(opacity=40);
-  -khtml-opacity: 0.40;
-  -moz-opacity: 0.40;
-  opacity: 0.40;
-  cursor: not-allowed;
-  box-shadow: none;
-}
-
-/* line 88, ../../scss/pure/_buttons.scss */
-.pure-button-hidden {
-  display: none;
-}
-
-/* Firefox: Get rid of the inner focus border */
-/* line 93, ../../scss/pure/_buttons.scss */
-.pure-button::-moz-focus-inner, .btn-pri::-moz-focus-inner, .play-now::-moz-focus-inner {
-  padding: 0;
-  border: 0;
-}
-
-/* line 101, ../../scss/pure/_buttons.scss */
-.pure-button-primary, .btn-pri, .play-now,
-.pure-button-selected,
-a.pure-button-primary,
-a.btn-pri,
-a.play-now,
-a.pure-button-selected {
-  background-color: #0078e7;
-  color: #fff;
-}
-
-/* line 23, ../../scss/bacro.scss */
+/* line 1, ../../scss/_global.scss */
 body {
   background: #f8f8f8;
-  color: #333333;
+  color: #666666;
   font-weight: 300;
 }
 
-/* line 29, ../../scss/bacro.scss */
+/* line 7, ../../scss/_global.scss */
 a {
   color: #268bd2;
   text-decoration: none;
 }
-/* line 32, ../../scss/bacro.scss */
+/* line 10, ../../scss/_global.scss */
 a:hover {
   color: #1d699e;
 }
-/* line 35, ../../scss/bacro.scss */
-a.pure-button-primary:hover, a.btn-pri:hover, a.play-now:hover {
+/* line 13, ../../scss/_global.scss */
+a.pure-button-primary:hover, a.btn-pri:hover, a.Chat-button:hover, a#Chat-button:hover, a.play-now:hover, a#bacronym-button:hover {
   color: white;
 }
 
-/* line 40, ../../scss/bacro.scss */
+/* line 18, ../../scss/_global.scss */
 #container {
   *zoom: 1;
   max-width: 48rem;
@@ -1173,33 +1281,18 @@ a.pure-button-primary:hover, a.btn-pri:hover, a.play-now:hover {
   clear: both;
 }
 
-/* line 44, ../../scss/bacro.scss */
-.pure-button, .btn-pri, .play-now {
-  text-transform: uppercase;
-}
-
-/* line 48, ../../scss/bacro.scss */
-.pure-button-primary, .btn-pri, .play-now, a.pure-button-primary, a.btn-pri, a.play-now {
-  background-color: #268bd2;
-}
-
-/* line 52, ../../scss/bacro.scss */
+/* line 23, ../../scss/_global.scss */
 h1, h2, h3 {
   font-weight: 300;
 }
 
-/* line 57, ../../scss/bacro.scss */
-a.site-title {
-  color: #cccccc;
-  font-style: italic;
-  margin-bottom: 0.4rem;
-}
-/* line 64, ../../scss/bacro.scss */
-a.site-title:hover {
-  color: #b3b3b3;
+/* line 29, ../../scss/_global.scss */
+.action-tiny {
+  margin: 0;
+  padding: 0;
 }
 
-/* line 69, ../../scss/bacro.scss */
+/* line 1, ../../scss/_site-header.scss */
 .site-header {
   margin-bottom: 2.5rem;
   padding: 0.5rem 1rem 0;
@@ -1215,28 +1308,94 @@ a.site-title:hover {
   clear: both;
 }
 
-/* line 75, ../../scss/bacro.scss */
+/* line 7, ../../scss/_site-header.scss */
+a.site-title {
+  color: #b3b3b3;
+  font-style: italic;
+  margin-bottom: 0.4rem;
+}
+/* line 14, ../../scss/_site-header.scss */
+a.site-title:hover {
+  color: #999999;
+}
+
+/* line 18, ../../scss/_site-header.scss */
 .auth-status {
   text-align: right;
-  color: #a6a6a6;
+  color: #999999;
   margin-bottom: 0;
 }
 
-/* line 88, ../../scss/bacro.scss */
+/* line 4, ../../scss/shared/_chat.scss */
+.Chat-chats {
+  width: 100%;
+  min-height: 5rem;
+  max-height: 12rem;
+  border-bottom: none;
+  padding: 0.6rem;
+}
+
+/* line 12, ../../scss/shared/_chat.scss */
+.Chat-msg {
+  line-height: 1.2;
+  font-weight: 400;
+  margin-bottom: 0;
+  padding-top: 0;
+}
+
+/* line 20, ../../scss/shared/_chat.scss */
+.Chat-header {
+  margin-bottom: 0;
+}
+
+/* line 24, ../../scss/shared/_chat.scss */
+.Chat-msg-sender {
+  font-weight: 500;
+}
+
+/* line 1, ../../scss/views/_index.scss */
 .play-now {
   float: left;
   margin-right: 1rem;
 }
 
-/* line 94, ../../scss/bacro.scss */
+/* line 1, ../../scss/views/_gamelobby.scss */
 .new-game {
   display: block;
   margin: -0.2rem 0 0 1rem;
   float: left;
 }
 
-/* line 100, ../../scss/bacro.scss */
-.action-tiny {
+/* line 1, ../../scss/views/_game.scss */
+.game-panel {
+  min-height: 15rem;
+}
+
+/* line 8, ../../scss/views/_game.scss */
+.acronym, .acronym-lg {
+  font-weight: 300;
+  color: #dc322f;
+}
+
+/* line 19, ../../scss/views/_game.scss */
+.bacronym-form {
+  clear: both;
+}
+
+/* line 26, ../../scss/views/_game.scss */
+#game-status {
+  padding: 0.2rem 0 0;
+}
+
+/* line 31, ../../scss/views/_game.scss */
+#round {
   margin: 0;
-  padding: 0;
+  float: left;
+}
+
+/* line 37, ../../scss/views/_game.scss */
+#time {
+  float: right;
+  text-align: right;
+  margin: 0;
 }

@@ -20,5 +20,6 @@ html
               a.action-tiny(href='/auth/google') LOGIN
     .container
       block content
+    script(src='https://cdn.firebase.com/v0/firebase.js')
+    script(src='/bower_components/requirejs/require.js', data-main='/js/main')
 
-    script(src='/js/bacro.js')

@@ -38,30 +38,35 @@ module.exports = (grunt) ->
     coffee:
       compile:
         options:
-          join: true
-        files:
-          'public/js/bacro.js': 'coffee/**/*.coffee'
+          bare: true
+        files: [
+          expand: true
+          cwd: 'coffee'
+          src: ['**/*.coffee']
+          dest: 'public/js'
+          ext: '.js'
+        ]
 
     watch:
       options:
         livereload: true
       express:
-        files: ['!coffee/**/*.coffee','**/*.coffee']
+        files: ['app/**/*.coffee']
         tasks: ['express:dev']
         options:
           nospawn: true
       scss:
-        files: ['scss/*.scss']
+        files: ['scss/**/*.scss']
         tasks: ['compass']
         options:
           livereload: false
       css:
         files: ['public/css/*.css']
       jade:
-        files: ['views/**/*.jade']
+        files: ['app/views/**/*.jade']
       coffee:
         files: ['coffee/**/*.coffee']
-        tasks: ['coffee:compile']
+        tasks: ['coffee']
 
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-express-server'
