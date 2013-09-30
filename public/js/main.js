@@ -7,7 +7,8 @@ bower = function(str) {
 require.config({
   paths: {
     ko: bower('knockout.js/knockout-2.3.0.debug'),
-    zepto: bower('zepto/zepto')
+    zepto: bower('zepto/zepto'),
+    socketio: bower('socket.io-client/dist/socket.io')
   },
   shim: {
     zepto: {
@@ -16,9 +17,10 @@ require.config({
   }
 });
 
-require(['ko', 'zepto', 'bacro'], function(ko, $, Bacro) {
+require(['ko', 'socketio', 'zepto', 'bacro'], function(ko, io, $, Bacro) {
   window.$ = $;
   window.ko = ko;
+  window.io = io;
   Bacro.init();
   return window.Bacro = Bacro;
 });
