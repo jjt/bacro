@@ -13,7 +13,8 @@ block content
         .acronym-lg(data-bind='text: acronym')
         form.bacronym-form(data-bind="submit: bacronymSubmit", action="/", method="POST")
           input#bacronym-input(data-bind="value: bacronymInput",type="text"
-            name="bacronym-input", placeholder="Type a bacronym and hit enter or press BACRO! -->")
+            name="bacronym-input", autofill="off",
+            placeholder="Type a bacronym and hit enter or press BACRO! -->")
           button#bacronym-button(type="submit") Bacro!
 
   .r

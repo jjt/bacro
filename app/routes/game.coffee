@@ -1,6 +1,6 @@
-GameController = require '../controllers/game.coffee'
 module.exports = (app) ->
 
+  GameController = require('../controllers/game.coffee')(app)
   app.get '/game/lobby', (req, res) ->
     res.render 'lobby'
 
