@@ -22,7 +22,9 @@
     "random-string": "~0.1.1",
     "supergoose": "0.0.9",
     "knockout": "~2.3.0",
-    "socket.io": "~0.9.16"
+    "socket.io": "~0.9.16",
+    "node_hash": "~0.2.0",
+    "animalonymous": "latest"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

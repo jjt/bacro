@@ -508,7 +508,7 @@ Licensed under the BSD License.
 https://github.com/yui/pure/blob/master/LICENSE.md
 */
 /* line 7, ../../scss/pure/_buttons.scss */
-.pure-button, .btn, .btn-pri, .Chat-button, #Chat-button, .play-now, #bacronym-button, .pure-button-primary {
+.pure-button, .btn, .btn-pri, .Chat-button, #Chat-button, .play-now, #bacronym-button, .game, .pure-button-primary {
   /* Structure */
   display: inline-block;
   *display: inline;
@@ -528,14 +528,14 @@ https://github.com/yui/pure/blob/master/LICENSE.md
 
 /* Firefox: Get rid of the inner focus border */
 /* line 25, ../../scss/pure/_buttons.scss */
-.pure-button::-moz-focus-inner, .btn::-moz-focus-inner, .btn-pri::-moz-focus-inner, .Chat-button::-moz-focus-inner, #Chat-button::-moz-focus-inner, .play-now::-moz-focus-inner, #bacronym-button::-moz-focus-inner, .pure-button-primary::-moz-focus-inner {
+.pure-button::-moz-focus-inner, .btn::-moz-focus-inner, .btn-pri::-moz-focus-inner, .Chat-button::-moz-focus-inner, #Chat-button::-moz-focus-inner, .play-now::-moz-focus-inner, #bacronym-button::-moz-focus-inner, .game::-moz-focus-inner, .pure-button-primary::-moz-focus-inner {
   padding: 0;
   border: 0;
 }
 
 /*csslint unqualified-attributes:false, outline-none:false*/
 /* line 32, ../../scss/pure/_buttons.scss */
-.pure-button, .btn, .btn-pri, .Chat-button, #Chat-button, .play-now, #bacronym-button, .pure-button-primary {
+.pure-button, .btn, .btn-pri, .Chat-button, #Chat-button, .play-now, #bacronym-button, .game, .pure-button-primary {
   font-size: 100%;
   *font-size: 90%;
   /*IE 6/7 - To reduce IE's oversized button text*/
@@ -572,6 +572,7 @@ https://github.com/yui/pure/blob/master/LICENSE.md
 #Chat-button:hover,
 .play-now:hover,
 #bacronym-button:hover,
+.game:hover,
 .pure-button-primary:hover,
 .pure-button:focus,
 .btn:focus,
@@ -580,6 +581,7 @@ https://github.com/yui/pure/blob/master/LICENSE.md
 #Chat-button:focus,
 .play-now:focus,
 #bacronym-button:focus,
+.game:focus,
 .pure-button-primary:focus {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#1a000000',GradientType=0);
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(transparent), color-stop(40%, rgba(0, 0, 0, 0.05)), to(rgba(0, 0, 0, 0.1)));
@@ -591,7 +593,7 @@ https://github.com/yui/pure/blob/master/LICENSE.md
 }
 
 /* line 64, ../../scss/pure/_buttons.scss */
-.pure-button:focus, .btn:focus, .btn-pri:focus, .Chat-button:focus, #Chat-button:focus, .play-now:focus, #bacronym-button:focus, .pure-button-primary:focus {
+.pure-button:focus, .btn:focus, .btn-pri:focus, .Chat-button:focus, #Chat-button:focus, .play-now:focus, #bacronym-button:focus, .game:focus, .pure-button-primary:focus {
   outline: 0;
 }
 
@@ -604,12 +606,13 @@ https://github.com/yui/pure/blob/master/LICENSE.md
 #Chat-button:active,
 .play-now:active,
 #bacronym-button:active,
+.game:active,
 .pure-button-primary:active {
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15) inset, 0 0 6px rgba(0, 0, 0, 0.2) inset;
 }
 
 /* line 76, ../../scss/pure/_buttons.scss */
-.pure-button[disabled], [disabled].btn, [disabled].btn-pri, [disabled].Chat-button, [disabled]#Chat-button, [disabled].play-now, [disabled]#bacronym-button, [disabled].pure-button-primary,
+.pure-button[disabled], [disabled].btn, [disabled].btn-pri, [disabled].Chat-button, [disabled]#Chat-button, [disabled].play-now, [disabled]#bacronym-button, [disabled].game, [disabled].pure-button-primary,
 .pure-button-disabled,
 .pure-button-disabled:hover,
 .pure-button-disabled:focus,
@@ -632,7 +635,7 @@ https://github.com/yui/pure/blob/master/LICENSE.md
 
 /* Firefox: Get rid of the inner focus border */
 /* line 93, ../../scss/pure/_buttons.scss */
-.pure-button::-moz-focus-inner, .btn::-moz-focus-inner, .btn-pri::-moz-focus-inner, .Chat-button::-moz-focus-inner, #Chat-button::-moz-focus-inner, .play-now::-moz-focus-inner, #bacronym-button::-moz-focus-inner, .pure-button-primary::-moz-focus-inner {
+.pure-button::-moz-focus-inner, .btn::-moz-focus-inner, .btn-pri::-moz-focus-inner, .Chat-button::-moz-focus-inner, #Chat-button::-moz-focus-inner, .play-now::-moz-focus-inner, #bacronym-button::-moz-focus-inner, .game::-moz-focus-inner, .pure-button-primary::-moz-focus-inner {
   padding: 0;
   border: 0;
 }
@@ -652,7 +655,7 @@ a.pure-button-selected {
 }
 
 /* line 1, ../../scss/_button.scss */
-.pure-button, .btn, .btn-pri, .Chat-button, #Chat-button, .play-now, #bacronym-button, .pure-button-primary {
+.pure-button, .btn, .btn-pri, .Chat-button, #Chat-button, .play-now, #bacronym-button, .game, .pure-button-primary {
   text-transform: uppercase;
 }
 
@@ -662,7 +665,7 @@ a.pure-button-selected {
 }
 
 /* line 9, ../../scss/_button.scss */
-.btn, .btn-pri, .Chat-button, #Chat-button, .play-now, #bacronym-button {
+.btn, .btn-pri, .Chat-button, #Chat-button, .play-now, #bacronym-button, .game {
   font-weight: 300;
 }
 
@@ -758,7 +761,7 @@ h5, .epsilon, .auth-status {
 }
 
 /* line 101, ../../scss/_type.scss */
-.zeta, h6, .action-tiny, .Chat-msg {
+.zeta, h6, .action-tiny, .Chat-chats, .Chat-msg, .game-date {
   font-size: 0.77778rem;
 }
 
@@ -1333,9 +1336,11 @@ a.site-title:hover {
   max-height: 12rem;
   border-bottom: none;
   padding: 0.6rem;
+  line-height: 1.2;
+  overflow-y: auto;
 }
 
-/* line 12, ../../scss/shared/_chat.scss */
+/* line 15, ../../scss/shared/_chat.scss */
 .Chat-msg {
   line-height: 1.2;
   font-weight: 400;
@@ -1343,12 +1348,12 @@ a.site-title:hover {
   padding-top: 0;
 }
 
-/* line 20, ../../scss/shared/_chat.scss */
+/* line 23, ../../scss/shared/_chat.scss */
 .Chat-header {
   margin-bottom: 0;
 }
 
-/* line 24, ../../scss/shared/_chat.scss */
+/* line 27, ../../scss/shared/_chat.scss */
 .Chat-msg-sender {
   font-weight: 500;
 }
@@ -1364,6 +1369,21 @@ a.site-title:hover {
   display: block;
   margin: -0.2rem 0 0 1rem;
   float: left;
+}
+
+/* line 7, ../../scss/views/_gamelobby.scss */
+#gameList {
+  margin-bottom: 1.5rem;
+  display: flex;
+}
+
+/* line 12, ../../scss/views/_gamelobby.scss */
+.game {
+  text-align: left;
+  padding: 0.5rem;
+  width: 32%;
+  margin-right: 1%;
+  min-height: 1.5rem;
 }
 
 /* line 1, ../../scss/views/_game.scss */

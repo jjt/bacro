@@ -1,7 +1,7 @@
 module.exports = (app, passport) ->
   express = require 'express'
   path = require 'path'
-  middle = require '../middle'
+  middle = require('../middle')(app)
 
   app.configure ->
     app.set 'port', process.env.PORT or 3000
