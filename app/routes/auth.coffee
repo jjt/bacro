@@ -1,10 +1,11 @@
 module.exports = (app) ->
 
   passport = require 'passport'
+  user = require '../models/user'
 
   app.get '/auth/google', passport.authenticate 'google'
 
-  googleAuthRedirs = successRedirect: '/game/lobby', failureRedirect: '/auth/google/error'
+  googleAuthRedirs = successRedirect: '/lobby', failureRedirect: '/auth/google/error'
   app.get '/auth/google/return', passport.authenticate 'google', googleAuthRedirs
 
   app.get '/auth/google/error', (req, res) ->
@@ -16,6 +17,7 @@ module.exports = (app) ->
   app.get '/auth/logout', (req, res) ->
     req.logout()
     res.redirect '/auth/loggedout'
+
   app.get '/auth/loggedout', (req, res) ->
     res.render 'page',
       pageHeader: 'All logged out, champ'

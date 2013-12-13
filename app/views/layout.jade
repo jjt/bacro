@@ -4,15 +4,16 @@ html
     title= title
     link(rel='stylesheet', href='/fontello/css/fontello.css')
     link(rel='stylesheet', href='/css/bacro.css')
-    script(src='http://localhost:35729/livereload.js')
+    //script(src='http://localhost:35729/livereload.js')
   body
     if !suppressHeader
       header.site-header
         .container.r
           a.site-title(href="/") BACRO
+          a(href="/lobby") Lobby
           if user
             .auth-status 
-              = user.email
+              = user.dispname
               br
               a.action-tiny(href='/auth/logout') LOGOUT
           else
@@ -21,4 +22,5 @@ html
     .container
       block content
     script(src='/bower_components/requirejs/require.js', data-main='/js/main')
+
 

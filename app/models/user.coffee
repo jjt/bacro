@@ -1,8 +1,15 @@
-mongoose = require 'mongoose'
-mongoose.connect 'mongodb://localhost/bacro'
+#module.exports = (app) ->
+console.log 'APP MODELS USER'
+mongoose = require '../config/mongoose'
+supergoose = require 'supergoose'
 
-User = mongoose.model 'User',
+userSchema = mongoose.Schema
   name: String
   email: String
+  dispname: String
 
-exports = User
+userSchema.plugin supergoose
+
+User = mongoose.model 'User', userSchema
+module.exports = User
+

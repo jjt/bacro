@@ -7,10 +7,25 @@ block content
       i.icon-plus
       | New Game
   .r
-    if !gameList
-      p.beta No games found 
+    #gameList
+      if !games
+        p.no-games.beta No games found 
+      else
+        each game in games
+          .game
+            = game.id 
+            | 
+            a.game-date= game.created.toString().split(" ").slice(1,5).join(" ")
+            
+
   .r
     .g-12
-      h2 Chat
-      textarea.ChatWindow(name="chat")
+      form#Chat.Chat
+        h2.Chat-header Chat 
+          span.delta.lighter but please don't be a dink
+
+        .FlexInput
+          input#Chat-input(name="Chat-input",placeholder="Chat goes here!")
+          button#Chat-button(name="Chat-button") CHAT  
+        #Chat-chats.Chat-chats(data-bind="value: chats")
 

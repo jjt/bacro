@@ -1,4 +1,5 @@
 module.exports = (passport) ->
+  User = require('../models/user')()
   GoogleStrategy = require('passport-google').Strategy
   googleStrategyConfig =
     returnURL: 'http://bacro.node/auth/google/return'

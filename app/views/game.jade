@@ -8,6 +8,9 @@ block content
         #time 3:00
       #Players
         ul.player-list 
+          if game.users
+            each user in game.users
+              li= user.dispname
     .g-9
       #Game
         .acronym-lg(data-bind='text: acronym')
@@ -23,14 +26,8 @@ block content
       form#Chat.Chat
         h2.Chat-header Chat 
           span.delta.lighter but please don't be a dink
-        #Chat-chats.Chat-chats
-          p.Chat-msg
-            span.Chat-msg-sender Jason Trill: 
-            | Hey man, time to get some chats going Hey man, time to get some chats going Hey man, time to get some chats going Hey man, time to get some chats going ooooHey man, time to get some chats going on
-          p.Chat-msg
-            span.Chat-msg-sender Jason Trill: 
-            | Hey man, time to get some chats going Hey man, time to get some chats going Hey man, time to get some chats going Hey man, time to get some chats going ooooHey man, time to get some chats going on
 
         .FlexInput
           input#Chat-input(name="Chat-input",placeholder="Chat goes here!")
-          button#Chat-button(name="Chat-button") CHAT      
+          button#Chat-button(name="Chat-button") CHAT  
+        #Chat-chats.Chat-chats

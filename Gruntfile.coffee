@@ -34,6 +34,11 @@ module.exports = (grunt) ->
         options:
           script: 'server.coffee'
           cmd: 'coffee'
+          args: ['-b', "DEBUG=socket.io"]
+          error: (err, res, code) ->
+            console.log err, res, code
+
+          
     
     coffee:
       compile:
