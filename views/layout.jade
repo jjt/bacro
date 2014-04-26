@@ -1,0 +1,17 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    title BACRO
+    link(rel='stylesheet', href='/styles/main.css')
+    block headend
+  body
+    #nav
+    #content 
+      block content
+    // build:js script/vendor.js
+    script(src='/bower_components/lodash/dist/lodash.js')
+    script(src='/bower_components/react/react-with-addons.js')
+    // endbuild
+    script(src='/script/main.js')
+    block bodyend
