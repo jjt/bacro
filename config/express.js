@@ -23,7 +23,10 @@ module.exports = function (app, config, passport) {
   }))
 
   //app.use(require('static-favicon')())
-  app.use(express.static(config.root + '/public'))
+  if(env === 'development') {
+    app.use(express.static(config.root + '/public'))
+    app.use(express.static(config.root + '/.public'))
+  }
 
   // Logging
   // Use winston on production
@@ -84,7 +87,7 @@ module.exports = function (app, config, passport) {
 
     // This could be moved to view-helpers :-)
     app.use(function(req, res, next){
-      res.locals.csrf_token = req.csrfToken()
+      res.locals.csrftoken = req.csrfToken('arstarst', 'arstarstuu');
       next()
     })
   }

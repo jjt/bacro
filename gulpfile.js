@@ -89,11 +89,21 @@ gulp.task('connect', function () {
 gulp.task('backend', function() {
   var server = $.nodemon({
     script: 'server.coffee',
-    ignore: ['public/**', '.public/**']
+    ignore: ['public/**', '.public/**', 'node_modules']
   })
-  server.on('restart', $.util.log.bind(null, 'BACRO UP IN IT AGAIN'));
+  server.on('restart', $.util.log.bind(null, 'EXPRESS'));
   return server;
 });
+
+gulp.task('sock', function(){
+  var server = $.nodemon({
+    script: 'sock.coffee',
+    ignore: ['public/**', '.public/**', 'app/**', 'node_modules']
+  });
+
+  server.on('restart', $.util.log.bind(null, 'SOCK'));
+  return server;
+})
 
 // inject bower components
 gulp.task('wiredep', function () {
@@ -144,6 +154,7 @@ gulp.task('watch', function () {
   //gulp.watch('public/script/**/*.coffee', ['coffee']);
   gulp.watch('public/script/**/*.coffee', ['browserify']);
   gulp.watch('public/images/**/*', ['images']);
+  //gulp.watch(['sock.coffee', 'lib/**'], ['sock']);
   //gulp.watch('bower.json', ['wiredep']);
 });
 
