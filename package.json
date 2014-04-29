@@ -1,7 +1,11 @@
 {
-  "name": "bacro",
+  "name": "BACRO",
   "description": "Bacro is a multi-player web game of bacronyms",
-  "keywords": ["multiplayer", "game", "bacronyms"],
+  "keywords": [
+    "multiplayer",
+    "game",
+    "bacronyms"
+  ],
   "version": "0.0.0",
   "browserify": {
     "transform": [
@@ -38,7 +42,13 @@
     "body-parser": "^1.0.2",
     "serve-static": "^1.1.0",
     "morgan": "^1.0.0",
-    "static-favicon": "^1.0.2"
+    "static-favicon": "^1.0.2",
+    "http": "0.0.0",
+    "sockjs": "^0.3.8",
+    "websocket-multiplexer": "0.0.4",
+    "websocket-multiplex": "^0.1.0",
+    "node-static": "^0.7.3",
+    "firebase": "^1.0.11"
   },
   "devDependencies": {
     "connect": "^2.14.4",

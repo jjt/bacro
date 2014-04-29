@@ -1,0 +1,16 @@
+extends ../layouts/default
+
+block content
+  #app
+
+block foot
+  script(src='/bower_components/firebase/firebase.js')
+  script(src='/bower_components/director/build/director.js')
+  script(src='/bower_components/react/react-with-addons.js')
+  script(src='/bower_components/lodash/dist/lodash.js')
+  script(src='/script/zepto.js')
+  script(src='/script/react-multiplayer.js')
+  script(src='/script/main.js')
+  
+  script.
+    user = !{JSON.stringify(user)} 

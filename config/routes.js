@@ -11,6 +11,7 @@ var async = require('async')
 var users = require('../app/controllers/users')
   , articles = require('../app/controllers/articles')
   , auth = require('./middlewares/authorization')
+  , games = require('../app/controllers/games')
 
 /**
  * Route middlewares
@@ -87,29 +88,40 @@ module.exports = function (app, passport) {
 
   app.param('userId', users.user)
 
+  app.get('/game', auth.requiresLogin, games.lobby)
+  app.get('/game/new', auth.requiresLogin, games.new)
+  app.get('/game/:id', auth.requiresLogin, games.game)
+  app.post('/game/:id/chat', auth.requiresLogin, games.chat)
+  app.post('/game/:id/answer', auth.requiresLogin, games.answer)
+
+
   // article routes
-  app.param('id', articles.load)
-  app.get('/articles', articles.index)
-  app.get('/articles/new', auth.requiresLogin, articles.new)
-  app.post('/articles', auth.requiresLogin, articles.create)
-  app.get('/articles/:id', articles.show)
-  app.get('/articles/:id/edit', articleAuth, articles.edit)
-  app.put('/articles/:id', articleAuth, articles.update)
-  app.del('/articles/:id', articleAuth, articles.destroy)
+  //app.param('id', articles.load)
+  //app.get('/articles', articles.index)
+  //app.get('/articles/new', auth.requiresLogin, articles.new)
+  //app.post('/articles', auth.requiresLogin, articles.create)
+  //app.get('/articles/:id', articles.show)
+  //app.get('/articles/:id/edit', articleAuth, articles.edit)
+  //app.put('/articles/:id', articleAuth, articles.update)
+  //app.del('/articles/:id', articleAuth, articles.destroy)
 
   // home route
-  app.get('/', articles.index)
+  app.get('/', function(req, res){
+    if(req.isAuthenticated())
+      return res.redirect('/game/');
+    res.render('index');
+  });
 
   // comment routes
-  var comments = require('../app/controllers/comments')
-  app.param('commentId', comments.load)
-  app.post('/articles/:id/comments', auth.requiresLogin, comments.create)
-  app.get('/articles/:id/comments', auth.requiresLogin, comments.create)
-  app.del('/articles/:id/comments/:commentId', commentAuth, comments.destroy)
+  //var comments = require('../app/controllers/comments')
+  //app.param('commentId', comments.load)
+  //app.post('/articles/:id/comments', auth.requiresLogin, comments.create)
+  //app.get('/articles/:id/comments', auth.requiresLogin, comments.create)
+  //app.del('/articles/:id/comments/:commentId', commentAuth, comments.destroy)
 
   // tag routes
-  var tags = require('../app/controllers/tags')
-  app.get('/tags/:tag', tags.index)
+  //var tags = require('../app/controllers/tags')
+  //app.get('/tags/:tag', tags.index)
   
   // assume "not found" in the error msgs
   // is a 404. this is somewhat silly, but
