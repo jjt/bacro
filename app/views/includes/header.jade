@@ -10,7 +10,7 @@ nav.navbar.navbar-default(role='navigation')
     .collapse.navbar-collapse
       ul.nav.navbar-nav
         li(class=isActive('/articles/new') ? 'active' : '')
-          a(href="/articles/new", title="new article") New
+          a(href="#/new", title="new article") New
         - if (req.isAuthenticated())
           li
             a(href="/users/"+req.user.id, title="Profile") Profile

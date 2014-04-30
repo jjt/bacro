@@ -1,33 +1,46 @@
 fb = require '../../lib/firebase'
+Game = require '../../lib/game'
 
-randStr = (len=8)-> Math.random().toString(36).slice(2,len+2)
+log = ()-> console.log.apply null, arguments
 
-Games =
-  lobby: (req, res) ->
-    res.render 'game/index',
-      user: req.user
+module.exports = (app)->
+  Games =
+    lobby: (req, res) ->
+      res.render 'game/index',
+        user: req.user
 
-  game: (req, res) ->
-    res.send 200, 'game OK'
+    game: (req, res) ->
+      res.send 200, 'game OK'
 
-  new: (req, res) ->
-    res.send 200, randStr()
+    new: (req, res) ->
+      game = new Game()
+      game.bind 'round:start', log
+      game.bind 'answer:start', log
+      game.bind 'answer:end', log
+      game.bind 'vote:start', log
+      game.bind 'vote:end', log
+      game.bind 'round:end', log
+      game.bind 'game:end', log
+      game.nextRound()
+      app.set('games', app.get('games').slice().push(game))
+      res.send 200, game.id
 
-  chat: (req, res)->
-    console.log req.user
-    channel = req.body.channel
-    msg = req.body.msg
-    user = req.user.name
-    time = (new Date).getTime()
+    chat: (req, res)->
+      console.log req.user
+      channel = req.body.channel
+      msg = req.body.msg
+      user = req.user.name
+      time = (new Date).getTime()
 
-    if not channel or not msg
-      return res.send 404
+      if not channel or not msg
+        return res.send 404
 
-    fb.child("chats/#{channel}").push {user, msg, time}
-    res.send 200
+      fb.child("chats/#{channel}").push {user, msg, time}
+      res.send 200
 
-  answer: (req, res)->
-    res.send 200, 'answer OK'
+    answer: (req, res)->
+      res.send 200, 'answer OK'
 
 
-exports = module.exports = Games
+  return Games
+

@@ -48,7 +48,8 @@
     "websocket-multiplexer": "0.0.4",
     "websocket-multiplex": "^0.1.0",
     "node-static": "^0.7.3",
-    "firebase": "^1.0.11"
+    "firebase": "^1.0.11",
+    "microevent": "^1.0.0"
   },
   "devDependencies": {
     "connect": "^2.14.4",
