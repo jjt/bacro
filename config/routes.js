@@ -11,7 +11,6 @@ var async = require('async')
 var users = require('../app/controllers/users')
   , articles = require('../app/controllers/articles')
   , auth = require('./middlewares/authorization')
-  , games = require('../app/controllers/games')
 
 /**
  * Route middlewares
@@ -26,6 +25,7 @@ var commentAuth = [auth.requiresLogin, auth.comment.hasAuthorization]
 
 module.exports = function (app, passport) {
 
+  var games = require('../app/controllers/games')(app);
   // user routes
   app.get('/login', users.login)
   app.get('/signup', users.signup)
@@ -88,11 +88,17 @@ module.exports = function (app, passport) {
 
   app.param('userId', users.user)
 
-  app.get('/game', auth.requiresLogin, games.lobby)
-  app.get('/game/new', auth.requiresLogin, games.new)
-  app.get('/game/:id', auth.requiresLogin, games.game)
-  app.post('/game/:id/chat', auth.requiresLogin, games.chat)
-  app.post('/game/:id/answer', auth.requiresLogin, games.answer)
+  //app.get('/game', auth.requiresLogin, games.lobby)
+  //app.get('/game/new', auth.requiresLogin, games.new)
+  //app.get('/game/:id', auth.requiresLogin, games.game)
+  //app.post('/game/:id/chat', auth.requiresLogin, games.chat)
+  //app.post('/game/:id/answer', auth.requiresLogin, games.answer)
+
+  app.get('/game',  games.lobby)
+  app.get('/game/new', games.new)
+  app.get('/game/:id', games.game)
+  app.post('/game/:id/chat', games.chat)
+  app.post('/game/:id/answer', games.answer)
 
 
   // article routes

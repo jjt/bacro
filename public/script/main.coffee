@@ -1,6 +1,7 @@
 R = React.DOM
 cx = React.addons.classSet
 
+
 fbRootURL = 'https://bacrogame.firebaseio.com'
 fbRoot = new Firebase fbRootURL
 
@@ -95,7 +96,20 @@ Lobby = React.createClass
     ]
        
 
+Board = React.createClass
+  render: ->
+    R.div className: 'jumbotron'
+
+GameStatus = React.createClass
+  render: ->
+    R.div {className:'GameStatus'},
+      R.h3 {}, 'Game Status'
+
 Game = React.createClass
+  getInitialState: ->
+    round: 1
+
+
   componentWillMount: ->
     fb = fbRoot.child "games/#{@props.id}"
     fb.set
@@ -103,7 +117,11 @@ Game = React.createClass
 
   render: ->
     R.div {className: 'Game'}, [
-      R.h1 {}, "Game #{@props.id}"
+      R.div {className: 'row'}, [
+        R.div className: 'col-sm-8', Board gameId: @props.id
+        R.div className: 'col-sm-4', GameStatus gameId: @props.id
+      ]
+        
       Chat gameId: @props.id
     ]
 

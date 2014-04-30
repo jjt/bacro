@@ -1,21 +1,7 @@
-
-#!
-# * nodejs-express-mongoose-demo
-# * Copyright(c) 2013 Madhusudhan Srinivasa <madhums8@gmail.com>
-# * MIT Licensed
-# 
-
-###
-Module dependencies.
-###
 express = require("express")
 fs = require("fs")
 passport = require("passport")
 
-###
-Main application entry file.
-Please note that the order of loading is important.
-###
 
 # Load configurations
 # if test env, load example file
@@ -53,17 +39,17 @@ fs.readdirSync(models_path).forEach (file) ->
   require models_path + "/" + file  if ~file.indexOf(".js")
   return
 
-
 # bootstrap passport config
 require("./config/passport") passport, config
 app = express()
+
+app.set 'games', []
 
 # express settings
 require("./config/express") app, config, passport
 
 # Bootstrap routes
 require("./config/routes") app, passport
-
 
 
 # Start the app by listening on <port>
