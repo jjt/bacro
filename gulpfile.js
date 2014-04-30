@@ -130,7 +130,7 @@ gulp.task('browserify', function () {
     })
     .bundle({debug:true})
     .on('error', $.util.log)
-    .pipe(require('vinyl-source-stream')('main.js'))
+    .pipe(require('vinyl-source-stream')('app-bundle.js'))
     .pipe(gulp.dest('./.public/script/'));
 });
 
