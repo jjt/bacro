@@ -21,14 +21,17 @@ class Game
     defaults =
       id: id
       numRounds: 8
-      rounds: []
       answerTime: 1300
       bufferTime: 300
       voteTime: 1300
-      curRoundNum: 0
       timeouts: []
 
-    _.assign this, defaults, optsIn
+    @data =
+      rounds: []
+      roundNum: 0
+      gameState: 'new'
+
+    @opts = _.merge defaults, optsIn
 
     @fbRef = fb.child "games/#{@id}"
     
@@ -40,61 +43,70 @@ class Game
     @timeouts.push setTimeout fn.bind(this), delay
 
   currentRound: ()->
-    @rounds[@curRoundNum]
+    @data.rounds[@data.roundNum]
 
-  persistRoundNum: (roundNum = @curRoundNum)->
+  persistGame: ()->
+    @fbRef.child("games/#{@id}").set @data
+
+  persistRoundNum: (roundNum = @data.roundNum)->
     @fbRef.child("roundNum").set roundNum
 
-  persistScores: (score = @getScores(), roundNum = @curRoundNum)->
-    @fbRef.child("score").set score
+  persistScores: (scores = @getScores(), roundNum = @data.roundNum)->
+    @fbRef.child("scores").set scores
 
-  persistVotes: (roundNum = @curRoundNum)->
+  persistVotes: (roundNum = @data.roundNum)->
     @fbRef.child("rounds/#{roundNum}/votes").set @currentRound().votes
 
   persistRound: (round = @currentRound())->
     fb.child("games/#{@id}/rounds/#{round.roundNum}").set round
 
-  persistBacronyms: (bacronyms = @currentRound().bacronyms, roundNum = @curRoundNum) ->
+  persistBacronyms: (bacronyms = @currentRound().bacronyms, roundNum = @data.roundNum) ->
     fb.child("games/#{@id}/rounds/#{roundNum}/bacronyms/").set bacronyms
+
+  startGame: ()->
+    @data.gameState = 'started'
+    @persistGame()
+    return
+    @nextRound()
 
   nextRound: ()->
     @clearTO()
-    @curRoundNum = @rounds.length
+    @data.roundNum = @data.rounds.length
 
-    if @curRoundNum == @numRounds
+    if @data.roundNum == @numRounds
       return @endGame()
 
-    @rounds.push
+    @data.rounds.push
       acronym: acronym _.random(3,6)
       bacronyms: {}
       phase: states.START
       started: nowISO()
-      roundNum: @curRoundNum
+      roundNum: @data.roundNum
       votes: {}
 
     @persistRoundNum()
 
-    @trigger "round:start", "round:start", @curRoundNum
+    @trigger "round:start", "round:start", @data.roundNum
     @persistRound @currentRound()
     @setTO @startAnswer, @bufferTime
 
   startAnswer: ()->
     @clearTO()
     @currentRound().phase = states.ANSWER
-    @trigger "answer:start", "answer:start", @curRoundNum
+    @trigger "answer:start", "answer:start", @data.roundNum
     testUsers.forEach (user)=>
-      @submitBacronym "Round #{@curRoundNum} - Bacronym goes here", user
+      @submitBacronym "Round #{@data.roundNum} - Bacronym goes here", user
     @setTO @endAnswer, @answerTime
 
   endAnswer: ()->
     @clearTO()
-    @trigger "answer:end", "answer:end", @curRoundNum
+    @trigger "answer:end", "answer:end", @data.roundNum
     @setTO @startVote, @bufferTime
 
   startVote: ()->
     @clearTO()
     @currentRound().phase = states.VOTE
-    @trigger "vote:start", "vote:start", @curRoundNum
+    @trigger "vote:start", "vote:start", @data.roundNum
     @persistBacronyms()
     testUsers.forEach (user)=>
       @submitVote _.sample(testUsers), user
@@ -103,18 +115,19 @@ class Game
   endVote: ()->
     @clearTO()
     @currentRound().phase = states.END
-    @trigger "vote:end", "vote:end", @curRoundNum
+    @trigger "vote:end", "vote:end", @data.roundNum
     @persistScores @getScores()
     @persistBacronyms()
     @setTO @endRound, @bufferTime
 
   endRound: ()->
     @clearTO()
-    @trigger 'round:end', 'round:end', @curRoundNum
+    @trigger 'round:end', 'round:end', @data.roundNum
     @nextRound()
 
   endGame: ()->
-    @trigger 'game:end', 'game:end', @curRoundNum
+    @data.gameState
+    @trigger 'game:end', 'game:end', @data.roundNum
 
   # {user, answer, timestamp}
   submitBacronym: (bacronym, user, time = nowISO(), votes = [])->
@@ -126,7 +139,7 @@ class Game
 
   getScores: ()->
     scores = {}
-    for round in @rounds
+    for round in @data.rounds
       for user, obj of round.bacronyms
         if not scores[user] then scores[user] = 0
         if 'votes' of obj then scores[user] += obj.votes.length
