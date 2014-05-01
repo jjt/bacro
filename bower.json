@@ -12,7 +12,8 @@
     "react-multiplayer": "https://github.com/petehunt/react-multiplayer.git",
     "Zepto-CSRF": "https://github.com/dcompute/Zepto-CSRF.git#~1.1.1",
     "jquery-file-upload": "~9.5.7",
-    "dropzone": "~3.8.5"
+    "dropzone": "~3.8.5",
+    "bourbon": "^3.2.1"
   },
   "devDependencies": {}
 }

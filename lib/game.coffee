@@ -16,24 +16,26 @@ nowISO = ()-> (new Date).toISOString()
 
 testUsers = ['Tuppy', 'Honoria', 'Bertram']
 
+   
+
 class Game
   constructor: (id = randStr(), optsIn = {})->
     defaults =
-      id: id
       numRounds: 8
-      answerTime: 1300
+      answerTime: 3500
       bufferTime: 300
-      voteTime: 1300
-      timeouts: []
+      voteTime: 3300
 
     @data =
+      id: id
       rounds: []
       roundNum: 0
       gameState: 'new'
 
     @opts = _.merge defaults, optsIn
+    @timeouts = []
 
-    @fbRef = fb.child "games/#{@id}"
+    @fbRef = fb.child "games/#{@data.id}"
     
   clearTO: ()->
     clearTimeout timeout for timeout in @timeouts
@@ -46,7 +48,7 @@ class Game
     @data.rounds[@data.roundNum]
 
   persistGame: ()->
-    @fbRef.child("games/#{@id}").set @data
+    @fbRef.set @data
 
   persistRoundNum: (roundNum = @data.roundNum)->
     @fbRef.child("roundNum").set roundNum
@@ -57,29 +59,40 @@ class Game
   persistVotes: (roundNum = @data.roundNum)->
     @fbRef.child("rounds/#{roundNum}/votes").set @currentRound().votes
 
-  persistRound: (round = @currentRound())->
-    fb.child("games/#{@id}/rounds/#{round.roundNum}").set round
+  persistRound: (anonymousBacronyms)->
+    round = _.cloneDeep @currentRound()
+    # In voting phase, turn the {user: {bacronym}, ... } object into an array
+    if anonymousBacronyms?
+      round.bacronyms = _.pluck round.bacronyms, 'bacronym'
+    @fbRef.child("rounds/#{round.roundNum}").set round
 
-  persistBacronyms: (bacronyms = @currentRound().bacronyms, roundNum = @data.roundNum) ->
-    fb.child("games/#{@id}/rounds/#{roundNum}/bacronyms/").set bacronyms
+  persistBacronyms: (anonymous) ->
+    bacronyms = @currentRound().bacronyms
+    roundNum = @data.roundNum
+    if anonymous?
+      console.log 'anon'
+      bacronyms = _.map bacronyms, (bacronym, user)=>
+        bacronym
+    @fbRef.child("rounds/#{roundNum}/bacronyms/").set bacronyms
+
 
   startGame: ()->
     @data.gameState = 'started'
     @persistGame()
-    return
     @nextRound()
 
   nextRound: ()->
     @clearTO()
     @data.roundNum = @data.rounds.length
 
-    if @data.roundNum == @numRounds
+    console.log 'nextRound'
+    if @data.roundNum == @opts.numRounds
       return @endGame()
 
     @data.rounds.push
       acronym: acronym _.random(3,6)
       bacronyms: {}
-      phase: states.START
+      phase: 'start'
       started: nowISO()
       roundNum: @data.roundNum
       votes: {}
@@ -88,37 +101,40 @@ class Game
 
     @trigger "round:start", "round:start", @data.roundNum
     @persistRound @currentRound()
-    @setTO @startAnswer, @bufferTime
+    @setTO @startAnswer, @opts.bufferTime
 
   startAnswer: ()->
     @clearTO()
-    @currentRound().phase = states.ANSWER
+    @currentRound().phase = 'answer'
     @trigger "answer:start", "answer:start", @data.roundNum
     testUsers.forEach (user)=>
-      @submitBacronym "Round #{@data.roundNum} - Bacronym goes here", user
-    @setTO @endAnswer, @answerTime
+      @submitBacronym "Round #{@data.roundNum} #{user} - Bacronym goes here", user
+    @setTO @endAnswer, @opts.answerTime
 
   endAnswer: ()->
     @clearTO()
     @trigger "answer:end", "answer:end", @data.roundNum
-    @setTO @startVote, @bufferTime
+    @setTO @startVote, @opts.bufferTime
 
   startVote: ()->
     @clearTO()
-    @currentRound().phase = states.VOTE
+    @currentRound().phase = 'vote'
     @trigger "vote:start", "vote:start", @data.roundNum
-    @persistBacronyms()
+    #@persistBacronyms()
+    @persistRound('anonymousBacronyms')
     testUsers.forEach (user)=>
       @submitVote _.sample(testUsers), user
-    @setTO @endVote, @voteTime
+    @setTO @endVote, @opts.voteTime
 
   endVote: ()->
     @clearTO()
-    @currentRound().phase = states.END
+    @currentRound().phase = 'end'
     @trigger "vote:end", "vote:end", @data.roundNum
     @persistScores @getScores()
-    @persistBacronyms()
-    @setTO @endRound, @bufferTime
+    #@persistVotes()
+    #@persistBacronyms()
+    @persistRound()
+    @setTO @endRound, @opts.bufferTime
 
   endRound: ()->
     @clearTO()
@@ -135,14 +151,14 @@ class Game
     @trigger 'bacronym', {user, bacronym, time, votes}
 
   submitVote: (candidate, voter) ->
-    @currentRound().bacronyms[candidate].votes.push voter
+    @currentRound().votes[voter] = candidate
 
   getScores: ()->
     scores = {}
     for round in @data.rounds
-      for user, obj of round.bacronyms
-        if not scores[user] then scores[user] = 0
-        if 'votes' of obj then scores[user] += obj.votes.length
+      for voter, candidate of round.votes
+        if not scores[candidate] then scores[candidate] = 0
+        scores[candidate]++
     scores
      
 

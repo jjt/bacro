@@ -1,12 +1,16 @@
 R = React.DOM
-fbRoot = require './fbRoot'
-csrfPost = require('../../lib/csrfPost')
+fbRoot = require '../fbRoot'
+csrfPost = require('../../../lib/csrfPost')
 
 Chat = React.createClass
   
+  getDefaultProps: ()->
+    submitURI: '/chat'
+
   setFbRef: (props)->
     console.log 'setFbref'
-    fbRef = fbRoot.child "chats/#{props.gameId}"
+    fbRef = fbRoot.child "chats/#{@props.channel}"
+    console.log fbRef
     #fbRef.push
       #user: "TESTO"
       #msg: "#{(new Date).getTime()} HEEEYYYYY"
@@ -14,12 +18,14 @@ Chat = React.createClass
     fbRef.once 'value', (snapshot)=>
       chats = _.values snapshot.val()
       chats = _.sortBy chats, 'id'
+      console.log 'chats', chats
       @setState {chats}
 
     fbRef.on 'child_added', (snapshot)=>
       msg = snapshot.val()
       chats = @state.chats
       chats.push msg
+      console.log 'msg', msg
       @setState {chats}
 
   componentDidUpdate: ()->
@@ -40,12 +46,11 @@ Chat = React.createClass
 
   handleChatSubmit: ()->
     $input = @refs.chatInput.getDOMNode()
-    csrfPost "/game/#{@props.gameId}/chat",
+    csrfPost @props.submitURI,
       msg: $input.value
-      channel: @props.gameId
+      channel: @props.channel
 
     $input.value = ''
-    #$.post "/game/#{@props.gameId}/chat", {msg}
     return false
 
   render: ->
