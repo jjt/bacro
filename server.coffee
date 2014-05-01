@@ -43,7 +43,7 @@ fs.readdirSync(models_path).forEach (file) ->
 require("./config/passport") passport, config
 app = express()
 
-app.set 'games', []
+app.games = []
 
 # express settings
 require("./config/express") app, config, passport

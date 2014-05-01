@@ -1,0 +1,10 @@
+.Chat {
+  border-top: 1px solid $cBase7;
+  @include radial-gradient(50% 10px at 50% 0, $cBase7 10%, $cBase8 100%);
+}
+
+.Chat-chats {
+  padding-top: 1rem;
+  height:20rem;
+  overflow:auto;
+}

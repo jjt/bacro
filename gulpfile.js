@@ -16,6 +16,7 @@ var $ = require('gulp-load-plugins')();
 gulp.task('styles', function () {
   return gulp.src('public/styles/main.scss')
     .pipe($.sass({
+      includePaths: ['public/bower_components']
     }))
     .pipe($.autoprefixer('last 1 version'))
     .pipe(gulp.dest('.public/styles'))

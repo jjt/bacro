@@ -11,6 +11,7 @@ var async = require('async')
 var users = require('../app/controllers/users')
   , articles = require('../app/controllers/articles')
   , auth = require('./middlewares/authorization')
+  , chat = require('../app/controllers/chat')
 
 /**
  * Route middlewares
@@ -97,8 +98,9 @@ module.exports = function (app, passport) {
   app.get('/game',  games.lobby)
   app.get('/game/new', games.new)
   app.get('/game/:id', games.game)
-  app.post('/game/:id/chat', games.chat)
   app.post('/game/:id/answer', games.answer)
+
+  app.post('/chat', chat.chat)
 
 
   // article routes

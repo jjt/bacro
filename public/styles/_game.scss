@@ -1,0 +1,38 @@
+.Game-main {
+  @include transition(background-color 0.5s ease-out);
+  color:rgba(#fff,0.8);
+}
+
+.Game-round {
+  color:rgba(#fff, 0.6);
+  text-align:center;
+  margin-bottom:0;
+}
+
+$i: 1;
+@each $color in $solarized-accent-colors {
+  .Game-round-#{$i} {
+    background-color: $color;
+  }
+  $i: $i + 1;
+}
+
+
+.Acronym {
+}
+
+.Acronym-acronym {
+  text-align: center;
+  @extend .text-jumbo;
+  color:rgba(#fff, 0.8);
+  line-height:1;
+  margin-bottom:3rem;
+}
+
+.Game-lower {
+  margin-top:1.5rem;
+}
+
+.Game-bacronymInput {
+  margin-bottom:3rem;
+}

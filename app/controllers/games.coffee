@@ -21,24 +21,14 @@ module.exports = (app)->
       game.bind 'vote:end', log
       game.bind 'round:end', log
       game.bind 'game:end', log
-      game.nextRound()
-      app.set('games', app.get('games').slice().push(game))
-      res.send 200, game.id
+      game.startGame()
+      console.log app.games
+      app.games.push game
+      res.send 200, game.data.id
 
-    chat: (req, res)->
-      console.log req.user
-      channel = req.body.channel
-      msg = req.body.msg
-      user = req.user.name
-      time = (new Date).getTime()
-
-      if not channel or not msg
-        return res.send 404
-
-      fb.child("chats/#{channel}").push {user, msg, time}
-      res.send 200
 
     answer: (req, res)->
+      console.log 'game.answer', req.body.bacronym
       res.send 200, 'answer OK'
 
 
