@@ -1,11 +1,11 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
 
-// bower:scss
+@import "colors";
+@import "variables";
 @import "../bower_components/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap.scss";
-// endbower
 
 @import "bourbon/dist/bourbon";
-@import "colors";
+@import "scrollbox";
 @import "type";
 @import "game";
 @import "chat";
@@ -28,26 +28,25 @@ body {
   margin-bottom:0;
 }
 
+.scrolled {
+  border-top: 1px solid $cBase7;
+  @include radial-gradient(50% 10px at 50% 0, $cBase7 10%, $cBase8 100%);
+}
+
+.site-nav {
+  @include linear-gradient($cBase2, $cBase1);
+  margin-bottom:2rem;
+}
+
+
+.x-small {
+  font-size:0.7em;
+  line-height:1;
+}
+
 @media screen and (min-width: 768px) {
     .container {
-        max-width: 730px;
     }
 
-    /* Remove the padding we set earlier */
-    .header,
-    .marketing,
-    .footer {
-        padding-left: 0;
-        padding-right: 0;
-    }
 
-    /* Space out the masthead */
-    .header {
-        margin-bottom: 30px;
-    }
-
-    /* Remove the bottom border on the jumbotron for visual effect */
-    .jumbotron {
-        border-bottom: 0;
-    }
 }

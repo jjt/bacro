@@ -5,7 +5,6 @@ Status404 = require './views/404'
 
 
 show = (component, props={})->
-  console.log 'show', component, props
   React.renderComponent component(props), document.getElementById('app')
 
 module.exports = new Router

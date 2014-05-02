@@ -4,6 +4,7 @@
 .UserList-list {
   overflow-y: auto;
   height:20rem;
+  @extend %shadowScroll;
   li {
     @extend .clearfix;
     font-size:16px;

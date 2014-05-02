@@ -1,18 +1,39 @@
-.Game-main {
+.RoundBadge {
   @include transition(background-color 0.5s ease-out);
-  color:rgba(#fff,0.8);
+  color: rgba(#fff, 0.8);
+  padding:1px 0;
+}
+.Game-round {
+  margin-bottom:0;
+  color: rgba(#fff, 0.6);
+  text-align: center;
 }
 
-.Game-round {
-  color:rgba(#fff, 0.6);
-  text-align:center;
-  margin-bottom:0;
+
+.Game-bacronym-form {
+  padding-top:2.3rem;
 }
+
+.Game-userBacronym {
+  font-size:3rem;
+  line-height:1;
+  &.no-bacronym {
+    font-style: italic;
+    color:$cBase5;
+  }
+}
+
+.Game-userBacronym-header {
+}
+
+
 
 $i: 1;
 @each $color in $solarized-accent-colors {
   .Game-round-#{$i} {
-    background-color: $color;
+    .RoundBadge {
+      background-color: $color;
+    }
   }
   $i: $i + 1;
 }
@@ -22,12 +43,25 @@ $i: 1;
 }
 
 .Acronym-acronym {
-  text-align: center;
   @extend .text-jumbo;
-  color:rgba(#fff, 0.8);
-  line-height:1;
-  margin-bottom:3rem;
+  font-family: 'Source Code Pro', monospace;
+  line-height:6rem;
+  margin-bottom:2rem;
+  text-align: center;
 }
+
+.acronym-len-5 {
+  font-size: 5rem;
+}
+
+.acronym-len-6 {
+  font-size: 4rem;
+}
+
+.acronym-len-7 {
+  font-size: 3rem;
+}
+
 
 .Game-lower {
   margin-top:1.5rem;
@@ -36,3 +70,4 @@ $i: 1;
 .Game-bacronymInput {
   margin-bottom:3rem;
 }
+

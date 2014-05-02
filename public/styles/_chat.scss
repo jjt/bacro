@@ -1,10 +1,24 @@
+ 
 .Chat {
-  border-top: 1px solid $cBase7;
-  @include radial-gradient(50% 10px at 50% 0, $cBase7 10%, $cBase8 100%);
 }
 
+
 .Chat-chats {
-  padding-top: 1rem;
+  border-radius: $border-radius-base $border-radius-base 0 0;
+  padding: 0.6rem 1rem;
   height:20rem;
   overflow:auto;
+  border: 1px solid $cBase7;
+  border-bottom:none;
+  @extend %shadowScroll;
+}
+
+.Chat-input {
+  border-top-left-radius: 0;
+}
+
+.Chat-input-form {
+  .btn {
+    border-top-right-radius: 0;
+  }
 }
