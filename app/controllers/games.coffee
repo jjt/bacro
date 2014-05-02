@@ -2,6 +2,7 @@ fb = require '../../lib/firebase'
 Game = require '../../lib/game'
 
 log = ()-> console.log.apply null, arguments
+testUsers = ['Tuppy', 'Honoria', 'Bertram']
 
 module.exports = (app)->
   Games =
@@ -21,6 +22,7 @@ module.exports = (app)->
       game.bind 'vote:end', log
       game.bind 'round:end', log
       game.bind 'game:end', log
+      game.addPlayers testUsers
       game.startGame()
       console.log app.games
       app.games.push game

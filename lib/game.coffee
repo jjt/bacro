@@ -14,7 +14,6 @@ now = ()-> (new Date).getTime()
 nowISO = ()-> (new Date).toISOString()
 
 
-testUsers = ['Tuppy', 'Honoria', 'Bertram']
 
    
 
@@ -31,12 +30,21 @@ class Game
       rounds: []
       roundNum: 0
       gameState: 'new'
+      scores: {}
+      players: []
 
     @opts = _.merge defaults, optsIn
     @timeouts = []
 
     @fbRef = fb.child "games/#{@data.id}"
     
+  addPlayers: (players)->
+    if not _.isArray players
+      players = [players]
+    players.forEach (player)=>
+      @initScore player
+    @data.players = @data.players.concat players
+
   clearTO: ()->
     clearTimeout timeout for timeout in @timeouts
     @timeouts = []
@@ -47,8 +55,14 @@ class Game
   currentRound: ()->
     @data.rounds[@data.roundNum]
 
-  persistGame: ()->
-    @fbRef.set @data
+  persistGame: (anonymousBacronyms)->
+    game = _.cloneDeep @data
+    console.log game.scores
+    if anonymousBacronyms?
+      round = @currentRound
+      bacronyms = _.pluck round.bacronyms, 'bacronym'
+      game.rounds[@curRoundNum]?.bacronyms = bacronyms
+    @fbRef.set game
 
   persistRoundNum: (roundNum = @data.roundNum)->
     @fbRef.child("roundNum").set roundNum
@@ -78,6 +92,7 @@ class Game
 
   startGame: ()->
     @data.gameState = 'started'
+    @setScores()
     @persistGame()
     @nextRound()
 
@@ -97,17 +112,18 @@ class Game
       roundNum: @data.roundNum
       votes: {}
 
-    @persistRoundNum()
+    #@persistRoundNum()
 
     @trigger "round:start", "round:start", @data.roundNum
-    @persistRound @currentRound()
+    @persistGame()
+    #@persistRound @currentRound()
     @setTO @startAnswer, @opts.bufferTime
 
   startAnswer: ()->
     @clearTO()
     @currentRound().phase = 'answer'
     @trigger "answer:start", "answer:start", @data.roundNum
-    testUsers.forEach (user)=>
+    @data.players.forEach (user)=>
       @submitBacronym "Round #{@data.roundNum} #{user} - Bacronym goes here", user
     @setTO @endAnswer, @opts.answerTime
 
@@ -121,19 +137,21 @@ class Game
     @currentRound().phase = 'vote'
     @trigger "vote:start", "vote:start", @data.roundNum
     #@persistBacronyms()
-    @persistRound('anonymousBacronyms')
-    testUsers.forEach (user)=>
-      @submitVote _.sample(testUsers), user
+    @persistGame('anonymousBacronyms')
+    @data.players.forEach (user)=>
+      @submitVote _.sample(@data.players), user
     @setTO @endVote, @opts.voteTime
 
   endVote: ()->
     @clearTO()
     @currentRound().phase = 'end'
     @trigger "vote:end", "vote:end", @data.roundNum
-    @persistScores @getScores()
+    @setScores()
+    @persistGame()
+    #@persistScores @getScores()
     #@persistVotes()
     #@persistBacronyms()
-    @persistRound()
+    #@persistRound()
     @setTO @endRound, @opts.bufferTime
 
   endRound: ()->
@@ -153,14 +171,24 @@ class Game
   submitVote: (candidate, voter) ->
     @currentRound().votes[voter] = candidate
 
-  getScores: ()->
+  initScore: (player)->
+    @data.scores[player] = 0
+
+  getFreshScoreObj: ()->
+    console.log 'initScores', @data.players
+
+  # Recalculates scores
+  setScores: ()->
     scores = {}
+    for player in @data.players
+      if not scores[player]?
+        scores[player] = 0
     for round in @data.rounds
       for voter, candidate of round.votes
-        if not scores[candidate] then scores[candidate] = 0
+        if not scores[candidate]?
+          scores[candidate] = 0
         scores[candidate]++
-    scores
-     
+    @data.scores = scores
 
 MicroEvent.mixin Game
 

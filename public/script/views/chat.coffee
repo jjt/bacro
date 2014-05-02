@@ -8,9 +8,7 @@ Chat = React.createClass
     submitURI: '/chat'
 
   setFbRef: (props)->
-    console.log 'setFbref'
     fbRef = fbRoot.child "chats/#{@props.channel}"
-    console.log fbRef
     #fbRef.push
       #user: "TESTO"
       #msg: "#{(new Date).getTime()} HEEEYYYYY"
@@ -18,27 +16,22 @@ Chat = React.createClass
     fbRef.once 'value', (snapshot)=>
       chats = _.values snapshot.val()
       chats = _.sortBy chats, 'id'
-      console.log 'chats', chats
       @setState {chats}
 
     fbRef.on 'child_added', (snapshot)=>
       msg = snapshot.val()
       chats = @state.chats
       chats.push msg
-      console.log 'msg', msg
       @setState {chats}
 
   componentDidUpdate: ()->
-    console.log 'cDU'
     $chats = @refs.chats.getDOMNode()
     $chats.scrollTop = $chats.scrollHeight
 
   componentWillMount: ()->
-    console.log 'cWM'
     @setFbRef @props
 
   componentWillRecieveProps: (nextProps)->
-    console.log 'cWRP', nextProps
     @setFbRef nextProps
 
   getInitialState: ()->
@@ -54,14 +47,13 @@ Chat = React.createClass
     return false
 
   render: ->
-    console.log @state.chats
     R.div {className: 'Chat'}, [
       R.div {className: 'Chat-chats', ref: 'chats'}, @state.chats.map (el)->
         R.div {}, [
           R.strong {}, el.user
           ": " + el.msg
         ]
-      R.form {className: 'form', onSubmit: @handleChatSubmit }, [
+      R.form {className: 'Chat-input-form form', onSubmit: @handleChatSubmit }, [
         R.div {className: 'input-group'}, [
           R.input
             className: 'Chat-input form-control'
