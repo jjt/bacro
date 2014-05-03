@@ -64,32 +64,6 @@ class Game
       game.rounds[@curRoundNum]?.bacronyms = bacronyms
     @fbRef.set game
 
-  persistRoundNum: (roundNum = @data.roundNum)->
-    @fbRef.child("roundNum").set roundNum
-
-  persistScores: (scores = @getScores(), roundNum = @data.roundNum)->
-    @fbRef.child("scores").set scores
-
-  persistVotes: (roundNum = @data.roundNum)->
-    @fbRef.child("rounds/#{roundNum}/votes").set @currentRound().votes
-
-  persistRound: (anonymousBacronyms)->
-    round = _.cloneDeep @currentRound()
-    # In voting phase, turn the {user: {bacronym}, ... } object into an array
-    if anonymousBacronyms?
-      round.bacronyms = _.pluck round.bacronyms, 'bacronym'
-    @fbRef.child("rounds/#{round.roundNum}").set round
-
-  persistBacronyms: (anonymous) ->
-    bacronyms = @currentRound().bacronyms
-    roundNum = @data.roundNum
-    if anonymous?
-      console.log 'anon'
-      bacronyms = _.map bacronyms, (bacronym, user)=>
-        bacronym
-    @fbRef.child("rounds/#{roundNum}/bacronyms/").set bacronyms
-
-
   startGame: ()->
     @data.gameState = 'started'
     @setScores()
@@ -112,11 +86,8 @@ class Game
       roundNum: @data.roundNum
       votes: {}
 
-    #@persistRoundNum()
-
     @trigger "round:start", "round:start", @data.roundNum
     @persistGame()
-    #@persistRound @currentRound()
     @setTO @startAnswer, @opts.bufferTime
 
   startAnswer: ()->
@@ -136,7 +107,6 @@ class Game
     @clearTO()
     @currentRound().phase = 'vote'
     @trigger "vote:start", "vote:start", @data.roundNum
-    #@persistBacronyms()
     @persistGame('anonymousBacronyms')
     @data.players.forEach (user)=>
       @submitVote _.sample(@data.players), user
@@ -148,10 +118,6 @@ class Game
     @trigger "vote:end", "vote:end", @data.roundNum
     @setScores()
     @persistGame()
-    #@persistScores @getScores()
-    #@persistVotes()
-    #@persistBacronyms()
-    #@persistRound()
     @setTO @endRound, @opts.bufferTime
 
   endRound: ()->

@@ -1,12 +1,14 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
 
+@import "bourbon/dist/bourbon";
 @import "colors";
 @import "variables";
 @import "../bower_components/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap.scss";
 
-@import "bourbon/dist/bourbon";
-@import "scrollbox";
+
 @import "type";
+@import "panelLayout";
+@import "scrollbox";
 @import "game";
 @import "chat";
 @import "userList";
@@ -21,21 +23,46 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/vendor/assets/font
 
 /* Space out content a bit */
 body {
+  @extend .PanelLayout;
   background: $cBase8;
 }
 
+
+
 .navbar {
-  margin-bottom:0;
+  font-family: 'Open Sans', sans-serif;
+  text-transform: uppercase;
 }
 
-.scrolled {
-  border-top: 1px solid $cBase7;
-  @include radial-gradient(50% 10px at 50% 0, $cBase7 10%, $cBase8 100%);
+.navbar-brand {
+  font-size:3rem;
 }
 
 .site-nav {
-  @include linear-gradient($cBase2, $cBase1);
-  margin-bottom:2rem;
+}
+
+.breadcrumb {
+  margin-bottom:0;
+  padding-left:0;
+  & > li + li:before {
+  }
+  a {
+    font-size: 1.6rem;
+    color:$cBase5;
+    text-transform: uppercase;
+    font-family:'Open Sans';
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+a.siteTitle {
+  font-family: 'Open Sans';
+  font-size: 3rem;
+  line-height:0.6;
+  margin-right:1rem;
+  color: $solarized-red;
 }
 
 

@@ -57,7 +57,7 @@ module.exports = React.createClass
         R.div className: 'container', [
           R.div className: 'row', [
             R.div className:'RoundBadge col-lg-2 col-md-3', [
-              R.h2 className:'Game-round', "Round #{@props.game.roundNum + 1}"
+              R.h3 className:'Game-round', "Round #{@props.game.roundNum + 1}"
               R.p className: "Acronym-acronym acronym-len-#{round.acronym.length}", round.acronym
             ]
             R.div className: 'col-lg-10 col-md-9', mainComponent()
