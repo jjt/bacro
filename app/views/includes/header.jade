@@ -8,7 +8,7 @@ nav.site-nav.navbar.navbar-default(role='navigation')
         span.icon-bar
       a.navbar-brand(href='/')= pkg.name 
     .collapse.navbar-collapse
-      ul.nav.navbar-nav
+      ul.nav.navbar-nav.navbar-right
         li(class=isActive('/articles/new') ? 'active' : '')
           a(href="#/new", title="new article") New
         - if (req.isAuthenticated())

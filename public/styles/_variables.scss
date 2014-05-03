@@ -1,8 +1,13 @@
 $navbar-default-border: none;
 $navbar-border-radius: 0;
-$navbar-default-color: $cBase7;
-$navbar-default-link-color: $cBase7;
-$navbar-default-link-hover-color: $cBase7;
-$navbar-default-link-hover-bg: $cBase1;
-$navbar-default-brand-hover-bg: $cBase1;
+$navbar-default-bg: $cBase8;
+$navbar-default-color: $cBase5;
+$navbar-default-link-color: $cBase5;
+$navbar-default-link-hover-color: $cBase2;
+$navbar-default-link-hover-bg: $cBase8;
+$navbar-default-brand-hover-bg: $cBase8;
 
+
+$breadcrumb-bg: transparent;
+$breadcrumb-padding-vertical: 16px;
+$breadcrumb-seperator: "";

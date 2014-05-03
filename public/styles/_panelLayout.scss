@@ -1,0 +1,17 @@
+@import 'flex';
+
+html, body {
+  height:100%;
+}
+
+.PanelLayout {
+  @extend .flexboxV;
+}
+
+.Panel-main {
+  @extend .flex1;
+}
+
+.Panel-nav {
+  height:5rem;
+}

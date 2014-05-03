@@ -3,7 +3,9 @@ body {
 }
 h1,h2,h3,h4 {
   font-weight:normal;
-  color:$cBase4;
+  color:$cBase5;
+  font-family: 'Open Sans', sans-serif;
+  text-transform: uppercase;
 }
 .smallArrow {
   font-size:60%;
