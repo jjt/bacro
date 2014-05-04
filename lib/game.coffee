@@ -4,6 +4,7 @@ fb = require('./firebase')
 _ = require('lodash')
 salt = require('./salt')
 md5 = require 'MD5'
+randomWords = require 'random-words'
 MicroEvent = require('microevent')
 
 acronym = (len = 3) ->
@@ -15,7 +16,8 @@ acronym = (len = 3) ->
 now = ()-> (new Date).getTime()
 nowISO = ()-> (new Date).toISOString()
 
-
+ucFirst = (str)->
+  str.slice(0,1).toUpperCase() + str.slice(1)
 
 
 class Game
@@ -113,7 +115,9 @@ class Game
     @currentRound().phase = 'answer'
     @trigger "answer:start", "answer:start", @data.roundNum
     @data.players.forEach (user)=>
-      @submitBacronym "Round #{@data.roundNum} #{user} - Bacronym goes here", user
+      words = randomWords(@currentRound().acronym.length)
+      console.log words, user
+      @submitBacronym words.map(ucFirst).join(' '), user
     @setTO @endAnswer, @opts.answerTime
 
   endAnswer: ()->
@@ -148,6 +152,7 @@ class Game
 
   # {user, answer, timestamp}
   submitBacronym: (bacronym, user, time = nowISO(), votes = [])->
+    console.log bacronym, user
     @currentRound().bacronyms[user] = {bacronym, time, votes}
     @trigger 'bacronym', {user, bacronym, time, votes}
 
