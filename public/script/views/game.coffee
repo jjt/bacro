@@ -31,6 +31,7 @@ Game = React.createClass
 
   getInitialState: ()->
     view: 'loading'
+    roundPhase: 'new'
 
   initGame: (props)->
     if not props?
@@ -60,20 +61,25 @@ Game = React.createClass
       console.log 'round child added', round
       @setState
         round: round
+        roundPhase: 'start'
 
       @firebaseOn "rounds/#{round.roundNum}/bacronyms", 'value', (snapshot)=>
         bacronyms = snapshot.val()
         console.log 'bacronyms value', bacronyms
+        return unless bacronyms?
         @setState
           round:
             _.merge @state.round, {bacronyms}
+          roundPhase: 'vote'
 
       @firebaseOn "rounds/#{round.roundNum}/votes", 'value', (snapshot)=>
         votes = snapshot.val()
         console.log 'votes value', votes
+        return unless votes?
         @setState
           round:
             _.merge @state.round, {votes}
+          roundPhase: 'end'
 
     #state.fbRef.on 'child_changed', (snapshot)=>
       #console.log 'child_changed', snapshot.val()
@@ -132,29 +138,22 @@ Game = React.createClass
 
     R.div {className: 'Game'}, [
       R.div className: "Game-main Game-round-#{round.roundNum + 1}", [
-        R.div className: 'container', [
-          R.div className: 'row', [
-            R.div className:'RoundBadge col-lg-2 col-md-3', [
+        R.div className:'container', [
+          R.div className:'Game-Panel-left', [
+            R.div className:'RoundBadge', [
               R.h3 className:'Game-round', "Round #{round.roundNum + 1}"
               R.p className: "Acronym-acronym acronym-len-#{round.acronym.length}", round.acronym
+              R.p className: "Game-phase", @state.roundPhase
             ]
-            R.div className: 'col-lg-10 col-md-9', mainComponent()
-          ]
-        ]
-      ]
-
-      R.div className: 'Game-lower container', [
-        R.div className: 'row', [
-          R.div className: 'col-lg-2 col-md-3', [
             GameStatus scores: @state.scores
           ]
-          R.div className: 'col-lg-10 col-md-9', [
+          R.div className:'Game-Panel-main', [
+            mainComponent()
             Chat
               channel: "#{@props.gameId}"
           ]
         ]
       ]
-        
     ]
 
 module.exports = Game
