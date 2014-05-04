@@ -2,14 +2,22 @@
   @include transition(background-color 0.5s ease-out);
   color: rgba(#fff, 0.8);
   padding:1px 0;
+  box-sizing: border-box;
+  min-height:15rem;
+  margin-bottom:2rem;
 }
 
-.Game-round {
+.Game-round, .Game-phase {
   font-family: 'Open Sans';
   text-transform: uppercase;
   margin-bottom:0;
   color: rgba(#fff, 0.6);
   text-align: center;
+}
+
+.Game-phase {
+  margin:0;
+  font-size: $font-size-h3;
 }
 
 
@@ -28,6 +36,18 @@
 }
 
 .Game-userBacronym-header {
+}
+
+
+@media screen and (min-width:600px) {
+  .Game-Panel-left {
+    width: 20rem;
+    float:left;
+    margin-right:4rem;
+    .UserList {
+      padding: 0 2rem;
+    }
+  }
 }
 
 
@@ -50,7 +70,7 @@ $i: 1;
   @extend .text-jumbo;
   font-family: 'Source Code Pro', monospace;
   line-height:6rem;
-  margin-bottom:2rem;
+  margin-bottom:0rem;
   text-align: center;
 }
 

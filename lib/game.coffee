@@ -76,6 +76,7 @@ class Game
       bacronyms = _.values round.bacronyms
       bacronymsObj = _.zipObject anonUsers, bacronyms
       round.bacronyms = bacronymsObj
+      delete game.rounds[@data.roundNum].votes
       game.rounds[@data.roundNum] = round
 
     if trigger == 'vote:end'
