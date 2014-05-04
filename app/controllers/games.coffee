@@ -15,16 +15,16 @@ module.exports = (app)->
 
     new: (req, res) ->
       game = new Game()
-      game.bind 'round:start', log
-      game.bind 'answer:start', log
-      game.bind 'answer:end', log
-      game.bind 'vote:start', log
-      game.bind 'vote:end', log
-      game.bind 'round:end', log
-      game.bind 'game:end', log
+      #game.bind 'round:start', log
+      #game.bind 'answer:start', log
+      #game.bind 'answer:end', log
+      #game.bind 'vote:start', log
+      #game.bind 'vote:end', log
+      #game.bind 'round:end', log
+      #game.bind 'game:end', log
       game.addPlayers testUsers
       game.startGame()
-      console.log app.games
+      #console.log app.games
       app.games.push game
       res.send 200, game.data.id
 

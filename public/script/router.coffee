@@ -16,7 +16,9 @@ module.exports = new Router
     $.get '/game/new', (resp)=>
       @setRoute "/#{resp}"
   '/:id': (id)->
-    require('./fbRoot').child("games/#{id}").on 'value', (snapshot)=>
+    show Game, "Game #{id}", gameId: id
+    return
+    require('./fbRoot').child("games/#{id}").once 'value', (snapshot)=>
       if not snapshot.val()?
         return show Status404, msg: "Whoops, looks like that game doesn't exist"
       console.log 'firebase on value', snapshot.val()
