@@ -38,6 +38,48 @@
 .Game-userBacronym-header {
 }
 
+.Bacronym {
+  font-family: 'Open Sans';
+  cursor:pointer;
+  span {
+    vertical-align:middle;
+    font-size: $font-size-h4;
+    color:$cBase4;
+  }
+  .checkHolder {
+    width:3rem;
+    height:3rem;
+    border:1px solid $cBase7;
+    display:inline-block;
+    margin-right:1rem;
+    text-align:center;
+  }
+
+  &:hover {
+    span {
+      color:$cBase2;
+    }
+  }
+
+  i {
+    vertical-align:middle;
+    font-size: $font-size-h4;
+    text-align:center;
+    line-height:3rem;
+    color:$cBase6;
+    display: inline-block;
+  }
+
+  &.selected {
+    span {
+      color: $cBase2;
+    }
+    i {
+      color: rgba(#fff, 0.9); 
+    }
+  }
+}
+
 
 @media screen and (min-width:600px) {
   .Game-Panel-left {
@@ -48,6 +90,26 @@
       padding: 0 2rem;
     }
   }
+
+  .Game-Panel-main {
+    margin-left:24rem;
+  }
+  
+  .Game-MainComponent {
+    min-height:13rem;
+    margin-bottom:3rem;
+  }
+
+  .Bacronyms {
+    
+  }
+
+  .Bacronym {
+    display:inline-block;
+    width:50%;
+    padding: 0.6rem 1rem;
+  }
+
 }
 
 
@@ -57,6 +119,23 @@ $i: 1;
   .Game-round-#{$i} {
     .RoundBadge {
       background-color: $color;
+    }
+    .Bacronym.selected {
+      &,&:hover i {
+        color: rgba(#fff, 0.9);
+      }
+      .checkHolder {
+        background-color: $color;
+        border:1px solid $color;
+      }
+    }
+    .Bacronym:hover {
+      .checkHolder {
+        border-color: $color;
+      }
+      i {
+        color: $color;
+      }
     }
   }
   $i: $i + 1;
@@ -87,9 +166,8 @@ $i: 1;
 }
 
 
-.Game-lower {
-  margin-top:1.5rem;
-}
+
+
 
 .Game-bacronymInput {
   margin-bottom:3rem;

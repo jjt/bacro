@@ -97,8 +97,14 @@ Game = React.createClass
     csrfPost "/game/#{@props.game.id}/answer", {bacronym}
     false
 
-  handleBacronymVote: ()->
-    
+  handleBacronymVote: (user)->
+    bacronyms = _.map @state.round.bacronyms, (obj)->
+      delete obj.selected
+      obj
+    bacronyms[user]?.selected = true
+    @setState
+      round:
+        _.merge @state.round, {bacronyms}
 
   render: ->
     if not @state.game? or @state.view == 'loading'
@@ -122,6 +128,7 @@ Game = React.createClass
 
     mainComponent = ()=>
       if round.bacronyms?
+        console.log round.bacronyms
         return Bacronyms
           bacronyms: round.bacronyms
           handleBacronymVote: @handleBacronymVote
@@ -148,7 +155,9 @@ Game = React.createClass
             GameStatus scores: @state.scores
           ]
           R.div className:'Game-Panel-main', [
-            mainComponent()
+            R.div className:'Game-MainComponent', [
+              mainComponent()
+            ]
             Chat
               channel: "#{@props.gameId}"
           ]
