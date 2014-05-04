@@ -4,6 +4,8 @@
 .UserList-list {
   overflow-y: auto;
   height:20rem;
+  font-family:'Open Sans', sans-serif;
+  text-transform:uppercase;
   @extend %shadowScroll;
   li {
     @extend .clearfix;
@@ -17,5 +19,5 @@
 
 .UserList-score {
   float:right;
-  font-weight:bold;
+  font-weight:600;
 }

@@ -49,8 +49,8 @@ Chat = React.createClass
   render: ->
     R.div {className: 'Chat'}, [
       R.div {className: 'Chat-chats', ref: 'chats'}, @state.chats.map (el)->
-        R.div {}, [
-          R.strong {}, el.user
+        R.div className: 'Chat-chat', [
+          R.span className: 'Chat-user', el.user
           ": " + el.msg
         ]
       R.form {className: 'Chat-input-form form', onSubmit: @handleChatSubmit }, [

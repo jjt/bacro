@@ -3,6 +3,7 @@
   color: rgba(#fff, 0.8);
   padding:1px 0;
 }
+
 .Game-round {
   font-family: 'Open Sans';
   text-transform: uppercase;
@@ -19,6 +20,7 @@
 .Game-userBacronym {
   font-size:3rem;
   line-height:1;
+  font-family: 'Open Sans', sans-serif;
   &.no-bacronym {
     font-style: italic;
     color:$cBase5;

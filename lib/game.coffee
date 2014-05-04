@@ -2,6 +2,8 @@ randStr = require('./randStr')
 states = require('./gameStates')
 fb = require('./firebase')
 _ = require('lodash')
+salt = require('./salt')
+md5 = require 'MD5'
 MicroEvent = require('microevent')
 
 acronym = (len = 3) ->
@@ -15,16 +17,16 @@ nowISO = ()-> (new Date).toISOString()
 
 
 
-   
 
 class Game
-  constructor: (id = randStr(), optsIn = {})->
-    defaults =
-      numRounds: 8
-      answerTime: 3500
-      bufferTime: 300
-      voteTime: 3300
 
+  defaults: ()->
+    numRounds: 8
+    answerTime: 3500
+    bufferTime: 300
+    voteTime: 3300
+
+  constructor: (id = randStr(), optsIn = {})->
     @data =
       id: id
       rounds: []
@@ -33,8 +35,13 @@ class Game
       scores: {}
       players: []
 
-    @opts = _.merge defaults, optsIn
+    @opts = _.merge @defaults(), optsIn
     @timeouts = []
+
+    @persistEvents
+      'round:start': @persistGame
+      'vote:start': @persistGame
+      'vote:end': @persistGame
 
     @fbRef = fb.child "games/#{@data.id}"
     
@@ -44,6 +51,10 @@ class Game
     players.forEach (player)=>
       @initScore player
     @data.players = @data.players.concat players
+
+  persistEvents: (obj)->
+    _.forEach obj, (fn, trigger)=>
+      @bind trigger, fn.bind this, trigger
 
   clearTO: ()->
     clearTimeout timeout for timeout in @timeouts
@@ -55,26 +66,32 @@ class Game
   currentRound: ()->
     @data.rounds[@data.roundNum]
 
-  persistGame: (anonymousBacronyms)->
+  persistGame: (trigger)->
+    # Remove bacronyms
     game = _.cloneDeep @data
-    console.log game.scores
-    if anonymousBacronyms?
-      round = @currentRound
-      bacronyms = _.pluck round.bacronyms, 'bacronym'
-      game.rounds[@curRoundNum]?.bacronyms = bacronyms
+    if trigger == 'vote:start'
+      round = game.rounds[@data.roundNum]
+      anonUsers = _.keys(round.bacronyms).map (el)->
+        md5 el + salt + round.roundNum
+      bacronyms = _.values round.bacronyms
+      bacronymsObj = _.zipObject anonUsers, bacronyms
+      round.bacronyms = bacronymsObj
+      game.rounds[@data.roundNum] = round
+
+    if trigger == 'vote:end'
+      @fbRef.child("rounds/#{@data.roundNum}/bacronyms").remove()
     @fbRef.set game
 
   startGame: ()->
     @data.gameState = 'started'
     @setScores()
-    @persistGame()
+    #@persistGame()
     @nextRound()
 
   nextRound: ()->
     @clearTO()
     @data.roundNum = @data.rounds.length
 
-    console.log 'nextRound'
     if @data.roundNum == @opts.numRounds
       return @endGame()
 
@@ -87,7 +104,7 @@ class Game
       votes: {}
 
     @trigger "round:start", "round:start", @data.roundNum
-    @persistGame()
+    #@persistGame()
     @setTO @startAnswer, @opts.bufferTime
 
   startAnswer: ()->
@@ -106,18 +123,17 @@ class Game
   startVote: ()->
     @clearTO()
     @currentRound().phase = 'vote'
-    @trigger "vote:start", "vote:start", @data.roundNum
-    @persistGame('anonymousBacronyms')
     @data.players.forEach (user)=>
       @submitVote _.sample(@data.players), user
+    @trigger "vote:start", "vote:start", @data.roundNum
     @setTO @endVote, @opts.voteTime
 
   endVote: ()->
     @clearTO()
     @currentRound().phase = 'end'
-    @trigger "vote:end", "vote:end", @data.roundNum
     @setScores()
-    @persistGame()
+    @trigger "vote:end", "vote:end", @data.roundNum
+    #@persistGame()
     @setTO @endRound, @opts.bufferTime
 
   endRound: ()->
@@ -141,7 +157,6 @@ class Game
     @data.scores[player] = 0
 
   getFreshScoreObj: ()->
-    console.log 'initScores', @data.players
 
   # Recalculates scores
   setScores: ()->
