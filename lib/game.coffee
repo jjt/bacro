@@ -69,12 +69,12 @@ class Game
     @data.rounds[@data.roundNum]
 
   persistGame: (trigger)->
-    # Remove bacronyms
     game = _.cloneDeep @data
+    # For start of voting, replace user names with hashes
     if trigger == 'vote:start'
       round = game.rounds[@data.roundNum]
       anonUsers = _.keys(round.bacronyms).map (el)->
-        md5 el + salt + round.roundNum
+        md5(el + salt + round.roundNum).slice 0,8
       bacronyms = _.values round.bacronyms
       bacronymsObj = _.zipObject anonUsers, bacronyms
       round.bacronyms = bacronymsObj
@@ -83,6 +83,7 @@ class Game
 
     if trigger == 'vote:end'
       @fbRef.child("rounds/#{@data.roundNum}/bacronyms").remove()
+
     @fbRef.set game
 
   startGame: ()->

@@ -14,34 +14,26 @@ FirebaseMixin =
       this[fbRootAlias] = fb
 
   firebaseDestroy: ()->
-    @firebaseRefRoot.off()
+    @firebaseRefRoot?.off()
     if @firebaseRefs?
       @firebaseRefs.forEach (ref)->
         ref.off()
     delete @firebaseRefRoot
     
-  firebaseRef: (path)->
+  firebaseRef: (child)->
     ref = @firebaseRefRoot
-    if path?
-      ref = ref.child path
+    if child?
+      ref = ref.child child
     @firebaseRefs.push ref
     ref
 
   firebaseOn: (child)->
-    ref = @firebaseRefRoot
-    if child?
-      ref = ref.child child
+    ref = @firebaseRef child
     ref.on.apply ref, sliceArgs(arguments, 1)
-    @firebaseRefs.push ref
-    ref
 
   firebaseOnce: (child)->
-    ref = @firebaseRefRoot
-    if child?
-      ref = ref.child child
+    ref = @firebaseRef child
     ref.once.apply ref, sliceArgs(arguments, 1)
-    @firebaseRefs.push ref
-    ref
 
   firebaseOff: ()->
     args = Array.prototype.slice.call arguments, 0

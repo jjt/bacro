@@ -1,8 +1,10 @@
 fb = require '../../lib/firebase'
 Game = require '../../lib/game'
+names = require '../../lib/names'
+_ = require 'lodash'
 
 log = ()-> console.log.apply null, arguments
-testUsers = ['Tuppy', 'Honoria', 'Bertram']
+testUsers = _.sample names, 8
 
 module.exports = (app)->
   Games =

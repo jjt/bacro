@@ -39,12 +39,14 @@
 }
 
 .Bacronym {
-  font-family: 'Open Sans';
   cursor:pointer;
+  width:auto;
+  display:inline-block;
   span {
     vertical-align:middle;
     font-size: $font-size-h4;
     color:$cBase4;
+    line-height:$font-size-h4;
   }
   .checkHolder {
     width:3rem;
@@ -105,9 +107,8 @@
   }
 
   .Bacronym {
-    display:inline-block;
-    width:50%;
     padding: 0.6rem 1rem;
+    margin-right:2rem; 
   }
 
 }

@@ -2,15 +2,17 @@
 }
 
 .UserList-list {
+  @extend %shadowScroll;
+  @extend .list-unstyled;
   overflow-y: auto;
   height:20rem;
   font-family:'Open Sans', sans-serif;
   text-transform:uppercase;
-  @extend %shadowScroll;
-  li {
-    @extend .clearfix;
-    font-size:16px;
-  }
+}
+
+.UserList-item {
+  @extend .clearfix;
+  font-size:16px;
 }
 
 .UserList-user {
