@@ -1,17 +1,39 @@
-@import 'flex';
-
-html, body {
-  height:100%;
+html, body, .Panel, .Panel-body, .Panel-fh-row {
+  height: 100%;
 }
 
-.PanelLayout {
-  @extend .flexboxV;
+.site-nav {
+  position:absolute;
+  top:0;
+  width:100%;
 }
+
+.Panel {
+  padding-top:6rem;
+}
+
+
+.Panel-right {
+  clear:both;
+}
+
 
 .Panel-main {
-  @extend .flex1;
+  margin-bottom:4rem;
 }
 
-.Panel-nav {
-  height:5rem;
+
+
+@media (min-width:$screen-lg-min){
+  .Panel-left, .Panel-main, .Panel-right { 
+    height:100%;
+  }
+
+  .Panel-right {
+    clear: none;
+  }
+  
+  .Panel-main {
+    margin-bottom:0;
+  }
 }

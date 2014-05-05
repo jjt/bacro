@@ -143,24 +143,24 @@ Game = React.createClass
             placeholder: placeholder
       ]
 
-    R.div {className: 'Game'}, [
-      R.div className: "Game-main Game-round-#{round.roundNum + 1}", [
-        R.div className:'container', [
-          R.div className:'Game-Panel-left', [
-            R.div className:'RoundBadge', [
-              R.h3 className:'Game-round', "Round #{round.roundNum + 1}"
-              R.p className: "Acronym-acronym acronym-len-#{round.acronym.length}", round.acronym
-              R.p className: "Game-phase", @state.roundPhase
-            ]
-            ScoreBoard scores: @state.scores
+    R.div {className: "Panel-body container Game Game-round-#{round.roundNum + 1}"}, [
+      R.div className:'row Panel-fh-row', [
+        R.div className:'Panel-left col-sm-4 col-lg-2', [
+          R.div className:'RoundBadge', [
+            R.h3 className:'Game-round', "Round #{round.roundNum + 1}"
+            R.p className: "Acronym-acronym acronym-len-#{round.acronym.length}", round.acronym
+            R.p className: "Game-phase", @state.roundPhase
           ]
-          R.div className:'Game-Panel-main', [
-            R.div className:'Game-MainComponent', [
-              mainComponent()
-            ]
-            Chat
-              channel: "#{@props.gameId}"
+          ScoreBoard scores: @state.scores
+        ]
+        R.div className:'Panel-main col-sm-8 col-lg-6', [
+          R.div className:'Game-MainComponent', [
+            mainComponent()
           ]
+        ]
+        R.div className:'Panel-right col-md-12 col-lg-4', [
+          Chat
+            channel: "#{@props.gameId}"
         ]
       ]
     ]

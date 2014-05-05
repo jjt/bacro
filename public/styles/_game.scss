@@ -1,3 +1,6 @@
+.Game {
+}
+
 .RoundBadge {
   @include transition(background-color 0.5s ease-out);
   color: rgba(#fff, 0.8);
@@ -5,7 +8,19 @@
   box-sizing: border-box;
   min-height:15rem;
   margin-bottom:2rem;
+  float:left;
+  width:48%;
+
+  margin-right:4%;
 }
+
+
+.ScoreBoard {
+  width:48%;  
+  float:left;
+  padding:0 1rem;
+}
+
 
 .Game-round, .Game-phase {
   font-family: 'Open Sans';
@@ -83,7 +98,24 @@
 }
 
 
-@media screen and (min-width:600px) {
+
+@media screen and (min-width:$screen-sm-min) {
+  .RoundBadge {
+    float:none; 
+    width:auto;
+    margin-right:0;
+  }
+  .ScoreBoard {
+    width:auto;
+    float:none;
+  }
+}
+
+@media screen and (min-width:$screen-sm-min) {
+  /*
+  [class^="Game-Panel-"] {
+    float: left; 
+  }
   .Game-Panel-left {
     width: 20rem;
     float:left;
@@ -94,14 +126,13 @@
   }
 
   .Game-Panel-main {
-    margin-left:24rem;
   }
   
   .Game-MainComponent {
     min-height:13rem;
     margin-bottom:3rem;
   }
-
+*/
   .Bacronyms {
     
   }
@@ -113,6 +144,14 @@
 
 }
 
+@media (min-width:$screen-lg-min){
+  .Game .Chat, .Game .Chat-input, .Game .Chat-chats {
+    height:100%;
+  }
+  .Game .Chat {
+    padding-bottom: 6rem;
+  }
+}
 
 
 $i: 1;
