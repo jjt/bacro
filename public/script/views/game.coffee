@@ -1,8 +1,7 @@
 Acronym = require './acronym'
 Bacronyms = require './bacronyms'
 Chat = require './chat'
-GameStatus = require './gameStatus'
-ReactLifeCycle = require '../../../lib/reactLifeCycle'
+ScoreBoard = require './scoreBoard'
 Status404 = require './404'
 
 FirebaseMixin = require '../firebaseMixin'
@@ -25,7 +24,6 @@ Game = React.createClass
     @initGame()
 
   componentWillReceiveProps: (nextProps)->
-    console.log 'cWRP', nextProps
     if nextProps?.gameId != @props.gameId
       @initGame(nextProps)
 
@@ -36,9 +34,10 @@ Game = React.createClass
   initGame: (props)->
     if not props?
       props = @props
-
-    console.log 'initGame', props
       
+    # Get rid of any old Firebase refs
+    @firebaseDestroy()
+
     @firebaseInit "games/#{@props.gameId}", 'fb'
 
     @firebaseOnce null, 'value', (snapshot)=>
@@ -49,23 +48,19 @@ Game = React.createClass
         view: 'game'
         game: game
 
-      console.log 'Firebase once', game
 
     @firebaseOn 'scores', 'value', (snapshot)=>
-      console.log 'FB scores value', snapshot.val()
       @setState
         scores: snapshot.val()
 
     @firebaseRef('rounds').limit(1).on 'child_added', (snapshot)=>
       round = snapshot.val()
-      console.log 'round child added', round
       @setState
         round: round
         roundPhase: 'start'
 
       @firebaseOn "rounds/#{round.roundNum}/bacronyms", 'value', (snapshot)=>
         bacronyms = snapshot.val()
-        console.log 'bacronyms value', bacronyms
         return unless bacronyms?
         @setState
           round:
@@ -74,7 +69,6 @@ Game = React.createClass
 
       @firebaseOn "rounds/#{round.roundNum}/votes", 'value', (snapshot)=>
         votes = snapshot.val()
-        console.log 'votes value', votes
         return unless votes?
         @setState
           round:
@@ -82,9 +76,7 @@ Game = React.createClass
           roundPhase: 'end'
 
     #state.fbRef.on 'child_changed', (snapshot)=>
-      #console.log 'child_changed', snapshot.val()
     #state.fbRef.on 'child_added', (snapshot)=>
-      #console.log 'child_added', snapshot.val()
 
 
   handleBacronymSubmit: (e)->
@@ -98,10 +90,13 @@ Game = React.createClass
     false
 
   handleBacronymVote: (user)->
-    bacronyms = _.map @state.round.bacronyms, (obj)->
-      delete obj.selected
-      obj
+    bacronyms = _.reduce @state.round.bacronyms, (accum, bacronymObj, user)->
+      delete bacronymObj.selected
+      accum[user] = bacronymObj
+      accum
+    , {}
     bacronyms[user]?.selected = true
+    console.log 'hBV', bacronyms
     @setState
       round:
         _.merge @state.round, {bacronyms}
@@ -152,7 +147,7 @@ Game = React.createClass
               R.p className: "Acronym-acronym acronym-len-#{round.acronym.length}", round.acronym
               R.p className: "Game-phase", @state.roundPhase
             ]
-            GameStatus scores: @state.scores
+            ScoreBoard scores: @state.scores
           ]
           R.div className:'Game-Panel-main', [
             R.div className:'Game-MainComponent', [

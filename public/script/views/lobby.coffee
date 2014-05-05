@@ -3,7 +3,9 @@ Chat = require './chat'
 R = React.DOM
 module.exports = React.createClass
   render: ->
-    users = require '../../../lib/names'
+    users = _.map require('../../../lib/names'), (name)->
+      {name}
+
     R.div className: 'Lobby container', [
       R.div {className: 'row'}, [
         R.div {className: 'Lobby-games col-xs-12'}, [
