@@ -1,0 +1,41 @@
+.HolyGrail {
+  max-width: $container-lg;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+@media (min-width: $screen-sm-min) {
+  .HolyGrail,
+  .HolyGrail-body {
+    display: flex;
+    flex-direction: column;
+  }
+  .HolyGrail-body {
+    flex-direction: row;
+    flex: 1;
+  }
+  .HolyGrail-main {
+    flex: 1;
+  }
+  .HolyGrail-left {
+    /* 12em is the width of the columns */
+    flex: 0 0 20rem;
+  }
+  .HolyGrail-right {
+    width:100%;
+  }
+}
+
+@media (min-width: $screen-md-min) {
+  .HolyGrail-right {
+    /* 12em is the width of the columns */
+    flex: 0 0 30%;
+  }
+
+}
+
+@media (min-width: $screen-lg-min) {
+  .HolyGrail-right {
+    flex: 0 0 40rem;
+  }
+}
