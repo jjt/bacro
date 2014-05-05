@@ -1,5 +1,6 @@
 R = React.DOM
 module.exports = React.createClass
+  displayName: 'Acronym'
   render: ->
     R.div className:'Acronym', [
       R.div className:'container', [

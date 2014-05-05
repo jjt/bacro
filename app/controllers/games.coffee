@@ -32,7 +32,6 @@ module.exports = (app)->
 
 
     answer: (req, res)->
-      console.log 'game.answer', req.body.bacronym
       res.send 200, 'answer OK'
 
 

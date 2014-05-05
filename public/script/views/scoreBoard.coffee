@@ -2,8 +2,8 @@ UserList = require './userList'
 R = React.DOM
 
 module.exports = React.createClass
+  displayName: 'ScoreBoard'
   render: ->
-    console.log @props.scores
     scores = _(@props.scores)
       .map (score, name)->
         {name, score}
@@ -11,7 +11,6 @@ module.exports = React.createClass
       .reverse()
       .value()
 
-    console.log scores
     R.div {className:'GameStatus'},
       R.ul className: 'UserList-list', 
         _.map scores, (obj)->

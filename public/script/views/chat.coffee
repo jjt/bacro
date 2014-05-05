@@ -3,6 +3,7 @@ fbRoot = require '../fbRoot'
 csrfPost = require('../../../lib/csrfPost')
 
 Chat = React.createClass
+  displayName: 'Chat'
   
   getDefaultProps: ()->
     submitURI: '/chat'

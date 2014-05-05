@@ -2,6 +2,7 @@ UserList = require './userList'
 Chat = require './chat'
 R = React.DOM
 module.exports = React.createClass
+  displayName: 'Lobby'
   render: ->
     users = _.map require('../../../lib/names'), (name)->
       {name}

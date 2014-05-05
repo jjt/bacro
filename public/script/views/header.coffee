@@ -1,5 +1,6 @@
 R = React.DOM
 module.exports = React.createClass
+  displayName: 'Header'
   getDefaultProps: ()->
     siteTitle: 'BACRO'
     breadCrumbs: []
