@@ -19,6 +19,7 @@ cx = React.addons.classSet
 Game = React.createClass
 
   mixins: [FirebaseMixin]
+  displayName: 'Game'
 
   componentWillMount: ()->
     @initGame()
@@ -59,13 +60,20 @@ Game = React.createClass
         round: round
         roundPhase: 'start'
 
+      @firebaseOn "rounds/#{round.roundNum}/phase", 'value', (snapshot)=>
+        @setState
+          roundPhase: snapshot.val()
+
       @firebaseOn "rounds/#{round.roundNum}/bacronyms", 'value', (snapshot)=>
         bacronyms = snapshot.val()
         return unless bacronyms?
+        # Firebase shows old bacronyms as well as new
+        if @state.roundPhase == 'end'
+          bacronyms = _.filter bacronyms, (obj)->
+            'votes' of obj
         @setState
           round:
             _.merge @state.round, {bacronyms}
-          roundPhase: 'vote'
 
       @firebaseOn "rounds/#{round.roundNum}/votes", 'value', (snapshot)=>
         votes = snapshot.val()
@@ -73,7 +81,6 @@ Game = React.createClass
         @setState
           round:
             _.merge @state.round, {votes}
-          roundPhase: 'end'
 
     #state.fbRef.on 'child_changed', (snapshot)=>
     #state.fbRef.on 'child_added', (snapshot)=>
@@ -96,7 +103,6 @@ Game = React.createClass
       accum
     , {}
     bacronyms[user]?.selected = true
-    console.log 'hBV', bacronyms
     @setState
       round:
         _.merge @state.round, {bacronyms}
@@ -123,7 +129,6 @@ Game = React.createClass
 
     mainComponent = ()=>
       if round.bacronyms?
-        console.log round.bacronyms
         return Bacronyms
           bacronyms: round.bacronyms
           handleBacronymVote: @handleBacronymVote

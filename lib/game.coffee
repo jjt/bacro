@@ -24,9 +24,9 @@ class Game
 
   defaults: ()->
     numRounds: 8
-    answerTime: 3500
-    bufferTime: 300
-    voteTime: 3300
+    answerTime: 3000
+    bufferTime: 2000
+    voteTime: 3000
 
   constructor: (id = randStr(), optsIn = {})->
     @data =
@@ -78,6 +78,7 @@ class Game
       bacronyms = _.values round.bacronyms
       bacronymsObj = _.zipObject anonUsers, bacronyms
       round.bacronyms = bacronymsObj
+      # We sholudn't have any votes here, but just in case we do...
       delete game.rounds[@data.roundNum].votes
       game.rounds[@data.roundNum] = round
 
@@ -117,7 +118,6 @@ class Game
     @trigger "answer:start", "answer:start", @data.roundNum
     @data.players.forEach (user)=>
       words = randomWords(@currentRound().acronym.length)
-      console.log words, user
       @submitBacronym words.map(ucFirst).join(' '), user
     @setTO @endAnswer, @opts.answerTime
 
@@ -137,6 +137,7 @@ class Game
   endVote: ()->
     @clearTO()
     @currentRound().phase = 'end'
+    @setVotesOnBacronyms()
     @setScores()
     @trigger "vote:end", "vote:end", @data.roundNum
     #@persistGame()
@@ -153,18 +154,32 @@ class Game
 
   # {user, answer, timestamp}
   submitBacronym: (bacronym, user, time = nowISO(), votes = [])->
-    console.log bacronym, user
     @currentRound().bacronyms[user] = {bacronym, time, votes}
     @trigger 'bacronym', {user, bacronym, time, votes}
 
   submitVote: (candidate, voter) ->
     @currentRound().votes[voter] = candidate
+    
 
   initScore: (player)->
     @data.scores[player] = 0
 
   getFreshScoreObj: ()->
 
+  setVotesOnBacronyms: ()->
+    round = @currentRound()
+    voteCounts = _.countBy round.votes
+    voteCountsKeys = _.keys voteCounts
+    round.bacronyms = _.reduce round.bacronyms, (accum, obj, user)->
+      console.log user, accum
+      votes = 0
+      if user in voteCountsKeys
+        votes = voteCounts[user]
+      obj.votes = votes
+      accum[user] = obj
+      accum
+    , {}
+     
   # Recalculates scores
   setScores: ()->
     scores = {}

@@ -1,5 +1,6 @@
 R = React.DOM
 module.exports = React.createClass
+  displayName: 'Bacronyms'
   render: ->
     R.ul className: 'Bacronyms list-unstyled', _.map @props.bacronyms, (bacronymObj, user)=>
       bacroObj =

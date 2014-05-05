@@ -1,10 +1,10 @@
 R = React.DOM
 
 module.exports = React.createClass
+  displayName: 'UserList'
   render: ()->
     users = _(@props.users)
       .sortBy 'name'
-      .tap console.log.bind console
       .map (obj)->
         R.div {className: 'UserList-item', key:obj.name}, obj.name
       .value()
