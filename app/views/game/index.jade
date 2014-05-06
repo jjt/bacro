@@ -5,12 +5,14 @@ block content
 
 block foot
   script(src='/bower_components/firebase/firebase.js')
-  script(src='/bower_components/director/build/director.js')
+  script(src='/bower_components/page.js/index.js')
+  //script(src='/bower_components/director/build/director.js')
   script(src='/bower_components/react/react-with-addons.js')
   script(src='/bower_components/lodash/dist/lodash.js')
   script(src='/script/zepto.js')
   script(src='/script/react-multiplayer.js')
   script(src='/script/app-bundle.js')
   
-  script.
-    user = !{JSON.stringify(user)} 
+  if user
+    script.
+      user = !{JSON.stringify(user)} 

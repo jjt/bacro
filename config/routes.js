@@ -1,3 +1,4 @@
+fs = require('fs')
 /*!
  * Module dependencies.
  */
@@ -9,7 +10,6 @@ var async = require('async')
  */
 
 var users = require('../app/controllers/users')
-  , articles = require('../app/controllers/articles')
   , auth = require('./middlewares/authorization')
   , chat = require('../app/controllers/chat')
 
@@ -17,8 +17,8 @@ var users = require('../app/controllers/users')
  * Route middlewares
  */
 
-var articleAuth = [auth.requiresLogin, auth.article.hasAuthorization]
 var commentAuth = [auth.requiresLogin, auth.comment.hasAuthorization]
+
 
 /**
  * Expose routes
@@ -27,7 +27,9 @@ var commentAuth = [auth.requiresLogin, auth.comment.hasAuthorization]
 module.exports = function (app, passport) {
 
   var games = require('../app/controllers/games')(app);
+
   // user routes
+  app.get('/user', auth.requiresLogin, users.getCurrentUser)
   app.get('/login', users.login)
   app.get('/signup', users.signup)
   app.get('/logout', users.logout)
@@ -89,18 +91,19 @@ module.exports = function (app, passport) {
 
   app.param('userId', users.user)
 
-  //app.get('/game', auth.requiresLogin, games.lobby)
-  //app.get('/game/new', auth.requiresLogin, games.new)
-  //app.get('/game/:id', auth.requiresLogin, games.game)
-  //app.post('/game/:id/chat', auth.requiresLogin, games.chat)
-  //app.post('/game/:id/answer', auth.requiresLogin, games.answer)
 
-  app.get('/game',  games.lobby)
+
+
   app.get('/game/new', games.new)
-  app.get('/game/:id', games.game)
   app.post('/game/:id/answer', games.answer)
-
   app.post('/chat', chat.chat)
+
+  app.get('*', function(req, res){
+    if(req.isAuthenticated())
+      return games.app(req, res);
+    res.render('index');
+  });
+
 
 
   // article routes
@@ -113,12 +116,8 @@ module.exports = function (app, passport) {
   //app.put('/articles/:id', articleAuth, articles.update)
   //app.del('/articles/:id', articleAuth, articles.destroy)
 
-  // home route
-  app.get('/', function(req, res){
-    if(req.isAuthenticated())
-      return res.redirect('/game/');
-    res.render('index');
-  });
+
+
 
   // comment routes
   //var comments = require('../app/controllers/comments')

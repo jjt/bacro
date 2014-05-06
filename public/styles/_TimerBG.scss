@@ -1,0 +1,18 @@
+.TimerBg-start {
+  background-position:0 0 !important;
+}
+
+$timerPoints: 3s 5s 10s 15s 20s;
+
+@each $timer in $timerPoints {
+  .TimerBg-#{$timer} {
+    @include transition(background-position $timer linear);
+  }
+}
+
+@mixin TimerBg($height, $colorOverlay:rgba(#000, 0.4), $time:15s) {
+  @include linear-gradient($colorOverlay, $colorOverlay);
+  background-repeat:no-repeat;
+  background-size:100% $height;
+  background-position:0 (-$height);
+}

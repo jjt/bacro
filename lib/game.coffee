@@ -24,9 +24,9 @@ class Game
 
   defaults: ()->
     numRounds: 8
-    answerTime: 3000
+    answerTime: 10000
     bufferTime: 2000
-    voteTime: 3000
+    voteTime: 10000
 
   constructor: (id = randStr(), optsIn = {})->
     @data =
@@ -171,7 +171,6 @@ class Game
     voteCounts = _.countBy round.votes
     voteCountsKeys = _.keys voteCounts
     round.bacronyms = _.reduce round.bacronyms, (accum, obj, user)->
-      console.log user, accum
       votes = 0
       if user in voteCountsKeys
         votes = voteCounts[user]

@@ -28,6 +28,7 @@ module.exports = function (app, config, passport) {
     app.use(express.static(config.root + '/.public'))
   }
 
+
   // Logging
   // Use winston on production
   var log

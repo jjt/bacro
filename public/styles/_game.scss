@@ -2,16 +2,43 @@
 }
 
 .RoundBadge {
-  @include transition(background-color 0.5s ease-out);
+  //@include transition(background-color 0.5s ease-out);
+  @include TimerBg(15rem);
   color: rgba(#fff, 0.8);
   padding:1px 0;
   box-sizing: border-box;
-  min-height:15rem;
+  height:15rem;
   margin-bottom:2rem;
   float:left;
-  width:48%;
-
+  width:48%; 
   margin-right:4%;
+}
+
+$i: 1;
+@each $color in $solarized-accent-colors {
+  .Game-round-#{$i} {
+    .RoundBadge {
+      background-color: $color;
+    }
+    .Bacronym.selected {
+      &,&:hover i {
+        color: rgba(#fff, 0.9);
+      }
+      .checkHolder {
+        background-color: $color;
+        border:1px solid $color;
+      }
+    }
+    .Bacronym:hover {
+      .checkHolder {
+        border-color: $color;
+      }
+      i {
+        color: $color;
+      }
+    }
+  }
+  $i: $i + 1;
 }
 
 
@@ -154,32 +181,6 @@
 }
 
 
-$i: 1;
-@each $color in $solarized-accent-colors {
-  .Game-round-#{$i} {
-    .RoundBadge {
-      background-color: $color;
-    }
-    .Bacronym.selected {
-      &,&:hover i {
-        color: rgba(#fff, 0.9);
-      }
-      .checkHolder {
-        background-color: $color;
-        border:1px solid $color;
-      }
-    }
-    .Bacronym:hover {
-      .checkHolder {
-        border-color: $color;
-      }
-      i {
-        color: $color;
-      }
-    }
-  }
-  $i: $i + 1;
-}
 
 
 .Acronym {
