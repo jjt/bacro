@@ -9,11 +9,17 @@ var mongoose = require('mongoose')
 
 var login = function (req, res) {
   var redirectTo = req.session.returnTo ? req.session.returnTo : '/'
+  res.cookie('user', {
+    name: req.user.name,
+    id: req.user._id
+  });
   delete req.session.returnTo
   res.redirect(redirectTo)
 }
 
-exports.signin = function (req, res) {}
+exports.signin = function (req, res) {
+  console.log('users.signin')
+}
 
 /**
  * Auth callback
@@ -57,6 +63,13 @@ exports.logout = function (req, res) {
  */
 
 exports.session = login
+
+exports.getCurrentUser = function (req, res) {
+  res.send(200, JSON.stringify({
+    id: req.user._id,
+    name: req.user.name
+  }));
+}
 
 /**
  * Create user

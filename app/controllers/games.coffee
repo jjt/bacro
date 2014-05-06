@@ -8,6 +8,11 @@ testUsers = _.sample names, 8
 
 module.exports = (app)->
   Games =
+    # Main entry point for logged-in users
+    app: (req, res)->
+      res.render 'game/index',
+        user: req.user
+
     lobby: (req, res) ->
       res.render 'game/index',
         user: req.user

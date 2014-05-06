@@ -49,7 +49,7 @@ app.games = []
 require("./config/express") app, config, passport
 
 # Bootstrap routes
-require("./config/routes") app, passport
+require("./app/routes") app, passport
 
 
 # Start the app by listening on <port>

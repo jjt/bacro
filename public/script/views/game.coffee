@@ -15,23 +15,7 @@ R = React.DOM
 cx = React.addons.classSet
 
 
-
-Game = React.createClass
-
-  mixins: [FirebaseMixin]
-  displayName: 'Game'
-
-  componentWillMount: ()->
-    @initGame()
-
-  componentWillReceiveProps: (nextProps)->
-    if nextProps?.gameId != @props.gameId
-      @initGame(nextProps)
-
-  getInitialState: ()->
-    view: 'loading'
-    roundPhase: 'new'
-
+InitGameMixin =
   initGame: (props)->
     if not props?
       props = @props
@@ -84,6 +68,25 @@ Game = React.createClass
 
     #state.fbRef.on 'child_changed', (snapshot)=>
     #state.fbRef.on 'child_added', (snapshot)=>
+
+
+
+Game = React.createClass
+
+  mixins: [FirebaseMixin, InitGameMixin]
+
+  displayName: 'Game'
+
+  componentWillMount: ()->
+    @initGame()
+
+  componentWillReceiveProps: (nextProps)->
+    if nextProps?.gameId != @props.gameId
+      @initGame(nextProps)
+
+  getInitialState: ()->
+    view: 'loading'
+    roundPhase: 'new'
 
 
   handleBacronymSubmit: (e)->
@@ -146,7 +149,7 @@ Game = React.createClass
     R.div {className: "Panel-body container Game Game-round-#{round.roundNum + 1}"}, [
       R.div className:'row Panel-fh-row', [
         R.div className:'Panel-left col-sm-4 col-lg-2', [
-          R.div className:'RoundBadge', [
+          R.div className:'RoundBadge TimerBg-10s', [
             R.h3 className:'Game-round', "Round #{round.roundNum + 1}"
             R.p className: "Acronym-acronym acronym-len-#{round.acronym.length}", round.acronym
             R.p className: "Game-phase", @state.roundPhase
