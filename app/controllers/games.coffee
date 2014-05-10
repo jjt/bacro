@@ -46,9 +46,9 @@ module.exports = (app)->
       #game.bind 'vote:end', log
       #game.bind 'round:end', log
       #game.bind 'game:end', log
-      game.addPlayers _.map testUsers, (user)=>
-        name: user
-        id: randStr()
+      #game.addPlayers _.map testUsers, (user)=>
+        #name: user
+        #id: randStr()
       #game.startGame()
       app.games.push game
 
@@ -58,16 +58,14 @@ module.exports = (app)->
 
 
     join: (req, res)->
-      getGameFromDB null, req.param('id'), (err, game)->
-        if err?
-          return res.status(500).send 'Whoops, something went wrong'
-        game.addPlayers
+      req.game.addPlayers
           name: req.user.name
           id: req.user.id
-        res.status(200).json msg: 'Welcome to the game, friendo!'
+      res.status(200).json msg: 'Welcome to the game, friendo!'
 
 
     answer: (req, res)->
+      req.game.submitBacronym req.param('bacronym'), req.user
       res.send 200, 'answer OK'
 
     vote: (req, res)->

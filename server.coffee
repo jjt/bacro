@@ -2,6 +2,9 @@ express = require("express")
 fs = require("fs")
 passport = require("passport")
 _ = require 'lodash'
+GameModel = require './app/models/game'
+Game = require './lib/game'
+
 
 
 # Load configurations
@@ -22,9 +25,19 @@ connect = ->
 
 connect()
 
+app = express()
+app.games = []
+
+mongoose.connection.once "open", ()->
+  GameModel.find {}, (err, games)->
+    console.log 'collection.once', games
+    _.forEach games, (gameModel)->
+      app.games.push new Game gameModel
+    console.log app.games
+
 # Error handler
 mongoose.connection.on "error", (err) ->
-  console.log err
+  console.log 'mongoose err', err
   return
 
 
@@ -42,9 +55,7 @@ fs.readdirSync(models_path).forEach (file) ->
 
 # bootstrap passport config
 require("./config/passport") passport, config
-app = express()
 
-app.games = []
 
 # express settings
 require("./config/express") app, config, passport
@@ -55,6 +66,7 @@ app.use '*', (req, res, next)->
 
 # Bootstrap routes
 require("./app/routes") app, passport
+
 
 
 # Start the app by listening on <port>

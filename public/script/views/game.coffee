@@ -1,5 +1,6 @@
 Acronym = require './acronym'
 Bacronyms = require './bacronyms'
+BacronymForm = require('./bacronymForm')
 Chat = require './chat'
 ScoreBoard = require './scoreBoard'
 Status404 = require './404'
@@ -20,6 +21,8 @@ InitGameMixin =
   initGame: (props)->
     if not props?
       props = @props
+    
+    @setState @getInitialState()
       
     # Get rid of any old Firebase refs
     @firebaseDestroy()
@@ -86,22 +89,21 @@ Game = React.createClass
     @initGame()
 
   componentWillReceiveProps: (nextProps)->
+    console.log @props, nextProps
     if nextProps?.gameId != @props.gameId
       @initGame(nextProps)
 
   getInitialState: ()->
     view: 'loading'
+    round: null
+    userBacronym: null
     roundHead: 'Hey There'
     roundMain: 'BACRO'
     roundFoot: 'New Game'
     
 
-  handleBacronymSubmit: (e)->
-    e.preventDefault()
-    $input = @refs.bacronymInput.getDOMNode()
-    bacronym = $input.value
+  submitBacronym: (bacronym)->
     # TODO: Bacronym validation
-    $input.value = ''
     @setState userBacronym: bacronym
     postBody =
       bacronym: bacronym
@@ -134,17 +136,8 @@ Game = React.createClass
       #return Status404 {}, msg: "Whoops, looks like that game doesn't exist"
 
     round = @state.round
-  
+    roundPhase = @state.roundPhase
 
-    if not @state?.userBacronym?
-      userBacronym = R.p className: 'Game-userBacronym no-bacronym', [
-        'Submit a bacronym '
-        R.span className:'x-small', '▼'
-      ]
-      placeholder = "Type in a bacronym and hit enter"
-    else
-      userBacronym = R.p className: 'Game-userBacronym', @state.userBacronym
-      placeholder = "Enter a new bacronym and hit enter (replaces old one)"
 
     mainComponent = ()=>
       if not round?
@@ -152,21 +145,18 @@ Game = React.createClass
           handleGameStart: @handleGameStart
           handleJoin: @handleJoin
           
-      if round.bacronyms?
+      if roundPhase == 'vote' or roundPhase == 'end'
         return Bacronyms
           bacronyms: round.bacronyms
           handleBacronymVote: @handleBacronymVote
+      
+      bForm =
+        submitBacronym: @submitBacronym
+      if @state.userBacronym
+        bForm.userBacronym = @state.userBacronym
 
-      R.form className: 'Game-bacronym-form', onSubmit: @handleBacronymSubmit, [
-        userBacronym
-        R.div className: 'form-group',
-          R.input
-            className: 'Game-bacronymInput form-control input-lg'
-            type:'text'
-            ref: 'bacronymInput'
-            placeholder: placeholder
-      ]
-
+      BacronymForm bForm
+      
     acroLenClass = "acronym-len-5"
     if round?
       roundClass = "Game-round-#{round.roundNum + 1}"
