@@ -5,7 +5,9 @@ _ = require('lodash')
 salt = require('./salt')
 md5 = require 'MD5'
 randomWords = require 'random-words'
+
 MicroEvent = require('microevent')
+GameModel = require '../app/models/game'
 
 acronym = (len = 3) ->
   ret = ''
@@ -22,41 +24,45 @@ ucFirst = (str)->
 
 class Game
 
-  defaults: ()->
-    numRounds: 8
-    answerTime: 10000
-    bufferTime: 2000
-    voteTime: 10000
+  constructor: (model)->
+    if not model?
+      model = new GameModel
+      model.save()
 
-  constructor: (id = randStr(), optsIn = {})->
-    @data =
-      id: id
-      rounds: []
-      roundNum: 0
-      gameState: 'new'
-      scores: {}
-      players: []
+    @model = model
+    @id = @model.id.toString()
 
-    @opts = _.merge @defaults(), optsIn
     @timeouts = []
+    
+    @fbRef = fb.child "games/#{@id}"
+      
 
-    @persistEvents
+    @bindEvents
+      'game:start': @persistGameLocal
       'round:start': @persistGame
+      'answer:start': @persistGameLocal
+      'answer:end': @persistGameLocal
       'vote:start': @persistGame
       'vote:end': @persistGame
+      'round:end': @persistGameLocal
+      'game:end': @persistGameLocal
+      'vote': @persistGameLocal
+      'bacronym': @persistGameLocal
+      'players:added': @persistGame
 
-    @fbRef = fb.child "games/#{@data.id}"
-    
+      
   addPlayers: (players)->
     if not _.isArray players
       players = [players]
     players.forEach (player)=>
       @initScore player
-    @data.players = @data.players.concat players
+    @model.data.players = @model.data.players.concat players
+    @trigger 'players:added', 'players:added', players
 
-  persistEvents: (obj)->
+  bindEvents: (obj)->
     _.forEach obj, (fn, trigger)=>
       @bind trigger, fn.bind this, trigger
+
 
   clearTO: ()->
     clearTimeout timeout for timeout in @timeouts
@@ -66,103 +72,124 @@ class Game
     @timeouts.push setTimeout fn.bind(this), delay
 
   currentRound: ()->
-    @data.rounds[@data.roundNum]
+    @model.data.rounds[@model.data.roundNum]
 
   persistGame: (trigger)->
-    game = _.cloneDeep @data
+    @persistGameLocal()
+    @persistGameToFirebase trigger
+
+  persistGameLocal: ()->
+    @model.save (err, model)=>
+      if err?
+        console.log 'persistGameLocal  ERR', err, model
+
+  persistGameToFirebase: (trigger)->
+    @fbRef.set @getRedacted trigger
+
+  # Firebase games are public knowledge, so we have to withold some secrets
+  # It's for the good of the BACROuntry
+  getRedacted: (trigger)->
+    game = (@model.toObject()).data
+    game.scores = _.reduce game.scores, (accum, score, userId)->
+      user = _.find(game.players, id: userId)
+      accum[user.name] = score
+      accum
+    ,
+    {}
+        
     # For start of voting, replace user names with hashes
     if trigger == 'vote:start'
-      round = game.rounds[@data.roundNum]
+      round = game.rounds[@model.data.roundNum]
       anonUsers = _.keys(round.bacronyms).map (el)->
         md5(el + salt + round.roundNum).slice 0,8
       bacronyms = _.values round.bacronyms
       bacronymsObj = _.zipObject anonUsers, bacronyms
       round.bacronyms = bacronymsObj
       # We sholudn't have any votes here, but just in case we do...
-      delete game.rounds[@data.roundNum].votes
-      game.rounds[@data.roundNum] = round
+      delete game.rounds[@model.data.roundNum].votes
+      game.rounds[@model.data.roundNum] = round
 
-    if trigger == 'vote:end'
-      @fbRef.child("rounds/#{@data.roundNum}/bacronyms").remove()
-
-    @fbRef.set game
+    game
 
   startGame: ()->
-    @data.gameState = 'started'
+    @model.data.gameState = 'started'
     @setScores()
-    #@persistGame()
     @nextRound()
 
   nextRound: ()->
     @clearTO()
-    @data.roundNum = @data.rounds.length
+    @model.data.roundNum = @model.data.rounds.length
 
-    if @data.roundNum == @opts.numRounds
+    if @model.data.roundNum == @model.opts.numRounds
       return @endGame()
 
-    @data.rounds.push
+    if @model.data.roundNum == 0
+      @trigger 'game:start', 'game:start'
+
+
+    @model.data.rounds.push
       acronym: acronym _.random(3,6)
       bacronyms: {}
       phase: 'start'
       started: nowISO()
-      roundNum: @data.roundNum
+      roundNum: @model.data.roundNum
       votes: {}
 
-    @trigger "round:start", "round:start", @data.roundNum
-    #@persistGame()
-    @setTO @startAnswer, @opts.bufferTime
+    @trigger "round:start", "round:start", @model.data.roundNum
+    @persistGameToFirebase
+    @setTO @startAnswer, @model.opts.bufferTime
 
   startAnswer: ()->
     @clearTO()
     @currentRound().phase = 'answer'
-    @trigger "answer:start", "answer:start", @data.roundNum
-    @data.players.forEach (user)=>
+    @trigger "answer:start", "answer:start", @model.data.roundNum
+    @model.data.players.forEach (user)=>
       words = randomWords(@currentRound().acronym.length)
       @submitBacronym words.map(ucFirst).join(' '), user
-    @setTO @endAnswer, @opts.answerTime
+    @setTO @endAnswer, @model.opts.answerTime
 
   endAnswer: ()->
     @clearTO()
-    @trigger "answer:end", "answer:end", @data.roundNum
-    @setTO @startVote, @opts.bufferTime
+    @trigger "answer:end", "answer:end", @model.data.roundNum
+    @setTO @startVote, @model.opts.bufferTime
 
   startVote: ()->
     @clearTO()
     @currentRound().phase = 'vote'
-    @data.players.forEach (user)=>
-      @submitVote _.sample(@data.players), user
-    @trigger "vote:start", "vote:start", @data.roundNum
-    @setTO @endVote, @opts.voteTime
+    @model.data.players.forEach (user)=>
+      @submitVote (_.sample(@model.data.players)).id, user.id
+    @trigger "vote:start", "vote:start", @model.data.roundNum
+    @setTO @endVote, @model.opts.voteTime
 
   endVote: ()->
     @clearTO()
     @currentRound().phase = 'end'
     @setVotesOnBacronyms()
     @setScores()
-    @trigger "vote:end", "vote:end", @data.roundNum
-    #@persistGame()
-    @setTO @endRound, @opts.bufferTime
+    @trigger "vote:end", "vote:end", @model.data.roundNum
+    @setTO @endRound, @model.opts.voteEndTime
 
   endRound: ()->
     @clearTO()
-    @trigger 'round:end', 'round:end', @data.roundNum
+    @trigger 'round:end', 'round:end', @model.data.roundNum
     @nextRound()
 
   endGame: ()->
-    @data.gameState
-    @trigger 'game:end', 'game:end', @data.roundNum
+    @model.data.gameState
+    @trigger 'game:end', 'game:end'
 
   # {user, answer, timestamp}
   submitBacronym: (bacronym, user, time = nowISO(), votes = [])->
-    @currentRound().bacronyms[user] = {bacronym, time, votes}
+    @currentRound().bacronyms[user.id] = {bacronym, time, votes}
     @trigger 'bacronym', {user, bacronym, time, votes}
 
   submitVote: (candidate, voter) ->
     @currentRound().votes[voter] = candidate
+    @trigger 'vote', {candidate, voter}
     
 
   initScore: (player)->
-    @data.scores[player] = 0
+    @model.data.scores[player.id] = 0
 
   getFreshScoreObj: ()->
 
@@ -182,15 +209,15 @@ class Game
   # Recalculates scores
   setScores: ()->
     scores = {}
-    for player in @data.players
-      if not scores[player]?
-        scores[player] = 0
-    for round in @data.rounds
+    for player in @model.data.players
+      if not scores[player.id]?
+        scores[player.id] = 0
+    for round in @model.data.rounds
       for voter, candidate of round.votes
         if not scores[candidate]?
           scores[candidate] = 0
         scores[candidate]++
-    @data.scores = scores
+    @model.data.scores = scores
 
 MicroEvent.mixin Game
 

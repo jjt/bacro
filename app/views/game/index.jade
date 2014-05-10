@@ -4,6 +4,9 @@ block content
   #app.Panel
 
 block foot
+  if user
+    script.
+      user = !{JSON.stringify(user)} 
   script(src='/bower_components/firebase/firebase.js')
   script(src='/bower_components/page.js/index.js')
   //script(src='/bower_components/director/build/director.js')
@@ -13,6 +16,3 @@ block foot
   script(src='/script/react-multiplayer.js')
   script(src='/script/app-bundle.js')
   
-  if user
-    script.
-      user = !{JSON.stringify(user)} 

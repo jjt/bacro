@@ -1,14 +1,14 @@
-$grid-float-breakpoint: 480px;
+$grid-float-breakpoint: 768px;
 
 $navbar-default-border: none;
 $navbar-border-radius: 0;
 $navbar-default-bg: $cBase8;
-$navbar-default-color: $cBase5;
-$navbar-default-link-color: $cBase5;
+$navbar-default-color: $cBase3;
+$navbar-default-link-color: $cBase3;
 $navbar-default-link-hover-color: $cBase2;
-$navbar-default-link-hover-bg: $cBase8;
+$navbar-default-brand-color: $cBase3;
 $navbar-default-brand-hover-bg: $cBase8;
-
+$navbar-default-brand-hover-color: $cBase2;
 
 $breadcrumb-bg: transparent;
 $breadcrumb-padding-vertical: 16px;

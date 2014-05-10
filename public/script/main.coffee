@@ -1,27 +1,15 @@
 # require 'director'
-Game = require './views/game'
-Lobby = require './views/lobby'
-Status404 = require './views/404'
-Header = require './views/header'
-page = require '../bower_components/page.js/index'
-
-
-show = (component, title, props={})->
-  #React.renderComponent Header(breadCrumbs: [title]), document.getElementById('nav')
-  console.log 'show'
-  React.renderComponent component(props), document.getElementById('app')
+router = require './router'
 
 
 
 
-page dispatch: true
-page '*', ()-> console.log 'star'
-page '/', show.bind null, Lobby, 'Lobby'
-page '/lobby', show.bind null, Lobby, 'Lobby'
-page '/game/:id', show.bind null, Game, 'Game'
 
 
-console.log page
+
+#page dispatch: true
+#page '', show.bind null, Lobby, 'Lobby'
+
 
 
 #module.exports = new Router

@@ -1,10 +1,12 @@
-games = require('../controllers/games');
 module.exports = function (app, passport) {
+  var games = require('../controllers/games')(app);
 
   require('./auth.js')(app, passport);
   require('./game.js')(app);
+  require('./chat.js')(app);
 
   app.get('*', function(req, res){
+    console.log('pushState redir');
     if(req.isAuthenticated())
       return games.app(req, res);
     res.render('index');
