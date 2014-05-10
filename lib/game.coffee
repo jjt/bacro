@@ -25,6 +25,7 @@ ucFirst = (str)->
 class Game
 
   constructor: (model)->
+    console.log 'game constructor', model
     if not model?
       model = new GameModel
       model.save()
@@ -72,7 +73,8 @@ class Game
     @timeouts.push setTimeout fn.bind(this), delay
 
   currentRound: ()->
-    @model.data.rounds[@model.data.roundNum]
+    round = @model.data.rounds[@model.data.roundNum]
+    round
 
   persistGame: (trigger)->
     @persistGameLocal()
@@ -126,7 +128,6 @@ class Game
     if @model.data.roundNum == 0
       @trigger 'game:start', 'game:start'
 
-
     @model.data.rounds.push
       acronym: acronym _.random(3,6)
       bacronyms: {}
@@ -143,13 +144,15 @@ class Game
     @clearTO()
     @currentRound().phase = 'answer'
     @trigger "answer:start", "answer:start", @model.data.roundNum
-    @model.data.players.forEach (user)=>
-      words = randomWords(@currentRound().acronym.length)
-      @submitBacronym words.map(ucFirst).join(' '), user
     @setTO @endAnswer, @model.opts.answerTime
 
   endAnswer: ()->
     @clearTO()
+    #@model.data.players.forEach (user)=>
+      #words = randomWords(@currentRound().acronym.length)
+      #console.log user.id, @currentRound().bacronyms[user.id]
+      #if not @currentRound().bacronyms?[user.id]?
+        #@submitBacronym words.map(ucFirst).join(' '), user
     @trigger "answer:end", "answer:end", @model.data.roundNum
     @setTO @startVote, @model.opts.bufferTime
 
@@ -180,7 +183,9 @@ class Game
 
   # {user, answer, timestamp}
   submitBacronym: (bacronym, user, time = nowISO(), votes = [])->
-    @currentRound().bacronyms[user.id] = {bacronym, time, votes}
+    #console.log 'submitBacronym', bacronym, user
+    @model.data.rounds[@model.data.roundNum].bacronyms[user.id] = {bacronym, time, votes}
+    console.log 'submitBacronym', user.id, @model.data.rounds[@model.data.roundNum].bacronyms
     @trigger 'bacronym', {user, bacronym, time, votes}
 
   submitVote: (candidate, voter) ->
