@@ -6,10 +6,11 @@ html, body, .Panel, .Panel-body, .Panel-fh-row {
   position:absolute;
   top:0;
   width:100%;
+  border-bottom:1px solid $cBase7;
 }
 
 .Panel {
-  padding-top:6rem;
+  padding-top:9rem;
 }
 
 

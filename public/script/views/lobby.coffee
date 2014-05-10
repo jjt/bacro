@@ -1,27 +1,56 @@
 UserList = require './userList'
+Gamelist = require './gamelist'
 Chat = require './chat'
 R = React.DOM
+
+FirebaseMixin = require '../firebaseMixin'
+
 module.exports = React.createClass
+  mixins: [FirebaseMixin]
   displayName: 'Lobby'
+  
+  componentWillUnmount: ()->
+    console.log 'componentWillUnmount'
+    clearTimeout @gamelistTimeout
+
+  getInitialState: ()->
+    gamelist: []
+
+  firebaseInitFn: ()->
+    console.log 'firebaseInitFn'
+    @firebaseInit 'gamelist'
+    @getGamelist()
+   
+    
+  getGamelist: ()->
+    clearTimeout @gamelistTimeout
+    @gamelistTimeout = setTimeout @getGamelist, 5000
+    console.log 'getGamelist', @firebaseRefRoot
+    @firebaseOnce null, 'value', (snapshot)=>
+      @setState
+        gamelist: snapshot.val()
+
+
   render: ->
     users = _.map require('../../../lib/names'), (name)->
       {name}
 
-    R.div className: 'Lobby container', [
-      R.div {className: 'row'}, [
-        R.div {className: 'Lobby-games col-xs-12'}, [
-          R.h2 {}, "Games"
-          R.div {}, "Game"
-          R.div {}, "Game"
-          R.div {}, "Game"
-          R.div {}, "Game"
-          R.div {}, "Game"
+    R.div {className: "Panel-body container Lobby"}, [
+      R.div className:'row Panel-fh-row', [
+        R.div className:'Panel-left col-sm-4 col-lg-2', [
+          R.div className:'RoundBadge', [
+            R.h3 className:'Game-round', "This is the"
+            R.p className: "Acronym-acronym acronym-len-5", "LOBBY"
+            R.p className: "Game-phase", "Have fun!"
+          ]
+          UserList {users}
         ]
-      ]
-
-
-      R.div className: 'row', [
-        R.div className: 'col-lg-2 col-md-3', UserList {users}
-        R.div className: 'col-lg-10 col-md-9', Chat channel: 'lobby'
+        R.div className:'Panel-main col-sm-8 col-lg-6', [
+          R.div className:'Game-MainComponent', [
+            Gamelist gamelist: @state.gamelist
+          ]
+        ]
+        R.div className:'Panel-right col-md-12 col-lg-4', Chat channel: 'lobby'
       ]
     ]
+

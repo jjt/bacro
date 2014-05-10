@@ -1,6 +1,7 @@
 express = require("express")
 fs = require("fs")
 passport = require("passport")
+_ = require 'lodash'
 
 
 # Load configurations
@@ -47,6 +48,10 @@ app.games = []
 
 # express settings
 require("./config/express") app, config, passport
+
+app.use '*', (req, res, next)->
+  req.games = app.games
+  next()
 
 # Bootstrap routes
 require("./app/routes") app, passport

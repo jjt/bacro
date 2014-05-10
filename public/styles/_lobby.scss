@@ -1,0 +1,20 @@
+.Lobby .RoundBadge {
+  background: $solarized-blue;
+}
+
+
+.Gamelist-game {
+  cursor: pointer;
+  display:block;
+  font-family: 'Open Sans', sans-serif;
+  h4, p {
+    display:inline-block;
+    text-transform:uppercase;
+  }
+
+  h4 {
+    min-width:12rem;
+    text-align:right;
+    margin-right:1rem;
+  }
+}

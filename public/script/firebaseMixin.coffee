@@ -3,6 +3,10 @@ sliceArgs = require '../../lib/sliceArgs'
 
 FirebaseMixin =
 
+  componentWillMount: ()->
+    if @firebaseInitFn? and _.isFunction @firebaseInitFn
+      @firebaseInitFn()
+
   componentWillUnmount: ()->
     @firebaseDestroy()
 
