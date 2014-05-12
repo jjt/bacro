@@ -23,6 +23,7 @@ module.exports = (app)->
     get: (req, res)->
       res.status(200).json
         id:req.game.id
+        opts: req.game.model.opts
 
 
     start: (req, res)->
