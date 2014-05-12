@@ -41,7 +41,10 @@ page '/game/:id', (ctx)->
       console.log 'got game', game
       if not game?
         return show Status404, "404", msg: "Whoops, couldn't find game #{id}"
-      show Game, "Game #{game.id}", gameId: game.id
+      gameObj = _.merge game.opts,
+        gameId: game.id
+        
+      show Game, "Game #{game.id}", gameObj
     error: (xhr, errType, err) ->
       return show Status404, "404", msg: "Whoops, couldn't find game #{id}"
 

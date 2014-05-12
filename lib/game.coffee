@@ -41,7 +41,7 @@ class Game
     @bindEvents
       'game:start': @persistGameLocal
       'round:start': @persistGame
-      'answer:start': @persistGameLocal
+      'answer:start': @persistGame
       'answer:end': @persistGameLocal
       'vote:start': @persistGame
       'vote:end': @persistGame
@@ -138,7 +138,7 @@ class Game
 
     @trigger "round:start", "round:start", @model.data.roundNum
     @persistGameToFirebase
-    @setTO @startAnswer, @model.opts.bufferTime
+    @setTO @startAnswer, @model.opts.startTime
 
   startAnswer: ()->
     @clearTO()

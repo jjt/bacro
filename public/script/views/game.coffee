@@ -1,6 +1,7 @@
 Acronym = require './acronym'
 Bacronyms = require './bacronyms'
 BacronymForm = require('./bacronymForm')
+Badge = require './badge'
 Chat = require './chat'
 ScoreBoard = require './scoreBoard'
 Status404 = require './404'
@@ -17,7 +18,14 @@ R = React.DOM
 cx = React.addons.classSet
 
 
-InitGameMixin =
+getTimerBgClass = (ms)->
+  if ms
+    sec = ms/1000
+    return "TimerBg-#{sec}s"
+  ""
+
+# Keeps the main react component leaner
+InitFirebaseMixin =
   initGame: (props)->
     if not props?
       props = @props
@@ -45,11 +53,14 @@ InitGameMixin =
         roundPhase: 'start'
         roundFoot: 'start'
         roundMain: round.acronym
+        timerBgClass: getTimerBgClass @props.startTime
 
       @firebaseOn "rounds/#{round.roundNum}/phase", 'value', (snapshot)=>
+        console.log "FB on round phase", snapshot.val()
         @setState
           roundPhase: snapshot.val()
           roundFoot: snapshot.val()
+          timerBgClass: getTimerBgClass @props[snapshot.val() + 'Time']
 
       @firebaseOn "rounds/#{round.roundNum}/bacronyms", 'value', (snapshot)=>
         bacronyms = snapshot.val()
@@ -61,6 +72,7 @@ InitGameMixin =
         @setState
           round:
             _.merge @state.round, {bacronyms}
+          timerBgClass: getTimerBgClass @props.voteTime
 
       @firebaseOn "rounds/#{round.roundNum}/votes", 'value', (snapshot)=>
         votes = snapshot.val()
@@ -81,7 +93,7 @@ InitGameMixin =
 
 Game = React.createClass
 
-  mixins: [FirebaseMixin, InitGameMixin]
+  mixins: [FirebaseMixin, InitFirebaseMixin]
 
   displayName: 'Game'
 
@@ -89,10 +101,10 @@ Game = React.createClass
     @initGame()
 
   componentWillReceiveProps: (nextProps)->
-    console.log @props, nextProps
     if nextProps?.gameId != @props.gameId
       @initGame(nextProps)
 
+    
   getInitialState: ()->
     view: 'loading'
     round: null
@@ -100,6 +112,7 @@ Game = React.createClass
     roundHead: 'Hey There'
     roundMain: 'BACRO'
     roundFoot: 'New Game'
+    timerBgClass: ''
     
 
   submitBacronym: (bacronym)->
@@ -137,7 +150,12 @@ Game = React.createClass
 
     round = @state.round
     roundPhase = @state.roundPhase
-
+    timerBgClass = @state.timerBgClass
+    
+    if roundPhase == 'answer'
+      timerBgClass += ' TimerBg-start'
+      
+    console.log 'roundPhase', roundPhase
 
     mainComponent = ()=>
       if not round?
@@ -157,19 +175,17 @@ Game = React.createClass
 
       BacronymForm bForm
       
-    acroLenClass = "acronym-len-5"
     if round?
       roundClass = "Game-round-#{round.roundNum + 1}"
-      acroLenClass = "acronym-len-#{round.acronym.length}"
 
-    R.div {className: "Panel-body container Game #{roundClass}"}, [
+    R.div {className: "Panel-body container Game #{roundClass}"},
       R.div className:'row Panel-fh-row', [
         R.div className:'Panel-left col-sm-4 col-lg-2', [
-          R.div className:'RoundBadge TimerBg-10s', [
-            R.h3 className:'Game-round', @state.roundHead
-            R.p className: "Acronym-acronym #{acroLenClass}", @state.roundMain
-            R.p className: "Game-phase", @state.roundFoot
-          ]
+          Badge
+            timerBgClass: timerBgClass
+            head: @state.roundHead
+            main: @state.roundMain
+            foot: @state.roundFoot
           ScoreBoard scores: @state.scores
         ]
         R.div className:'Panel-main col-sm-8 col-lg-6', [
@@ -182,6 +198,5 @@ Game = React.createClass
             channel: "#{@props.gameId}"
         ]
       ]
-    ]
 
 module.exports = Game
