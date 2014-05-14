@@ -20,6 +20,7 @@ show = (component, title, props={})->
 
 page '/', show.bind null, Lobby, 'Lobby'
 page '/lobby', show.bind null, Lobby, 'Lobby'
+
 page '/game/new', (ctx)->
   console.log 'gamenew'
   respFn = (gameId)->
@@ -29,8 +30,6 @@ page '/game/new', (ctx)->
     console.log arguments
 
   csrfPost '/game/new', newGame:'Yeah newGame!' , respFn, failFn
-  
-  
 
 page '/game/:id', (ctx)->
   id = ctx.params.id
@@ -43,6 +42,9 @@ page '/game/:id', (ctx)->
         return show Status404, "404", msg: "Whoops, couldn't find game #{id}"
       gameObj = _.merge game.opts,
         gameId: game.id
+        user:
+          name: window.user.name
+          id: window.user._id
         
       show Game, "Game #{game.id}", gameObj
     error: (xhr, errType, err) ->

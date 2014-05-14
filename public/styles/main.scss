@@ -28,6 +28,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/vendor/assets/font
 body {
   @extend .PanelLayout;
   background: $cBase8;
+  padding-top:5.5rem;
 }
 
 
@@ -42,6 +43,8 @@ body {
 }
 
 .site-nav {
+  height:5.5rem;
+  z-index:10;
   .navbar-nav.navbar-right > li > a {
     font-size:1.4rem;
     padding-top:2rem;
@@ -75,7 +78,22 @@ a.siteTitle {
   margin-right:1rem;
 }
 
-
+.jumbotron {
+  h1 {
+    font-size:4rem;
+    display:inline-block;
+    margin-right:1rem;
+  }
+  h3 {
+    display:inline-block;
+    color: $cBase4;
+  }
+  h1, h3 {
+    span {
+      color:$solarized-red;
+    }
+  }
+}
 
 @media screen and (min-width: 768px) {
     .container {

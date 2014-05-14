@@ -3,9 +3,30 @@ extends layouts/default
 
 
 
-block main
-  .jumbotron
-    h1 Bacro
-    p Bacro is a multiplayer game where you make bacronyms to earn other players' votes
-    a.btn.btn-primary(href='/game') Play now
+block content
+  .container
+    .row
+      .col-xs-12
+        .jumbotron
+          h1
+            span B
+            span a
+            span c
+            span r
+            span o
+          h3
+            span B
+            | acro: 
+            span A
+            | cronyms' 
+            span C
+            | omical 
+            span R
+            | oots 
+            span O
+            | nline 
+          p Bacro is a multiplayer game where you make bacronyms to earn other players' votes
+          a.btn.btn-primary(href='/auth/google') Play now
+          br 
+          small (Login with Google)
 

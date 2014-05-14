@@ -4,6 +4,7 @@ passport = require("passport")
 _ = require 'lodash'
 GameModel = require './app/models/game'
 Game = require './lib/game'
+GameList = require './lib/gamelist'
 
 
 
@@ -29,11 +30,12 @@ app = express()
 app.games = []
 
 mongoose.connection.once "open", ()->
+  # Load games into the app
   GameModel.find {}, (err, games)->
-    console.log 'collection.once', games
+    GameList.sync games
     _.forEach games, (gameModel)->
       app.games.push new Game gameModel
-    console.log app.games
+
 
 # Error handler
 mongoose.connection.on "error", (err) ->

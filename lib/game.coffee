@@ -25,7 +25,6 @@ ucFirst = (str)->
 class Game
 
   constructor: (model)->
-    console.log 'game constructor', model
     if not model?
       model = new GameModel
       model.save()
@@ -57,8 +56,10 @@ class Game
       players = [players]
     players.forEach (player)=>
       @initScore player
-    @model.data.players = @model.data.players.concat players
+    @model.data.players = _.uniq @model.data.players.concat(players), (player)->
+      player.id
     @trigger 'players:added', 'players:added', players
+
 
   bindEvents: (obj)->
     _.forEach obj, (fn, trigger)=>
@@ -178,7 +179,7 @@ class Game
     @nextRound()
 
   endGame: ()->
-    @model.data.gameState
+    @model.data.gameState = 'ended'
     @trigger 'game:end', 'game:end'
 
   # {user, answer, timestamp}

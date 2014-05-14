@@ -23,6 +23,7 @@ module.exports = (app)->
     get: (req, res)->
       res.status(200).json
         id:req.game.id
+        players: req.game.model.data.players
         opts: req.game.model.opts
 
 
@@ -33,7 +34,12 @@ module.exports = (app)->
 
     new: (req, res) ->
       game = new Game()
+      game.addPlayers
+        name: req.user.name
+        id: req.user.id
+
       setGamelist = ()->
+        console.log 'setGamelist'
         Gamelist.set game
 
       Gamelist.set game
@@ -60,8 +66,9 @@ module.exports = (app)->
 
     join: (req, res)->
       req.game.addPlayers
-          name: req.user.name
-          id: req.user.id
+        name: req.user.name
+        id: req.user.id
+      Gamelist.set req.game
       res.status(200).json msg: 'Welcome to the game, friendo!'
 
 
@@ -71,6 +78,7 @@ module.exports = (app)->
 
     vote: (req, res)->
       res.send 200, 'vote OK'
+
 
   return Games
 
