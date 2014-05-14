@@ -5,7 +5,6 @@ _ = require('lodash')
 module.exports = (req, res, next)->
   id = req.param 'id'
   game = _.find req.games, id: id
-  console.log 'getGame', id, _.pluck(req.games, 'id'), game
   if game?
     console.log 'MW.getGame game found', game.id
     req.game = game

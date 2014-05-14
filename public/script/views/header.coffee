@@ -30,7 +30,7 @@ module.exports = React.createClass
         R.ul className:'nav navbar-nav navbar-right', [
           R.li {}, R.a href: '/game/new', 'New Game'
           R.li {}, R.a href: '/lobby', 'Lobby'
-          R.li {}, R.a href: '/auth/logout', 'Logout'
+          R.li {}, R.a href: '/logout', 'Logout'
           R.li {}, R.a {}, @props.username
         ]
       ]

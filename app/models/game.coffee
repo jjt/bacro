@@ -7,7 +7,7 @@ gameSchema = new mongoose.Schema
   opts:
     numRounds: type: Number, default: 8
     startTime: type: Number, default: 1000
-    answerTime: type: Number, default: 15000
+    answerTime: type: Number, default: 5000
     answerEndTime: type: Number, default: 1000
     voteTime: type: Number, default: 5000
     voteEndTime: type: Number, default: 3000

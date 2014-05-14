@@ -2,8 +2,11 @@ R = React.DOM
 module.exports = React.createClass
   displayName: 'GameStart'
   render: ()->
+    join = ''
+    if not @props.userJoined?
+      join = R.a className: 'btn btn-primary', onClick: @props.handleJoin, "Join game"
     R.div className:'GameStart', [
-      R.a onClick: @props.handleJoin, "Join game"
-      R.a onClick: @props.handleGameStart, "Start game"
-      R.p {}, "Player list goes here!"
+      join
+      " "
+      R.a className: 'btn btn-primary', onClick: @props.handleGameStart, "Start game"
     ]

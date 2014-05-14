@@ -4,6 +4,7 @@
 .RoundBadge {
   //@include transition(background-color 0.5s ease-out);
   @include TimerBg(15rem);
+  background-color:$solarized-orange;
   color: rgba(#fff, 0.8);
   padding:1px 0;
   box-sizing: border-box;
@@ -14,8 +15,18 @@
   margin-right:4%;
 }
 
+$roundColors:
+  nth($solarized-accent-colors, 6),
+  nth($solarized-accent-colors, 3),
+  nth($solarized-accent-colors, 7),
+  nth($solarized-accent-colors, 4),
+  nth($solarized-accent-colors, 8),
+  nth($solarized-accent-colors, 5),
+  nth($solarized-accent-colors, 1),
+  nth($solarized-accent-colors, 2);
+
 $i: 1;
-@each $color in $solarized-accent-colors {
+@each $color in $roundColors {
   .Game-round-#{$i} {
     .RoundBadge {
       background-color: $color;

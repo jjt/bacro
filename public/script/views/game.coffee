@@ -54,6 +54,7 @@ InitFirebaseMixin =
         roundFoot: 'start'
         roundMain: round.acronym
         timerBgClass: getTimerBgClass @props.startTime
+        userBacronym: null
 
       @firebaseOn "rounds/#{round.roundNum}/phase", 'value', (snapshot)=>
         console.log "FB on round phase", snapshot.val()
@@ -109,9 +110,9 @@ Game = React.createClass
     view: 'loading'
     round: null
     userBacronym: null
-    roundHead: 'Hey There'
-    roundMain: 'BACRO'
-    roundFoot: 'New Game'
+    roundHead: 'Brand new'
+    roundMain: 'GAME'
+    roundFoot: 'Do it to it'
     timerBgClass: ''
     
 
@@ -170,7 +171,9 @@ Game = React.createClass
       
       bForm =
         submitBacronym: @submitBacronym
-      if @state.userBacronym
+        key: "BacronymForm-round-#{@state.roundNum}"
+      console.log 'state.userbacronym', @state.userBacronym
+      if @state.userBacronym?
         bForm.userBacronym = @state.userBacronym
 
       BacronymForm bForm
