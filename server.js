@@ -1,5 +1,9 @@
 var Game, GameList, GameModel, app, config, connect, env, exports, express, fb, fs, loadGamesFromDB, models_path, mongoose, passport, port, _;
 
+env = process.env.NODE_ENV || "development";
+
+console.log('ENV IS ', env);
+
 express = require("express");
 
 fs = require("fs");
@@ -15,10 +19,6 @@ GameModel = require('./app/models/game');
 Game = require('./lib/game');
 
 GameList = require('./lib/gamelist');
-
-env = process.env.NODE_ENV || "development";
-
-console.log('ENV IS ', env);
 
 config = require("./config/config")[env];
 
