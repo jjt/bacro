@@ -6,7 +6,15 @@ var mongoose = require('mongoose')
   , GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
   , LinkedinStrategy = require('passport-linkedin').Strategy
   , User = mongoose.model('User')
+  , hashwords = require('hashwords')({
+      salt:'saltedbacro'
+    , strPattern: 'adj noun'
+    })
 
+userForDisplay = function(user) {
+  user.name = hashwords.hashStr(user.email);
+  return user;
+}
 
 module.exports = function (passport, config) {
   // require('./initializer')
@@ -24,7 +32,7 @@ module.exports = function (passport, config) {
 
   // use local strategy
   passport.use(new LocalStrategy({
-      usernameField: 'email',
+      usernameField: 'name',
       passwordField: 'password'
     },
     function(email, password, done) {
@@ -141,12 +149,13 @@ module.exports = function (passport, config) {
             provider: 'google',
             google: profile._json
           })
+          user = userForDisplay(user)
           user.save(function (err) {
             if (err) console.log(err)
             return done(err, user)
           })
         } else {
-          return done(err, user)
+          return done(err, userForDisplay(user))
         }
       })
     }

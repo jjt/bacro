@@ -6,10 +6,11 @@ randStr = require('../../lib/randStr')
 gameSchema = new mongoose.Schema
   opts:
     numRounds: type: Number, default: 8
-    startTime: type: Number, default: 1000
-    answerTime: type: Number, default: 5000
+    startTime: type: Number, default: 3000
+    answerTime: type: Number, default: 24000
+    answerTimePerLetter: type: Number, default: 6000
     answerEndTime: type: Number, default: 1000
-    voteTime: type: Number, default: 5000
+    voteTime: type: Number, default: 10000
     voteEndTime: type: Number, default: 3000
     endTime: type: Number, default: 1000
   data:

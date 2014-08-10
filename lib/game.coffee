@@ -5,9 +5,13 @@ _ = require('lodash')
 salt = require('./salt')
 md5 = require 'MD5'
 randomWords = require 'random-words'
+letters = require './letters'
+
 
 MicroEvent = require('microevent')
 GameModel = require '../app/models/game'
+
+
 
 acronym = (len = 3) ->
   ret = ''
@@ -28,6 +32,7 @@ class Game
     if not model?
       model = new GameModel
       model.save()
+
 
     @model = model
     @id = @model.id.toString()
@@ -87,12 +92,12 @@ class Game
         console.log 'persistGameLocal  ERR', err, model
 
   persistGameToFirebase: (trigger)->
-    @fbRef.set @getRedacted trigger
+    @fbRef.set @getForFirebase trigger
 
-  # Firebase games are public knowledge, so we have to withold some secrets
-  # It's for the good of the BACROuntry
-  getRedacted: (trigger)->
+  getForFirebase: (trigger)->
     game = (@model.toObject()).data
+
+    # Firebase games are public knowledge, so we have to withold some secrets
     game.scores = _.reduce game.scores, (accum, score, userId)->
       user = _.find(game.players, id: userId)
       accum[user.name] = score
@@ -129,9 +134,12 @@ class Game
     if @model.data.roundNum == 0
       @trigger 'game:start', 'game:start'
 
+    acronym = letters.randomLetters(_.random(3,6)).join('').toUpperCase()
+
     @model.data.rounds.push
-      acronym: acronym _.random(3,6)
+      acronym: acronym
       bacronyms: {}
+      time: acronym.length * @model.opts.answerTimePerLetter
       phase: 'start'
       started: nowISO()
       roundNum: @model.data.roundNum
@@ -145,7 +153,7 @@ class Game
     @clearTO()
     @currentRound().phase = 'answer'
     @trigger "answer:start", "answer:start", @model.data.roundNum
-    @setTO @endAnswer, @model.opts.answerTime
+    @setTO @endAnswer, @currentRound().acronym.length * @model.opts.answerTimePerLetter
 
   endAnswer: ()->
     @clearTO()
@@ -160,8 +168,8 @@ class Game
   startVote: ()->
     @clearTO()
     @currentRound().phase = 'vote'
-    @model.data.players.forEach (user)=>
-      @submitVote (_.sample(@model.data.players)).id, user.id
+    #@model.data.players.forEach (user)=>
+      #@submitVote (_.sample(@model.data.players)).id, user.id
     @trigger "vote:start", "vote:start", @model.data.roundNum
     @setTO @endVote, @model.opts.voteTime
 
@@ -186,12 +194,14 @@ class Game
   submitBacronym: (bacronym, user, time = nowISO(), votes = [])->
     #console.log 'submitBacronym', bacronym, user
     @model.data.rounds[@model.data.roundNum].bacronyms[user.id] = {bacronym, time, votes}
-    console.log 'submitBacronym', user.id, @model.data.rounds[@model.data.roundNum].bacronyms
     @trigger 'bacronym', {user, bacronym, time, votes}
 
-  submitVote: (candidate, voter) ->
-    @currentRound().votes[voter] = candidate
-    @trigger 'vote', {candidate, voter}
+  submitVote: (bacronym, voter) ->
+    for own user, bacronymObj of @currentRound().bacronyms
+      if bacronymObj.bacronym == bacronym
+        @currentRound().votes[voter.id] = user
+        @trigger 'vote', {voter, user, bacronym}
+        break
     
 
   initScore: (player)->

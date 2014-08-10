@@ -3,19 +3,20 @@ Bacronyms = require './bacronyms'
 BacronymForm = require('./bacronymForm')
 Badge = require './badge'
 Chat = require './chat'
+GameStart = require './gameStart'
+RoundStart = require './roundStart'
 ScoreBoard = require './scoreBoard'
 Status404 = require './404'
-GameStart = require './gameStart'
 
 FirebaseMixin = require '../firebaseMixin'
 
 
-fbRoot = require '../fbRoot'
-validateBacronym = require '../../../lib/validateBacronym'
+#fbRoot = require '../fbRoot'
+#validateBacronym = require '../../../lib/validateBacronym'
 csrfPost = require('../../../lib/csrfPost')
 
 R = React.DOM
-cx = React.addons.classSet
+#cx = React.addons.classSet
 
 
 getTimerBgClass = (ms)->
@@ -40,7 +41,6 @@ InitFirebaseMixin =
       #if not game?
         #return @setState view: '404'
 
-
     @firebaseOn 'scores', 'value', (snapshot)=>
       @setState
         scores: snapshot.val()
@@ -51,17 +51,32 @@ InitFirebaseMixin =
         round: round
         roundHead: "Round #{round.roundNum + 1}"
         roundPhase: 'start'
-        roundFoot: 'start'
+        roundFoot: 'ready'
         roundMain: round.acronym
-        timerBgClass: getTimerBgClass @props.startTime
         userBacronym: null
 
       @firebaseOn "rounds/#{round.roundNum}/phase", 'value', (snapshot)=>
-        console.log "FB on round phase", snapshot.val()
-        @setState
-          roundPhase: snapshot.val()
-          roundFoot: snapshot.val()
-          timerBgClass: getTimerBgClass @props[snapshot.val() + 'Time']
+        roundPhase = snapshot.val()
+        # Redir user to lobby if the game gets taken offline
+        # Might be a better place for this, like the router
+        # but I don't want to incur extra trips to Firebase
+        if not roundPhase?
+          console.log 'NO PHASE, GAME IS DEAD'
+          @firebaseDestroy()
+          page '/lobby'
+          return
+
+        roundFoot = roundPhase
+
+        time = @props[snapshot.val() + 'Time']
+        if roundPhase == 'answer'
+          time = round.time
+        timerBgClass = getTimerBgClass time
+
+        if roundPhase == 'start'
+          roundFoot = 'ready'
+
+        @setState {roundPhase, roundFoot, timerBgClass}
 
       @firebaseOn "rounds/#{round.roundNum}/bacronyms", 'value', (snapshot)=>
         bacronyms = snapshot.val()
@@ -126,12 +141,16 @@ Game = React.createClass
     false
 
   handleBacronymVote: (user)->
+
     bacronyms = _.reduce @state.round.bacronyms, (accum, bacronymObj, user)->
       delete bacronymObj.selected
       accum[user] = bacronymObj
       accum
     , {}
     bacronyms[user]?.selected = true
+    csrfPost "/game/vote",
+      id: @props.gameId
+      bacronym: bacronyms[user].bacronym
     @setState
       round:
         _.merge @state.round, {bacronyms}
@@ -156,7 +175,6 @@ Game = React.createClass
     if roundPhase == 'answer'
       timerBgClass += ' TimerBg-start'
       
-    console.log 'roundPhase', roundPhase
 
     mainComponent = ()=>
       if not round?
@@ -164,6 +182,10 @@ Game = React.createClass
           handleGameStart: @handleGameStart
           handleJoin: @handleJoin
           
+      if roundPhase == 'start'
+        return RoundStart
+          time: (round.time / 1000)
+
       if roundPhase == 'vote' or roundPhase == 'end'
         return Bacronyms
           bacronyms: round.bacronyms
@@ -172,7 +194,6 @@ Game = React.createClass
       bForm =
         submitBacronym: @submitBacronym
         key: "BacronymForm-round-#{@state.roundNum}"
-      console.log 'state.userbacronym', @state.userBacronym
       if @state.userBacronym?
         bForm.userBacronym = @state.userBacronym
 
@@ -183,7 +204,7 @@ Game = React.createClass
 
     R.div {className: "Panel-body container Game #{roundClass}"},
       R.div className:'row Panel-fh-row', [
-        R.div className:'Panel-left col-sm-4 col-lg-2', [
+        R.div className:'Panel-left col-sm-4 col-lg-3', [
           Badge
             timerBgClass: timerBgClass
             head: @state.roundHead
@@ -191,7 +212,7 @@ Game = React.createClass
             foot: @state.roundFoot
           ScoreBoard scores: @state.scores
         ]
-        R.div className:'Panel-main col-sm-8 col-lg-6', [
+        R.div className:'Panel-main col-sm-8 col-lg-5', [
           R.div className:'Game-MainComponent', [
             mainComponent()
           ]

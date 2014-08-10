@@ -17,9 +17,6 @@ formatGameObj = (game)->
 Gamelist =
   set: (game)->
     fbGame = fb.child(game.id)
-    console.log 'GAMELIST', game
-    if game.model?.data?
-      console.log "Gamelist #{game.model.data.gameState}"
     if game.model?.data? and game.model?.data?.gameState == 'ended'
       return fbGame.remove()
     gameObj = formatGameObj game
@@ -27,9 +24,10 @@ Gamelist =
   
   # Syncs local db to Firebase
   sync: (games)->
-    console.log games
-    return
-    games = games.map formatGameObj
+    games = games.reduce (accum, game)->
+      accum[game.id] = formatGameObj game
+      accum
+    , {}
     fb.set games
 
 module.exports = Gamelist

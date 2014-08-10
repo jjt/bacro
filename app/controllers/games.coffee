@@ -25,12 +25,14 @@ module.exports = (app)->
         id:req.game.id
         players: req.game.model.data.players
         opts: req.game.model.opts
-
+    
+    clearFb: ()->
+      fb.child('games').remove()
 
     start: (req, res)->
       #game = new Game id: req.params.id
       req.game.startGame()
-      res.status(200).json req.game.getRedacted()
+      res.status(200).json req.game.getForFirebase()
 
     new: (req, res) ->
       game = new Game()
@@ -77,6 +79,7 @@ module.exports = (app)->
       res.send 200, 'answer OK'
 
     vote: (req, res)->
+      req.game.submitVote req.param('bacronym'), req.user
       res.send 200, 'vote OK'
 
 

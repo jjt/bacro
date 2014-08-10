@@ -29,6 +29,31 @@ gulp.task('coffee', function() {
     .pipe(gulp.dest('.public/script'));
 });
 
+gulp.task('coffeeServer', function(){
+  return gulp.src('./server.coffee')
+    .pipe($.coffee({bare: true})).on('error', $.util.log)
+    .pipe(gulp.dest('./'));
+});
+
+gulp.task('coffeeLib', function(){
+  return gulp.src('./lib/**/*.coffee')
+    .pipe($.coffee({bare: true})).on('error', $.util.log)
+    .pipe(gulp.dest('./lib'));
+});
+
+gulp.task('coffeeConfig', function(){
+  return gulp.src('./config/**/*.coffee')
+    .pipe($.coffee({bare: true})).on('error', $.util.log)
+    .pipe(gulp.dest('./config'));
+});
+
+gulp.task('coffeeApp', function(){
+  return gulp.src('./app/**/*.coffee')
+    .pipe($.coffee({bare: true})).on('error', $.util.log)
+    .pipe(gulp.dest('./app'));
+});
+
+
 gulp.task('html', ['styles'], function () {
   var jsFilter = $.filter('**/*.js');
   var cssFilter = $.filter('**/*.css');
@@ -136,6 +161,7 @@ gulp.task('browserify', function () {
 });
 
 
+
 gulp.task('watch', function () {
   var server = $.livereload();
 
@@ -155,6 +181,9 @@ gulp.task('watch', function () {
   //gulp.watch('public/script/**/*.coffee', ['coffee']);
   gulp.watch('public/script/**/*.coffee', ['browserify']);
   gulp.watch('public/images/**/*', ['images']);
+  gulp.watch('server.coffee', ['coffeeServer']);
+  gulp.watch('lib/**/*.coffee', ['coffeeLib']);
+  gulp.watch('config/**/*.coffee', ['coffeeConfig']);
   //gulp.watch(['sock.coffee', 'lib/**'], ['sock']);
   //gulp.watch('bower.json', ['wiredep']);
 });

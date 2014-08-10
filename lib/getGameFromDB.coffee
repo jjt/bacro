@@ -1,6 +1,7 @@
 GameModel = require '../app/models/game'
 
 module.exports = (ggErr, id, next)->
+  console.log 'getGameFromDB', id
   GameModel.findById id, (err, model)->
     if err
       console.log 'lib/getGame ERR', err, model

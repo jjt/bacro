@@ -7,6 +7,10 @@
     "bacronyms"
   ],
   "version": "0.0.0",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "main": "server.coffee",
   "browserify": {
     "transform": [
       "coffeeify"
@@ -51,16 +55,22 @@
     "firebase": "^1.0.11",
     "microevent": "^1.0.0",
     "MD5": "^1.2.1",
-    "cookie": "^0.1.2"
+    "cookie": "^0.1.2",
+    "hashwords": "^0.1.2"
   },
   "devDependencies": {
+    "browserify": "^3.44.2",
+    "browserify-shim": "^3.4.1",
+    "coffeeify": "^0.6.0",
     "connect": "^2.14.4",
     "connect-livereload": "^0.4.0",
+    "csurf": "^1.1.0",
     "gulp": "^3.6.0",
     "gulp-autoprefixer": "^0.0.6",
     "gulp-bower-files": "^0.2.1",
     "gulp-cache": "^0.1.1",
     "gulp-clean": "^0.2.4",
+    "gulp-coffee": "^1.4.2",
     "gulp-csso": "^0.2.6",
     "gulp-filter": "^0.4.1",
     "gulp-flatten": "^0.0.2",
@@ -69,25 +79,19 @@
     "gulp-livereload": "^1.2.0",
     "gulp-load-plugins": "^0.5.0",
     "gulp-ruby-sass": "^0.4.3",
+    "gulp-sass": "^0.7.1",
     "gulp-size": "^0.3.0",
     "gulp-uglify": "^0.2.1",
     "gulp-useref": "^0.3.1",
-    "jshint-stylish": "^0.1.5",
-    "opn": "^0.1.1",
-    "wiredep": "^1.4.3",
-    "gulp-sass": "^0.7.1",
-    "gulp-coffee": "^1.4.2",
     "gulp-util": "^2.2.14",
-    "serve-index": "^1.0.1",
+    "jshint-stylish": "^0.1.5",
     "morgan": "^1.0.0",
-    "browserify": "^3.44.2",
-    "coffeeify": "^0.6.0",
+    "opn": "^0.1.1",
+    "random-words": "0.0.1",
+    "serve-index": "^1.0.1",
+    "tabletojson": "^0.2.0",
     "vinyl-source-stream": "^0.1.1",
-    "browserify-shim": "^3.4.1",
-    "csurf": "^1.1.0",
-    "random-words": "0.0.1"
-  },
-  "engines": {
-    "node": ">=0.10.0"
+    "wiredep": "^1.4.3",
+    "cheerio": "^0.16.0"
   }
 }
