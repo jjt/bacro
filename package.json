@@ -57,7 +57,8 @@
     "MD5": "^1.2.1",
     "cookie": "^0.1.2",
     "hashwords": "^0.1.2",
-    "random-words": "0.0.1"
+    "random-words": "0.0.1",
+    "csrf": "0.0.3"
   },
   "devDependencies": {
     "browserify": "^3.44.2",
