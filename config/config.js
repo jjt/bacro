@@ -39,7 +39,7 @@ module.exports = {
     },
     google: {
       clientID: "1059096846902-cbmdbhqphmne2tv2mduha2elfpljnrii.apps.googleusercontent.com",
-      clientSecret: require('./googleSecret.LOCAL'),
+      clientSecret: (process.env.NODE_ENV == 'development') ? require('./googleSecret.LOCAL') : '',
       callbackURL: hostname + "/auth/google/callback"
     },
     linkedin: {
