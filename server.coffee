@@ -15,6 +15,8 @@ env = process.env.NODE_ENV or "development"
 config = require("./config/config")[env]
 mongoose = require("mongoose")
 
+console.log('ENV IS ', env)
+
 # Bootstrap db connection
 # Connect to mongodb
 connect = ->

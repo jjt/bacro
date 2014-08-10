@@ -22,6 +22,8 @@ config = require("./config/config")[env];
 
 mongoose = require("mongoose");
 
+console.log('ENV IS ', env);
+
 connect = function() {
   var options;
   options = {
