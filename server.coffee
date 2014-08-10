@@ -12,10 +12,10 @@ GameList = require './lib/gamelist'
 # Load configurations
 # if test env, load example file
 env = process.env.NODE_ENV or "development"
+console.log('ENV IS ', env)
 config = require("./config/config")[env]
 mongoose = require("mongoose")
 
-console.log('ENV IS ', env)
 
 # Bootstrap db connection
 # Connect to mongodb

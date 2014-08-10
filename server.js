@@ -18,11 +18,11 @@ GameList = require('./lib/gamelist');
 
 env = process.env.NODE_ENV || "development";
 
+console.log('ENV IS ', env);
+
 config = require("./config/config")[env];
 
 mongoose = require("mongoose");
-
-console.log('ENV IS ', env);
 
 connect = function() {
   var options;
