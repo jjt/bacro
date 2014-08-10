@@ -5,7 +5,8 @@ module.exports = React.createClass
     R.ul className: 'Bacronyms list-unstyled', _.map @props.bacronyms, (bacronymObj, user)=>
       bacroObj =
         className: "Bacronym"
-        onClick: @props.handleBacronymVote.bind null, user
+        onClick: (e)=>
+          @props.handleBacronymVote user
 
       if bacronymObj.selected
         bacroObj.className += ' selected'

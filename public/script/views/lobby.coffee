@@ -37,15 +37,15 @@ module.exports = React.createClass
 
     R.div {className: "Panel-body container Lobby"}, [
       R.div className:'row Panel-fh-row', [
-        R.div className:'Panel-left col-sm-4 col-lg-2', [
+        R.div className:'Panel-left col-sm-4 col-lg-3', [
           R.div className:'RoundBadge', [
             R.h3 className:'Game-round', "This is the"
             R.p className: "Acronym-acronym acronym-len-5", "LOBBY"
             R.p className: "Game-phase", "Have fun!"
           ]
-          UserList {users}
+          #UserList {users}
         ]
-        R.div className:'Panel-main col-sm-8 col-lg-6', [
+        R.div className:'Panel-main col-sm-8 col-lg-5', [
           R.div className:'Game-MainComponent', [
             Gamelist gamelist: @state.gamelist
           ]
@@ -53,4 +53,3 @@ module.exports = React.createClass
         R.div className:'Panel-right col-md-12 col-lg-4', Chat channel: 'lobby'
       ]
     ]
-

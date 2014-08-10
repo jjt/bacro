@@ -2,6 +2,7 @@ express = require("express")
 fs = require("fs")
 passport = require("passport")
 _ = require 'lodash'
+fb = require './lib/firebase'
 GameModel = require './app/models/game'
 Game = require './lib/game'
 GameList = require './lib/gamelist'
@@ -28,13 +29,21 @@ connect()
 
 app = express()
 app.games = []
+# Clear fb of everything
+# TODO: Sync existing games/chats/etc instead
+fb.remove()
 
-mongoose.connection.once "open", ()->
-  # Load games into the app
-  GameModel.find {}, (err, games)->
-    GameList.sync games
-    _.forEach games, (gameModel)->
-      app.games.push new Game gameModel
+
+
+loadGamesFromDB = ()->
+  GameModel.find {}, (err, gameModels)->
+    console.log 'OPENOPEN', gameModels
+    app.games = gameModels.map (gameModel)->
+      new Game gameModel
+    GameList.sync app.games
+
+#mongoose.connection.once "open", loadGamesFromDB
+
 
 
 # Error handler

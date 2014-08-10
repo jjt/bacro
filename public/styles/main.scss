@@ -84,14 +84,14 @@ a.siteTitle {
     display:inline-block;
     margin-right:1rem;
   }
-  h3 {
-    display:inline-block;
-    color: $cBase4;
+  p {
+    font-family: 'Open Sans', sans-serif;
   }
-  h1, h3 {
-    span {
-      color:$solarized-red;
-    }
+  .larger {
+    font-size: $font-size-h3;
+  }
+  h1, p span {
+    color:$solarized-red;
   }
 }
 

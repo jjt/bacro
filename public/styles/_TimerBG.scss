@@ -2,7 +2,7 @@
   background-position:0 0rem !important;
 }
 
-$timerPoints: 1s 3s 5s 10s 15s 20s 30s;
+$timerPoints: 1s 3s 6s 10s 12s 18s 24s 30s 36s 42s;
 
 @each $timer in $timerPoints {
   .TimerBg-#{$timer} {

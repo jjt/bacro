@@ -217,6 +217,20 @@ $i: 1;
   font-size: 3rem;
 }
 
+@media (min-width:$screen-xs-min) {
+  .acronym-len-5 {
+    font-size: 6rem;
+  }
+
+  .acronym-len-6 {
+    font-size: 5rem;
+  }
+
+  .acronym-len-7 {
+    font-size: 4rem;
+  }
+
+}
 
 
 

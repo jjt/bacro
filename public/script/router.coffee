@@ -7,7 +7,6 @@ csrfPost = require('../../lib/csrfPost')
 fb = require('./fbRoot')
 
 show = (component, title, props={})->
-  console.log props
   $header = document.getElementById('site-nav')
   $app = document.getElementById('app')
   headerObj =
@@ -22,9 +21,7 @@ page '/', show.bind null, Lobby, 'Lobby'
 page '/lobby', show.bind null, Lobby, 'Lobby'
 
 page '/game/new', (ctx)->
-  console.log 'gamenew'
   respFn = (gameId)->
-    console.log 'gamenew', gameId
     page.replace "/game/#{gameId}"
   failFn = ()->
     console.log arguments
@@ -33,11 +30,9 @@ page '/game/new', (ctx)->
 
 page '/game/:id', (ctx)->
   id = ctx.params.id
-  console.log 'ctx.params', ctx.params.id
   $.ajax
     url: "/game/get/#{id}"
     success: (game)->
-      console.log 'got game', game
       if not game?
         return show Status404, "404", msg: "Whoops, couldn't find game #{id}"
       gameObj = _.merge game.opts,
@@ -46,6 +41,7 @@ page '/game/:id', (ctx)->
           name: window.user.name
           id: window.user._id
         
+      # If the game is removed from FireBase, redirect user to lobby
       show Game, "Game #{game.id}", gameObj
     error: (xhr, errType, err) ->
       return show Status404, "404", msg: "Whoops, couldn't find game #{id}"
