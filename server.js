@@ -40,6 +40,8 @@ connect();
 
 app = express();
 
+app.use(express["static"](__dirname + '/public'));
+
 app.games = [];
 
 fb.remove();

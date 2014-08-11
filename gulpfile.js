@@ -97,20 +97,20 @@ gulp.task('clean', function () {
 
 gulp.task('build', ['html', 'images', 'fonts']);
 
-gulp.task('connect', function () {
-  var connect = require('connect');
-  var app = connect()
-    .use(require('connect-livereload')({ port: config.liveReloadPort }))
-    .use(connect.static('public'))
-    .use(connect.static('.public'))
-    .use(connect.directory('public'));
-
-  require('http').createServer(app)
-    .listen(config.connectPort)
-    .on('listening', function () {
-      console.log('Started connect web server on ' + config.connectDomain + ':' + config.connectPort);
-    });
-});
+//gulp.task('connect', function () {
+  //var connect = require('connect');
+  //var app = connect()
+    //.use(require('connect-livereload')({ port: config.liveReloadPort }))
+    //.use(connect.static('public'))
+    //.use(connect.static('.public'))
+    //.use(connect.directory('public'));
+//
+  //require('http').createServer(app)
+    //.listen(config.connectPort)
+    //.on('listening', function () {
+      //console.log('Started connect web server on ' + config.connectDomain + ':' + config.connectPort);
+    //});
+//});
 
 gulp.task('backend', function() {
   var server = $.nodemon({
