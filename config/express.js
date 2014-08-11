@@ -24,9 +24,10 @@ module.exports = function (app, config, passport) {
 
   //app.use(require('static-favicon')())
   if(env === 'development') {
-    app.use(express.static(config.root + '/public'))
-    app.use(express.static(config.root + '/.public'))
+    //app.use(express.static(config.root + '/public'))
+    //app.use(express.static(config.root + '/.public'))
   }
+  app.use(express.static(__dirname + '/../dist'));
 
 
   // Logging

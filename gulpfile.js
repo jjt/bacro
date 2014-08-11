@@ -3,6 +3,7 @@
 
 var gulp = require('gulp');
 var browserify = require('browserify');
+var runSeq = require('run-sequence');
 
 var config = {
   connectDomain: 'http://bacro.node',
@@ -83,6 +84,16 @@ gulp.task('images', function () {
     .pipe($.size());
 });
 
+gulp.task('distScripts', function(){
+  return gulp.src('.public/script/**/*.js')
+    .pipe(gulp.dest('dist/script'))
+});
+
+gulp.task('distStyles', function(){
+  return gulp.src('.public/styles/**/*.css')
+    .pipe(gulp.dest('dist/styles'))
+})
+
 gulp.task('fonts', function () {
   return $.bowerFiles()
     .pipe($.filter('**/*.{eot,svg,ttf,woff}'))
@@ -95,7 +106,13 @@ gulp.task('clean', function () {
   return gulp.src(['.public', 'dist'], { read: false }).pipe($.clean());
 });
 
-gulp.task('build', ['html', 'images', 'fonts']);
+gulp.task('build', function () {
+  return runSeq('clean',
+    ['coffeeServer', 'coffeeConfig', 'coffeeLib'],
+    ['browserify', 'html', 'images', 'fonts'],
+    ['distStyles', 'distScripts']
+  );
+});
 
 //gulp.task('connect', function () {
   //var connect = require('connect');
