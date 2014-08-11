@@ -14,6 +14,8 @@ var path = require('path')
       parseApiKey: 'PARSE_MASTER_KEY'
     }
 
+env = process.env.NODE_ENV || 'development'
+
 module.exports = {
   development: {
     db: 'mongodb://localhost/bacro_dev',
@@ -39,7 +41,7 @@ module.exports = {
     },
     google: {
       clientID: "1059096846902-cbmdbhqphmne2tv2mduha2elfpljnrii.apps.googleusercontent.com",
-      clientSecret: (process.env.NODE_ENV == 'development') ? require('./googleSecret.LOCAL') : '',
+      clientSecret: (env == 'development') ? require('./googleSecret.LOCAL') : '',
       callbackURL: hostname + "/auth/google/callback"
     },
     linkedin: {

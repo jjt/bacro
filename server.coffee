@@ -31,6 +31,7 @@ connect = ->
 connect()
 
 app = express()
+app.use(express.static(__dirname + '/public'))
 app.games = []
 # Clear fb of everything
 # TODO: Sync existing games/chats/etc instead
