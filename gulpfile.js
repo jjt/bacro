@@ -132,7 +132,8 @@ gulp.task('build', function () {
 gulp.task('backend', function() {
   var server = $.nodemon({
     script: 'server.coffee',
-    ignore: ['public/**', '.public/**', 'node_modules']
+    ignore: ['public/**', '.public/**', 'node_modules'],
+    env: require('./.env')
   })
   server.on('restart', $.util.log.bind(null, 'EXPRESS'));
   return server;
