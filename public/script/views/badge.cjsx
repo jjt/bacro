@@ -11,8 +11,8 @@ module.exports = React.createClass
 
   render: ()->
     lenClass = "acronym-len-#{@props.main.length}"
-    R.div ref: 'RoundBadge', className: "RoundBadge #{@props.timerBgClass}", [
-      R.h3 className:'Game-round', @props.head
-      R.p className: "Acronym-acronym #{lenClass}", @props.main
-      R.p className: "Game-phase", @props.foot
-    ]
+    <div ref='RoundBadge' className={"RoundBadge #{@props.timerBgClass}"}>
+      <h3 className='Game-round'>{@props.head}</h3>
+      <p className={"Acronym-acronym #{lenClass}"}>{@props.main}</p>
+      <p className="Game-phase">{@props.foot}</p>
+    </div>

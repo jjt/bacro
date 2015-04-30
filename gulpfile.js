@@ -170,10 +170,13 @@ gulp.task('wiredep', function () {
 gulp.task('browserify', function () {
   return browserify({
       entries: ['./public/script/main.coffee'],
-      extensions:['.coffee']
+      extensions:['.coffee', '.cjsx']
     })
     .bundle({debug:true})
-    .on('error', $.util.log)
+    .on('error', function (err) {
+      $.util.log(err);
+      this.emit('end');
+    })
     .pipe(require('vinyl-source-stream')('app-bundle.js'))
     .pipe(gulp.dest('./.public/script/'));
 });

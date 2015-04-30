@@ -11,10 +11,14 @@ module.exports = React.createClass
       .reverse()
       .value()
 
-    R.div {className:'ScoreBoard'},
-      R.ul className: 'UserList-list',
-        _.map scores, (obj)->
-          R.li {key:obj.name, className: 'UserList-item'}, [
-            R.span className:'UserList-user', obj.name
-            R.span className:'UserList-score', obj.score
-          ]
+    scoreComponents = _.map scores, (obj)->
+      <li key={obj.name} className='UserList-item'>
+        <span className='UserList-user'>{obj.name}</span>
+        <span className='UserList-score'>{obj.score}</span>
+      </li>
+
+    <div className='ScoreBoard'>
+      <ul className='UserList-list'>
+        {scoreComponents}
+      </ul>
+    </div>

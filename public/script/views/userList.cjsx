@@ -6,9 +6,13 @@ module.exports = React.createClass
     users = _(@props.users)
       .sortBy 'name'
       .map (obj)->
-        R.div {className: 'UserList-item', key:obj.name}, obj.name
+        <div className='UserList-item' key={obj.name}>
+          {obj.name}
+        </div>
       .value()
 
-    R.div {className:'UserList'}, [
-      R.div {className:'UserList-list'}, users
-    ]
+    <div className='UserList'>
+      <div className='UserList-list'>
+        {users}
+      </div>
+    </div>
