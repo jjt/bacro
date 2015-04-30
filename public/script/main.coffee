@@ -26,4 +26,3 @@ router = require './router'
         #return show Status404, msg: "Whoops, looks like that game doesn't exist"
       #console.log 'firebase on value', snapshot.val()
       #show Game, "Game #{id}", game: snapshot.val()
-    

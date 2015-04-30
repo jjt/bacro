@@ -8,7 +8,7 @@ FirebaseMixin = require '../firebaseMixin'
 module.exports = React.createClass
   mixins: [FirebaseMixin]
   displayName: 'Lobby'
-  
+
   componentWillUnmount: ()->
     console.log 'componentWillUnmount'
     clearTimeout @gamelistTimeout
@@ -20,8 +20,8 @@ module.exports = React.createClass
     console.log 'firebaseInitFn'
     @firebaseInit 'gamelist'
     @getGamelist()
-   
-    
+
+
   getGamelist: ()->
     clearTimeout @gamelistTimeout
     @gamelistTimeout = setTimeout @getGamelist, 5000

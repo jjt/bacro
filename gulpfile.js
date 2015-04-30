@@ -170,7 +170,7 @@ gulp.task('wiredep', function () {
 gulp.task('browserify', function () {
   return browserify({
       entries: ['./public/script/main.coffee'],
-      extensions:['.coffee'] 
+      extensions:['.coffee']
     })
     .bundle({debug:true})
     .on('error', $.util.log)
@@ -197,7 +197,10 @@ gulp.task('watch', function () {
   gulp.watch('public/styles/**/*.scss', ['styles']);
   //gulp.watch('public/script/**/*.js', ['scripts']);
   //gulp.watch('public/script/**/*.coffee', ['coffee']);
-  gulp.watch('public/script/**/*.coffee', ['browserify']);
+  gulp.watch([
+    'public/script/**/*.coffee',
+    'public/script/**/*.cjsx'
+  ],['browserify']);
   gulp.watch('public/images/**/*', ['images']);
   gulp.watch('server.coffee', ['coffeeServer']);
   gulp.watch('lib/**/*.coffee', ['coffeeLib']);

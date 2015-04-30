@@ -1,5 +1,5 @@
 Game = require './views/game'
-Lobby = require './views/lobby'
+Lobby = require './views/lobby.cjsx'
 Status404 = require './views/404'
 Header = require './views/header'
 page = require ('../bower_components/page.js/index')
@@ -14,8 +14,10 @@ show = (component, title, props={})->
     username:user.name
     page: page
 
-  React.renderComponent Header(headerObj), $header
-  React.renderComponent component(props), $app
+  header = React.createElement(Header, headerObj)
+  comp = React.createElement(component, props)
+  React.render header, $header
+  React.render comp, $app
 
 page '/', show.bind null, Lobby, 'Lobby'
 page '/lobby', show.bind null, Lobby, 'Lobby'
@@ -40,7 +42,7 @@ page '/game/:id', (ctx)->
         user:
           name: window.user.name
           id: window.user._id
-        
+
       # If the game is removed from FireBase, redirect user to lobby
       show Game, "Game #{game.id}", gameObj
     error: (xhr, errType, err) ->
