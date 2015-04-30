@@ -2,8 +2,8 @@
   "name": "bacro",
   "private": true,
   "dependencies": {
-    "bootstrap-sass-official": "^3",
-    "react": "~0.10.0",
+    "bootstrap-sass": "^3",
+    "react": "^0.13",
     "lodash": "~2.4.1",
     "solarized": "~0.1.2",
     "sockjs-client": "~0.3.4",

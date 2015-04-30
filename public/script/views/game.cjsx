@@ -1,12 +1,12 @@
-Acronym = require './acronym'
-Bacronyms = require './bacronyms'
-BacronymForm = require('./bacronymForm')
-Badge = require './badge'
-Chat = require './chat'
-GameStart = require './gameStart'
-RoundStart = require './roundStart'
-ScoreBoard = require './scoreBoard'
-Status404 = require './404'
+Acronym = require './acronym.cjsx'
+Bacronyms = require './bacronyms.cjsx'
+BacronymForm = require './bacronymForm.cjsx'
+Badge = require './badge.cjsx'
+Chat = require './chat.cjsx'
+GameStart = require './gameStart.cjsx'
+RoundStart = require './roundStart.cjsx'
+ScoreBoard = require './scoreBoard.cjsx'
+Status404 = require './404.cjsx'
 
 FirebaseMixin = require '../firebaseMixin'
 
@@ -30,9 +30,9 @@ InitFirebaseMixin =
   initGame: (props)->
     if not props?
       props = @props
-    
+
     @setState @getInitialState()
-      
+
     # Get rid of any old Firebase refs
     @firebaseDestroy()
 
@@ -120,7 +120,7 @@ Game = React.createClass
     if nextProps?.gameId != @props.gameId
       @initGame(nextProps)
 
-    
+
   getInitialState: ()->
     view: 'loading'
     round: null
@@ -129,7 +129,7 @@ Game = React.createClass
     roundMain: 'GAME'
     roundFoot: 'Do it to it'
     timerBgClass: ''
-    
+
 
   submitBacronym: (bacronym)->
     # TODO: Bacronym validation
@@ -171,56 +171,58 @@ Game = React.createClass
     round = @state.round
     roundPhase = @state.roundPhase
     timerBgClass = @state.timerBgClass
-    
+
     if roundPhase == 'answer'
       timerBgClass += ' TimerBg-start'
-      
+
 
     mainComponent = ()=>
-      if not round?
-        return GameStart
-          handleGameStart: @handleGameStart
-          handleJoin: @handleJoin
-          
       if roundPhase == 'start'
-        return RoundStart
-          time: (round.time / 1000)
+        return <RoundStart time={round.time / 1000} />
+
+      if not round?
+        return <GameStart handleGameStart={@handleGameStart} handleJoin={@handleJoin} />
 
       if roundPhase == 'vote' or roundPhase == 'end'
-        return Bacronyms
-          bacronyms: round.bacronyms
-          handleBacronymVote: @handleBacronymVote
-      
+        return (
+          <Bacronyms
+            bacronyms={round.bacronyms}
+            handleBacronymVote={@handleBacronymVote}
+          />
+        )
+
       bForm =
         submitBacronym: @submitBacronym
         key: "BacronymForm-round-#{@state.roundNum}"
       if @state.userBacronym?
         bForm.userBacronym = @state.userBacronym
 
-      BacronymForm bForm
-      
+      <BacronymForm {...bForm} />
+
+    roundClass = ''
     if round?
       roundClass = "Game-round-#{round.roundNum + 1}"
 
-    R.div {className: "Panel-body container Game #{roundClass}"},
-      R.div className:'row Panel-fh-row', [
-        R.div className:'Panel-left col-sm-4 col-lg-3', [
-          Badge
-            timerBgClass: timerBgClass
-            head: @state.roundHead
-            main: @state.roundMain
-            foot: @state.roundFoot
-          ScoreBoard scores: @state.scores
-        ]
-        R.div className:'Panel-main col-sm-8 col-lg-5', [
-          R.div className:'Game-MainComponent', [
-            mainComponent()
-          ]
-        ]
-        R.div className:'Panel-right col-md-12 col-lg-4', [
-          Chat
-            channel: "#{@props.gameId}"
-        ]
-      ]
+    <div className={"Panel-body container Game #{roundClass}"}>
+      <div className='row Panel-fh-row'>
+        <div className='Panel-left col-sm-4 col-lg-3'>
+          <Badge
+            timerBgClass={timerBgClass}
+            head={@state.roundHead}
+            main={@state.roundMain}
+            foot={@state.roundFoot}
+          />
+          <ScoreBoard scores={@state.scores} />
+        </div>
+        <div className='Panel-main col-sm-8 col-lg-5'>
+          <div className='Game-MainComponent'>
+            {mainComponent()}
+          </div>
+        </div>
+        <div className='Panel-right col-md-12 col-lg-4'>
+          <Chat channel="#{@props.gameId}" />
+        </div>
+      </div>
+    </div>
 
 module.exports = Game

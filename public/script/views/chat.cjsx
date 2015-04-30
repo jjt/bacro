@@ -4,7 +4,7 @@ csrfPost = require('../../../lib/csrfPost')
 
 Chat = React.createClass
   displayName: 'Chat'
-  
+
   getDefaultProps: ()->
     submitURI: '/chat'
 
@@ -48,22 +48,25 @@ Chat = React.createClass
     return false
 
   render: ->
-    R.div {className: 'Chat'}, [
-      R.div {className: 'Chat-chats', ref: 'chats'}, @state.chats.map (el)->
-        R.div className: 'Chat-chat', [
-          R.span className: 'Chat-user', el.user
-          ": " + el.msg
-        ]
-      R.form {className: 'Chat-input-form form', onSubmit: @handleChatSubmit }, [
-        R.div {className: 'input-group'}, [
-          R.input
-            className: 'Chat-input form-control'
-            ref: 'chatInput'
-            placeholder: 'Type to chat'
-          R.span {className: 'input-group-btn'},
-            R.button {className: 'btn btn-primary'}, 'Chat'
-        ]
-      ]
-    ]
+    chats = @state.chats.map (el)->
+      <div className='Chat-chat'>
+        <span className='Chat-user'>{el.user ": " + el.msg}</span>
+      </div>
+
+    <div className='Chat'>
+      <div className='Chat-chats' ref='chats'>{chats}</div>
+      <form className='Chat-input-form form' onSubmit={@handleChatSubmit}>
+        <div className='input-group'>
+          <input
+            className='Chat-input form-control'
+            ref='chatInput'
+            placeholder='Type to chat'
+          />
+          <span className='input-group-btn'>
+            <button className='btn btn-primary'>Chat</button>
+          </span>
+        </div>
+      </form>
+    </div>
 
 module.exports = Chat
