@@ -14,6 +14,7 @@ module.exports = React.createClass
     $input = ''
     console.log this.props
     @props.submitBacronym @refs.bacronymInput.getDOMNode().value
+
   render: ()->
     console.log 'userBacronym', @props.userBacronym
     if not @props.userBacronym?

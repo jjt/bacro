@@ -9,8 +9,6 @@ module.exports = React.createClass
         R.div {className: 'UserList-item', key:obj.name}, obj.name
       .value()
 
-      # Scoreboard object {user: score}
-    
     R.div {className:'UserList'}, [
       R.div {className:'UserList-list'}, users
     ]

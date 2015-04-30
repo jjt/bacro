@@ -1,7 +1,7 @@
-Game = require './views/game'
+Game = require './views/game.cjsx'
 Lobby = require './views/lobby.cjsx'
-Status404 = require './views/404'
-Header = require './views/header'
+Status404 = require './views/404.cjsx'
+Header = require './views/header.cjsx'
 page = require ('../bower_components/page.js/index')
 csrfPost = require('../../lib/csrfPost')
 fb = require('./fbRoot')

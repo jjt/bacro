@@ -1,6 +1,6 @@
-UserList = require './userList'
-Gamelist = require './gamelist'
-Chat = require './chat'
+UserList = require './userList.cjsx'
+Gamelist = require './gamelist.cjsx'
+Chat = require './chat.cjsx'
 R = React.DOM
 
 FirebaseMixin = require '../firebaseMixin'
@@ -47,9 +47,11 @@ module.exports = React.createClass
         ]
         R.div className:'Panel-main col-sm-8 col-lg-5', [
           R.div className:'Game-MainComponent', [
-            Gamelist gamelist: @state.gamelist
+            <Gamelist gamelist=@state.gamelist />
           ]
         ]
-        R.div className:'Panel-right col-md-12 col-lg-4', Chat channel: 'lobby'
+        <div className='Panel-right col-md-12 col-lg-4'>
+          <Chat channel='lobby' />
+        </div>
       ]
     ]
