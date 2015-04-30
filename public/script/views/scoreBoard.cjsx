@@ -1,4 +1,4 @@
-UserList = require './userList'
+UserList = require './userList.cjsx'
 R = React.DOM
 
 module.exports = React.createClass
