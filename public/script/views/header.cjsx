@@ -9,33 +9,32 @@ module.exports = React.createClass
     $.get '/game/new', (resp)=> @props.page "/game/#{resp}"
 
   render: ()->
-    console.log 'header'
-    R.div className: 'container', [
-      R.div className:'navbar-header', [
-        #<button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle"
-        # ="icon-bar"></span></button><a href="/" class="navbar-brand">BACRO</a></div>
-        R.button className:'navbar-toggle', dataToggle: 'collapse', dataTarget: '.navbar-collapse', [
-          R.span className:'sr-only', ['Toggle navigation']
-          R.div className:'icon-bar'
-          R.div className:'icon-bar'
-          R.div className:'icon-bar'
-        ]
-        R.ul className:'breadcrumb', [
-          R.li {}, R.a className:'siteTitle', href:'/', @props.siteTitle
-          @props.breadCrumbs.map (el)=>
-            R.li {}, R.a className: 'disabled', el
-        ]
-      ]
-      R.div className:'collapse navbar-collapse', [
-        R.ul className:'nav navbar-nav navbar-right', [
-          R.li {}, R.a href: '/game/new', 'New Game'
-          R.li {}, R.a href: '/lobby', 'Lobby'
-          R.li {}, R.a href: '/logout', 'Logout'
-          R.li {}, R.a {}, @props.username
-        ]
-      ]
-      R.div className:'row', [
-        R.div className:'col-xs-12', [
-        ]
-      ]
-    ]
+
+    breadCrumbs = @props.breadCrumbs.map (el)=>
+      <li><a className='disabled'>{el}</a></li>
+
+    <div className='container'>
+      <div className='navbar-header'>
+        <button className='navbar-toggle' dataToggle='collapse' dataTarget='.navbar-collapse'>
+          <span className='sr-only'>Toggle navigation</span>
+          <div className='icon-bar'></div>
+          <div className='icon-bar'></div>
+          <div className='icon-bar'></div>
+        </button>
+        <ul className='breadcrumb'>
+          <li><a className='siteTitle' href='/'>{@props.siteTitle}</a></li>
+          {breadCrumbs}
+        </ul>
+      </div>
+      <div className='collapse navbar-collapse'>
+        <ul className='nav navbar-nav navbar-right'>
+          <li><a href='/game/new'>New Game</a></li>
+          <li><a href='/lobby'>Lobby</a></li>
+          <li><a href='/logout'>Logout</a></li>
+          <li><a>{@props.username}</a></li>
+        </ul>
+      </div>
+      <div className='row'>
+        <div className='col-xs-12'></div>
+      </div>
+    </div>
