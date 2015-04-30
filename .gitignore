@@ -5,3 +5,4 @@ app/bower_components
 test/bower_components
 bower_components
 .public
+public/styles/bourbon

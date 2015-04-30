@@ -132,7 +132,8 @@ gulp.task('build', function () {
 gulp.task('backend', function() {
   var server = $.nodemon({
     script: 'server.coffee',
-    ignore: ['public/**', '.public/**', 'node_modules']
+    ignore: ['public/**', '.public/**', 'node_modules'],
+    env: require('./.env')
   })
   server.on('restart', $.util.log.bind(null, 'EXPRESS'));
   return server;
@@ -169,10 +170,13 @@ gulp.task('wiredep', function () {
 gulp.task('browserify', function () {
   return browserify({
       entries: ['./public/script/main.coffee'],
-      extensions:['.coffee'] 
+      extensions:['.coffee', '.cjsx']
     })
     .bundle({debug:true})
-    .on('error', $.util.log)
+    .on('error', function (err) {
+      $.util.log(err);
+      this.emit('end');
+    })
     .pipe(require('vinyl-source-stream')('app-bundle.js'))
     .pipe(gulp.dest('./.public/script/'));
 });
@@ -196,7 +200,10 @@ gulp.task('watch', function () {
   gulp.watch('public/styles/**/*.scss', ['styles']);
   //gulp.watch('public/script/**/*.js', ['scripts']);
   //gulp.watch('public/script/**/*.coffee', ['coffee']);
-  gulp.watch('public/script/**/*.coffee', ['browserify']);
+  gulp.watch([
+    'public/script/**/*.coffee',
+    'public/script/**/*.cjsx'
+  ],['browserify']);
   gulp.watch('public/images/**/*', ['images']);
   gulp.watch('server.coffee', ['coffeeServer']);
   gulp.watch('lib/**/*.coffee', ['coffeeLib']);
