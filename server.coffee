@@ -1,7 +1,6 @@
 # Load configurations
 # if test env, load example file
 env = process.env.NODE_ENV or "development"
-console.log('ENV IS ', env)
 
 express = require("express")
 fs = require("fs")
@@ -42,7 +41,6 @@ fb.remove()
 
 loadGamesFromDB = ()->
   GameModel.find {}, (err, gameModels)->
-    console.log 'OPENOPEN', gameModels
     app.games = gameModels.map (gameModel)->
       new Game gameModel
     GameList.sync app.games
@@ -53,7 +51,6 @@ loadGamesFromDB = ()->
 
 # Error handler
 mongoose.connection.on "error", (err) ->
-  console.log 'mongoose err', err
   return
 
 
