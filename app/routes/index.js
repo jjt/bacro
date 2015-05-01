@@ -1,15 +1,18 @@
 module.exports = function (app, passport) {
   var games = require('../controllers/games')(app);
+  var mongoose = require('mongoose');
+  var User = mongoose.model('User');
 
   require('./auth.js')(app, passport);
   require('./game.js')(app);
   require('./chat.js')(app);
 
   app.get('*', function(req, res){
-    console.log('pushState redir');
     if(req.isAuthenticated())
       return games.app(req, res);
-    res.render('index');
+    res.render('index', {
+      username: User.makeUsername(req.sessionID)
+    });
   });
 
   app.use(function(err, req, res, next){

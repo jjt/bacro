@@ -15,17 +15,19 @@ block content
           h4 Example:
           p.larger
             span B
-            | acro:
+            | acro: 
             span A
-            | cronyms'
+            | cronyms' 
             span C
-            | omical
+            | omical 
             span R
-            | oots
+            | oots 
             span O
-            | nline
-          br
-          a.btn.btn-primary(href='/auth/google') Play now
-          br
-          br
-          small Login with Google. No personal data will be displayed to any other user nor shared with anyone else.
+            | nline 
+
+
+          form.form-horizontal(action="/users", method="post", role="form")
+            input(type='hidden', name='_csrf', value="#{csrftoken}")
+            .form-group
+              .col-sm-12
+                button.btn.btn-primary.btn-lg(type='submit') Play Bacro

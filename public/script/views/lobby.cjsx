@@ -41,7 +41,7 @@ module.exports = React.createClass
           <div className='RoundBadge'>
             <h3 className='Game-round'>This is the</h3>
             <p className="Acronym-acronym acronym-len-5">LOBBY</p>
-            <p className="Game-phase">Have fun!<p>
+            <p className="Game-phase">Have fun!</p>
           </div>
         </div>
         <div className='Panel-main col-sm-8 col-lg-5'>
