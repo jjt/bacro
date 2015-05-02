@@ -1,3 +1,4 @@
+/*
 .Gamelist-game {
   cursor: pointer;
   display:block;
@@ -13,3 +14,79 @@
     margin-right:1rem;
   }
 }
+*/
+
+.Gamelist-game {
+  cursor: pointer;
+  width: 100%;
+  display: block;
+  background: white;
+  border: 1px solid $cBase7;
+  border-left: 0;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+}
+
+$watch: $solarized-violet;
+$join: mix($solarized-magenta, black, 90%);
+
+.Gamelist-game-state {
+  display: inline-block;
+  width: 11rem;
+  margin-right: 1.5rem;
+  padding-right: 2px;
+  border-left: 4px solid $brand-primary;
+  border-right: 1px solid $cBase7;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  background: white;
+  color: $cBase2;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 2rem;
+  line-height:5rem;
+  //color: mix($solarized-blue, $cBase1, 90%);
+
+  .Gamelist-game:hover & {
+    background: $brand-primary;
+    color: rgba(#fff, 0.9);
+  }
+
+  .Gamelist-game[data-state="new"] & {
+    border-left-color: $join;
+  }
+
+  .Gamelist-game[data-state="new"]:hover & {
+    background: $join;
+  }
+
+  .Gamelist-game[data-state="started"] & {
+    border-left-color: $watch;
+  }
+
+  .Gamelist-game[data-state="started"]:hover & {
+    background: $watch;
+  }
+
+}
+
+.Gamelist-game-body {
+  font-size: 1.6rem;
+  line-height: 1.8rem;
+  color: $cBase2;
+  .Gamelist-game:hover & {
+    color: $brand-primary;
+  }
+  .Gamelist-game[data-state="new"]:hover & {
+    color: $join;
+  }
+  .Gamelist-game[data-state="started"]:hover & {
+    color: $watch;
+  }
+}
+
