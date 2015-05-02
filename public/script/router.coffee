@@ -20,6 +20,7 @@ show = (component, title, props={})->
   React.render comp, $app
 
 page '/', show.bind null, Lobby, 'Lobby'
+
 page '/lobby', show.bind null, Lobby, 'Lobby'
 
 page '/game/new', (ctx)->

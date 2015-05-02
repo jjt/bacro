@@ -76,24 +76,38 @@ exports.getCurrentUser = function (req, res) {
  * Create user
  */
 
-exports.create = function (req, res) {
-  var user = new User(req.body)
-  user.provider = 'local'
-  user.save(function (err) {
-    if (err) {
-      return res.render('users/signup', {
-        error: utils.errors(err.errors),
-        user: user,
-        title: 'Sign up'
-      })
-    }
+exports.createOrLogin = function (req, res) {
+  var username = User.makeUsername(req.sessionID)
+  var body = {
+    name: username,
+    username: username,
+    email: username.replace(' ', '.') + '@nopefake.com',
+    password: process.env.SALT
+  }
 
-    // manually login the user once successfully signed up
-    req.logIn(user, function(err) {
-      if (err) return next(err)
-      return res.redirect('/')
-    })
-  })
+  User
+    .where({username: body.name})
+    .findOne(function(err, user) {
+        console.log(err, user);
+        if(err || user == null) {
+          user = new User(body);
+          user.provider = 'local'
+          user.save(function(err) {
+            req.logIn(user, function(err) {
+              if (err) return next(err)
+              return res.redirect('/')
+            })
+          })
+          return;
+        }
+
+        user.provider = 'local'
+        req.logIn(user, function(err) {
+          if (err) return next(err)
+          return res.redirect('/')
+        })
+
+      });
 }
 
 /**

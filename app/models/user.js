@@ -6,6 +6,10 @@ var mongoose = require('mongoose')
   , Schema = mongoose.Schema
   , crypto = require('crypto')
   , oAuthTypes = ['github', 'twitter', 'facebook', 'google', 'linkedin']
+  , hashwords = require('hashwords')({
+    wordLength: [3,6],
+    salt: process.env.SALT
+  })
 
 /**
  * User Schema
@@ -38,6 +42,14 @@ UserSchema
     this.hashed_password = this.encryptPassword(password)
   })
   .get(function() { return this._password })
+
+/**
+ * Statics
+ */
+UserSchema.statics.makeUsername = function (input) {
+  return hashwords.hashStr(input);
+}
+
 
 /**
  * Validations
