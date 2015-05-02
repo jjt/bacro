@@ -6,11 +6,9 @@ html, body, .Panel, .Panel-body, .Panel-fh-row {
   position:absolute;
   top:0;
   width:100%;
-  border-bottom:1px solid $cBase7;
 }
 
 .Panel {
-  padding-top:3rem;
 }
 
 
@@ -23,18 +21,14 @@ html, body, .Panel, .Panel-body, .Panel-fh-row {
   margin-bottom:4rem;
 }
 
-
-
-@media (min-width:$screen-lg-min){
-  .Panel-left, .Panel-main, .Panel-right { 
-    height:100%;
-  }
-
-  .Panel-right {
-    clear: none;
-  }
-  
-  .Panel-main {
-    margin-bottom:0;
-  }
+.Panel-header {
+  @include background-image(
+    linear-gradient(top, rgba(#000, 0), rgba(#000, 0.2)),
+    linear-gradient(90deg, $solarized-blue, $solarized-magenta)
+  );
+  box-shadow: 0 0 20px 0 rgba(#000,0.5);
+  border-bottom: 1px solid rgba(#000, 0.5);
+  padding-top: 2rem;
 }
+
+

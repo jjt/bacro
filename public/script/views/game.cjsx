@@ -189,6 +189,7 @@ Game = React.createClass
         )
 
       bForm =
+        acronym: round.acronym
         submitBacronym: @submitBacronym
         key: "BacronymForm-round-#{@state.roundNum}"
       if @state.userBacronym?
@@ -200,25 +201,17 @@ Game = React.createClass
     if round?
       roundClass = "Game-round-#{round.roundNum + 1}"
 
-    <div className={"Panel-body container Game #{roundClass}"}>
-      <div className='row Panel-fh-row'>
-        <div className='Panel-left col-sm-4 col-lg-3'>
-          <Badge
-            timerBgClass={timerBgClass}
-            head={@state.roundHead}
-            main={@state.roundMain}
-            foot={@state.roundFoot}
-          />
-          <ScoreBoard scores={@state.scores} />
+    <div className={"Game #{roundClass}"}>
+      <div className='Panel-main col-sm-8 col-lg-5'>
+        <span className="Game-roundHead">{@state.roundHead}</span>
+        <span className="Game-roundFoot">{@state.roundFoot}</span>
+        <div className='Game-MainComponent'>
+          {mainComponent()}
         </div>
-        <div className='Panel-main col-sm-8 col-lg-5'>
-          <div className='Game-MainComponent'>
-            {mainComponent()}
-          </div>
-        </div>
-        <div className='Panel-right col-md-12 col-lg-4'>
-          <Chat channel="#{@props.gameId}" />
-        </div>
+      </div>
+      <div className='Panel-right col-md-12 col-lg-4'>
+        <Chat channel="#{@props.gameId}" />
+        <ScoreBoard scores={@state.scores} />
       </div>
     </div>
 

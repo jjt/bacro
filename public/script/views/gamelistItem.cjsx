@@ -8,6 +8,6 @@ module.exports = React.createClass
       href={"/game/#{@props.id}"}
       className="Gamelist-game"
     >
-      <span className="Gamelist-game-state">{@props.buttonText}</span>
+      <span className="Gamelist-game-state btn">{@props.buttonText}</span>
       <span className="Gamelist-game-body">{@props.body}</span>
     </a>

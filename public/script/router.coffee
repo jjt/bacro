@@ -19,9 +19,13 @@ show = (component, title, props={})->
   React.render header, $header
   React.render comp, $app
 
-page '/', show.bind null, Lobby, 'Lobby'
 
-page '/lobby', show.bind null, Lobby, 'Lobby'
+lobbyFn = show.bind null, Lobby, 'Lobby',
+  showIntro: window.showIntro
+
+page '/', lobbyFn
+page '/lobby', lobbyFn
+
 
 page '/game/new', (ctx)->
   respFn = (gameId)->
