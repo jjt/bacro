@@ -22,7 +22,7 @@ module.exports = React.createClass
           <div className='icon-bar'></div>
         </button>
         <ul className='breadcrumb'>
-          <li><a className='siteTitle' href='/'>{@props.siteTitle}</a></li>
+          <li><a className='site-title' href='/'>{@props.siteTitle}</a></li>
           {breadCrumbs}
         </ul>
       </div>

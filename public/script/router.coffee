@@ -45,7 +45,7 @@ page '/game/:id', (ctx)->
           id: window.user._id
 
       # If the game is removed from FireBase, redirect user to lobby
-      show Game, "Game #{game.id}", gameObj
+      show Game, "Game", gameObj
     error: (xhr, errType, err) ->
       return show Status404, "404", msg: "Whoops, couldn't find game #{id}"
 

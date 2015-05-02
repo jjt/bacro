@@ -10,9 +10,6 @@ Status404 = require './404.cjsx'
 
 FirebaseMixin = require '../firebaseMixin'
 
-
-#fbRoot = require '../fbRoot'
-#validateBacronym = require '../../../lib/validateBacronym'
 csrfPost = require('../../../lib/csrfPost')
 
 R = React.DOM
