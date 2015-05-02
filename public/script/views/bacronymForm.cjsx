@@ -11,19 +11,26 @@ module.exports = React.createClass
     $input = @refs.bacronymInput.getDOMNode()
     bacronym = $input.value
     # TODO: Bacronym validation
-    $input = ''
     @props.submitBacronym @refs.bacronymInput.getDOMNode().value
+    $input.value = ''
 
   render: ()->
     if not @props.userBacronym?
-      userBacronym = <p className='Game-userBacronym no-bacronym'>Submit a bacronym</p>
+      userBacronym = (
+        <p className='Game-userBacronym no-bacronym'>
+          <i className="glyphicon glyphicon-hand-up"></i>
+          Your bacronym here!
+        </p>
+      )
       placeholder = "Type in a bacronym and hit enter"
     else
       userBacronym = <p className='Game-userBacronym'>{@props.userBacronym}</p>
-      placeholder = "Enter a new bacronym and hit enter (replaces old one)"
+      placeholder = "Submit new bacronym"
 
     <form className='Game-bacronym-form' onSubmit=@handleBacronymSubmit>
-      {userBacronym}
+      <p className='Game-acronym'>
+        {@props.acronym}
+      </p>
       <div className='form-group'>
         <input
           className='Game-bacronymInput form-control input-lg'
@@ -32,4 +39,5 @@ module.exports = React.createClass
           placeholder=placeholder
         />
       </div>
+      {userBacronym}
     </form>

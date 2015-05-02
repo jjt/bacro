@@ -1,0 +1,4 @@
+@mixin headerBg() {
+  //background-color: darken($solarized-blue, 20%);
+  background: radial-gradient(circle at 100% 50%, $solarized-violet);
+}
