@@ -1,7 +1,5 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
 
-$font-family-sans-serif:  "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-
 @import "bourbon/bourbon";
 @import "colors";
 @import "variables";
@@ -65,11 +63,11 @@ body {
   }
   a {
     font-size: 1.6rem;
-    color:$cBase4;
+    color: rgba(#fff, 0.7);
     text-transform: uppercase;
     font-family:'Open Sans';
     &:hover {
-      color:$cBase2;
+      color: rgba(#fff, 0.9);
       text-decoration: none;
     }
   }
@@ -87,3 +85,9 @@ a.site-title {
   }
 }
 
+.navbar-default .navbar-toggle:hover {
+  border-color: white;
+  .icon-bar {
+    background: white;
+  }
+}

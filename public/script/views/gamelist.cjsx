@@ -1,30 +1,44 @@
 router = require '../router'
+GamelistItem = require './gamelistItem'
 R = React.DOM
 
 module.exports = React.createClass
   displayName: 'Gamelist'
 
   render: ()->
-    games = _.map @props.gamelist, (game, id)=>
-      gameState = game.gameState
-      body = if game.numPlayers == 0 then "no players" else "#{game.numPlayers} players"
-      if game.numPlayers == 1
-        body = "1 player"
-      if gameState == 'new'
-        gameState = "New Game"
-        body += ' - join now'
-      if gameState == 'started'
-        body = "Round #{game.roundNum+1}/#{game.numRounds}, with #{body}"
+    # Sort by gameState - "new" comes before "started", which is what we want
+    games = _.chain(@props.gamelist)
+      .sortBy (game) -> game.gameState
+      .map (game) =>
+        state = game.gameState
+        id = game.id
+        key = "game-#{id}"
+        body = if game.numPlayers == 0 then "no players" else "#{game.numPlayers} players"
+        if game.numPlayers == 1
+          body = '1 player'
+        if state == 'new'
+          buttonText = 'Join'
+          body += ' - join now'
+        if state == 'started'
+          buttonText = 'Watch'
+          body = "Round #{game.roundNum+1}/#{game.numRounds}, with #{body}"
 
-      <a key={"game-#{id}"} href={"/game/#{id}"} className={"Gamelist-game"}>
-        <h4>{gameState}</h4>
-        <p>{body}</p>
-      </a>
+        gameProps = {state, buttonText, body, id, key}
+        <GamelistItem {...gameProps}/>
+      .value()
+
+    games.unshift(
+      <GamelistItem
+        state="create"
+        buttonText="Create"
+        body="Start a new game"
+        id="new"
+        key="new"
+      />
+    )
+
+    console.log games
 
     <div className='Gamelist'>
-      <a href='/game/new' className="Gamelist-game Gamelist-newgame">
-        <h4>New game</h4>
-        <p>Start a new game</p>
-      </a>
       {games}
     </div>

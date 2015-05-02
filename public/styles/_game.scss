@@ -11,7 +11,7 @@
   height:15rem;
   margin-bottom:2rem;
   float:left;
-  width:48%; 
+  width:48%;
   margin-right:4%;
 }
 
@@ -54,7 +54,7 @@ $i: 1;
 
 
 .ScoreBoard {
-  width:48%;  
+  width:48%;
   float:left;
   padding:0 1rem;
 }
@@ -130,7 +130,7 @@ $i: 1;
       color: $cBase2;
     }
     i {
-      color: rgba(#fff, 0.9); 
+      color: rgba(#fff, 0.9);
     }
   }
 }
@@ -139,7 +139,7 @@ $i: 1;
 
 @media screen and (min-width:$screen-sm-min) {
   .RoundBadge {
-    float:none; 
+    float:none;
     width:auto;
     margin-right:0;
   }
@@ -152,7 +152,7 @@ $i: 1;
 @media screen and (min-width:$screen-sm-min) {
   /*
   [class^="Game-Panel-"] {
-    float: left; 
+    float: left;
   }
   .Game-Panel-left {
     width: 20rem;
@@ -165,19 +165,19 @@ $i: 1;
 
   .Game-Panel-main {
   }
-  
+
   .Game-MainComponent {
     min-height:13rem;
     margin-bottom:3rem;
   }
 */
   .Bacronyms {
-    
+
   }
 
   .Bacronym {
     padding: 0.6rem 1rem;
-    margin-right:2rem; 
+    margin-right:2rem;
   }
 
 }
