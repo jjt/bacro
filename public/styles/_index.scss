@@ -1,0 +1,29 @@
+.jumbotron {
+  h1 {
+    font-size:4rem;
+    display:inline-block;
+    margin-right:1rem;
+  }
+  p {
+    font-family: 'Open Sans', sans-serif;
+  }
+  .larger {
+    font-size: $font-size-h3;
+  }
+  h1, p span {
+    color:$solarized-red;
+  }
+}
+
+.auth-form {
+  margin-top: 5rem;
+}
+
+.play-bacro {
+  margin-right: 1rem;
+  text-transform: uppercase;
+}
+
+.index-username {
+  color: $cBase3;
+}
