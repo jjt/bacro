@@ -2,8 +2,6 @@ var Game, GameList, GameModel, app, config, connect, env, exports, express, fb, 
 
 env = process.env.NODE_ENV || "development";
 
-console.log('ENV IS ', env);
-
 express = require("express");
 
 fs = require("fs");
@@ -50,7 +48,6 @@ fb.remove();
 
 loadGamesFromDB = function() {
   return GameModel.find({}, function(err, gameModels) {
-    console.log('OPENOPEN', gameModels);
     app.games = gameModels.map(function(gameModel) {
       return new Game(gameModel);
     });
@@ -58,9 +55,7 @@ loadGamesFromDB = function() {
   });
 };
 
-mongoose.connection.on("error", function(err) {
-  console.log('mongoose err', err);
-});
+mongoose.connection.on("error", function(err) {});
 
 mongoose.connection.on("disconnected", function() {
   connect();
