@@ -50,7 +50,8 @@ Chat = React.createClass
   render: ->
     chats = @state.chats.map (el)->
       <div className='Chat-chat'>
-        <span className='Chat-user'>{el.user ": " + el.msg}</span>
+        <span className='Chat-user'>{el.user}: </span>
+        <span className='Chat-body'>{el.msg}</span>
       </div>
 
     <div className='Chat'>
