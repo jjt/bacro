@@ -18,7 +18,7 @@ gulp.task('styles', function () {
   return gulp.src('public/styles/main.scss')
     .pipe($.sass({
       includePaths: ['public/bower_components']
-    }))
+    })).on('error', $.util.log)
     .pipe($.autoprefixer('last 1 version'))
     .pipe(gulp.dest('.public/styles'))
     .pipe($.size());
