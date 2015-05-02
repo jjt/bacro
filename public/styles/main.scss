@@ -1,5 +1,7 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
 
+$font-family-sans-serif:  "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
 @import "bourbon/bourbon";
 @import "colors";
 @import "variables";
@@ -11,6 +13,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/vendor/assets/font
 @import "holyGrail";
 @import "TimerBg";
 @import "shadowScroll";
+@import "index";
 @import "game";
 @import "lobby";
 @import "chat";
@@ -42,6 +45,7 @@ body {
   font-size:3rem;
 }
 
+
 .site-nav {
   height:5.5rem;
   z-index:10;
@@ -71,33 +75,15 @@ body {
   }
 }
 
-a.siteTitle {
-  font-family: 'Open Sans';
-  font-size: 3rem;
-  line-height:0.6;
-  margin-right:1rem;
-}
-
-.jumbotron {
-  h1 {
-    font-size:4rem;
-    display:inline-block;
+a.site-title {
+  &,
+  &:hover,
+  &:focus {
+    font-family: 'Open Sans';
+    font-size: 3rem;
+    line-height:0.6;
     margin-right:1rem;
-  }
-  p {
-    font-family: 'Open Sans', sans-serif;
-  }
-  .larger {
-    font-size: $font-size-h3;
-  }
-  h1, p span {
-    color:$solarized-red;
+    text-decoration: none;
   }
 }
 
-@media screen and (min-width: 768px) {
-    .container {
-    }
-
-
-}
