@@ -56,6 +56,7 @@ exports.signup = function (req, res) {
 
 exports.logout = function (req, res) {
   req.logout()
+  req.session.destroy();
   res.redirect('/')
 }
 
@@ -75,8 +76,7 @@ exports.getCurrentUser = function (req, res) {
 /**
  * Create user
  */
-
-exports.createOrLogin = function (req, res) {
+exports.createOrLogin = function (req, res, next) {
   var username = User.makeUsername(req.sessionID)
   var body = {
     name: username,
@@ -88,14 +88,12 @@ exports.createOrLogin = function (req, res) {
   User
     .where({username: body.name})
     .findOne(function(err, user) {
-        console.log(err, user);
         if(err || user == null) {
           user = new User(body);
           user.provider = 'local'
           user.save(function(err) {
             req.logIn(user, function(err) {
-              if (err) return next(err)
-              return res.redirect('/')
+              return next(err);
             })
           })
           return;
@@ -103,12 +101,12 @@ exports.createOrLogin = function (req, res) {
 
         user.provider = 'local'
         req.logIn(user, function(err) {
-          if (err) return next(err)
-          return res.redirect('/')
+          return next(err);
         })
 
       });
 }
+
 
 /**
  *  Show profile

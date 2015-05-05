@@ -27,18 +27,6 @@ module.exports = React.createClass
         <GamelistItem {...gameProps}/>
       .value()
 
-    games.unshift(
-      <GamelistItem
-        state="create"
-        buttonText="Create"
-        body="Start a new game"
-        id="new"
-        key="new"
-      />
-    )
-
-    console.log games
-
     <div className='Gamelist'>
       {games}
     </div>
