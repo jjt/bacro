@@ -1,4 +1,13 @@
-.jumbotron {
+.Intro-pane {
+  color: rgba(#fff, 0.8);
+  margin-bottom: 0;
+  padding-top: 0;
+
+  @media (min-width: $screen-sm-min) {
+    padding-top: 2rem;
+  }
+
+
   h1 {
     font-size:4rem;
     display:inline-block;
@@ -6,12 +15,17 @@
   }
   p {
     font-family: 'Open Sans', sans-serif;
+    font-size: 3rem;
+    &.Intro-blurb {
+      margin-bottom: 3rem;
+    }
   }
+
   .larger {
     font-size: $font-size-h3;
   }
-  h1, p span {
-    color:$solarized-magenta;
+  h4 {
+    color: rgba(#fff, 0.6);
   }
 }
 
@@ -26,4 +40,14 @@
 
 .index-username {
   color: $cBase3;
+}
+
+.Intro-brand {
+  color: white;
+  font-weight: bold;
+}
+
+.Intro-letter {
+  font-weight: bold;
+  color:white;
 }

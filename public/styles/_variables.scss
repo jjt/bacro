@@ -5,24 +5,26 @@ $font-family-sans-serif:  "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-
 
 $navbar-default-border: none;
 $navbar-border-radius: 0;
-$navbar-default-bg: $solarized-cyan;
-$navbar-default-color: $blendWhite;
-$navbar-default-link-color: $blendWhite;
-$navbar-default-link-hover-color: $blendWhite;
-$navbar-default-brand-color: $blendWhite;
-$navbar-default-brand-hover-bg: $blendWhite;
-$navbar-default-brand-hover-color: $blendWhite;
+$navbar-default-bg: $cBase8;
+$navbar-default-color: rgba(#fff, 0.8);
+$navbar-default-link-color:         $navbar-default-color;
+$navbar-default-link-hover-color:   $navbar-default-color;
+$navbar-default-brand-color:        $navbar-default-color;
+$navbar-default-brand-hover-bg:     $navbar-default-color;
+$navbar-default-brand-hover-color:  $navbar-default-color;
 
-$navbar-default-toggle-hover-bg:         $brand-primary;
-$navbar-default-toggle-icon-bar-bg:        $blendWhite;
-$navbar-default-toggle-border-color:       $blendWhite;
+$navbar-default-toggle-hover-bg:      transparent;
+$navbar-default-toggle-icon-bar-bg:   $navbar-default-color;
+$navbar-default-toggle-border-color:  $navbar-default-color;
 
-$breadcrumb-color: rgba(#fff, 0.6);
-$breadcrumb-active-color: rgba(#fff, 0.6);
+$breadcrumb-color: $navbar-default-color;
+$breadcrumb-active-color: white;
 
 $breadcrumb-bg: transparent;
 $breadcrumb-padding-vertical: 16px;
 $breadcrumb-seperator: "";
 
+$btn-default-color: rgba(#fff, 0.8);
+$btn-primary-color: rgba(#fff, 0.8);
 
-$jumbotron-bg:$cBase8;
+$jumbotron-bg: transparent;

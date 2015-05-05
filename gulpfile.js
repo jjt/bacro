@@ -8,49 +8,57 @@ var runSeq = require('run-sequence');
 var config = {
   connectDomain: 'http://bacro.node',
   connectPort: 3000,
-  liveReloadPort: 35729 
+  liveReloadPort: 35729
 }
 
 // load plugins
 var $ = require('gulp-load-plugins')();
 
+var errFn = function () {
+  $.util.log.apply(null, arguments);
+  this.emit('end');
+}
+
 gulp.task('styles', function () {
   return gulp.src('public/styles/main.scss')
+    .pipe($.sourcemaps.init())
     .pipe($.sass({
       includePaths: ['public/bower_components']
-    })).on('error', $.util.log)
+    })).on('error', errFn.bind(this))
+    .pipe($.sourcemaps.write('../maps'))
     .pipe($.autoprefixer('last 1 version'))
     .pipe(gulp.dest('.public/styles'))
-    .pipe($.size());
+    .pipe($.size())
+    .pipe($.livereload());
 });
 
 gulp.task('coffee', function() {
   return gulp.src('public/script/**/*.coffee')
-    .pipe($.coffee({bare: true})).on('error', $.util.log)
+    .pipe($.coffee({bare: true})).on('error', errFn.bind(tnis))
     .pipe(gulp.dest('.public/script'));
 });
 
 gulp.task('coffeeServer', function(){
   return gulp.src('./server.coffee')
-    .pipe($.coffee({bare: true})).on('error', $.util.log)
+    .pipe($.coffee({bare: true})).on('error', errFn.bind(tnis))
     .pipe(gulp.dest('./'));
 });
 
 gulp.task('coffeeLib', function(){
   return gulp.src('./lib/**/*.coffee')
-    .pipe($.coffee({bare: true})).on('error', $.util.log)
+    .pipe($.coffee({bare: true})).on('error', errFn.bind(tnis))
     .pipe(gulp.dest('./lib'));
 });
 
 gulp.task('coffeeConfig', function(){
   return gulp.src('./config/**/*.coffee')
-    .pipe($.coffee({bare: true})).on('error', $.util.log)
+    .pipe($.coffee({bare: true})).on('error', errFn.bind(tnis))
     .pipe(gulp.dest('./config'));
 });
 
 gulp.task('coffeeApp', function(){
   return gulp.src('./app/**/*.coffee')
-    .pipe($.coffee({bare: true})).on('error', $.util.log)
+    .pipe($.coffee({bare: true})).on('error', errFn.bind(tnis))
     .pipe(gulp.dest('./app'));
 });
 
@@ -81,7 +89,8 @@ gulp.task('images', function () {
       interlaced: true
     })))
     .pipe(gulp.dest('dist/images'))
-    .pipe($.size());
+    .pipe($.size())
+    .pipe($.livereload());
 });
 
 gulp.task('distScripts', function(){
@@ -99,7 +108,8 @@ gulp.task('fonts', function () {
     .pipe($.filter('**/*.{eot,svg,ttf,woff}'))
     .pipe($.flatten())
     .pipe(gulp.dest('dist/fonts'))
-    .pipe($.size());
+    .pipe($.size())
+    .pipe($.livereload());
 });
 
 gulp.task('clean', function () {
@@ -135,7 +145,7 @@ gulp.task('backend', function() {
     ignore: ['public/**', '.public/**', 'node_modules'],
     env: require('./.env')
   })
-  server.on('restart', $.util.log.bind(null, 'EXPRESS'));
+  server.on('restart', errFn.bind(this, 'EXPRESS'));
   return server;
 });
 
@@ -145,7 +155,7 @@ gulp.task('sock', function(){
     ignore: ['public/**', '.public/**', 'app/**', 'node_modules']
   });
 
-  server.on('restart', $.util.log.bind(null, 'SOCK'));
+  server.on('restart', errFn.bind(this, 'SOCK'));
   return server;
 })
 
@@ -174,28 +184,18 @@ gulp.task('browserify', function () {
     })
     .bundle({debug:true})
     .on('error', function (err) {
-      $.util.log(err);
+      errFn.bind(this)(err);
       this.emit('end');
     })
     .pipe(require('vinyl-source-stream')('app-bundle.js'))
-    .pipe(gulp.dest('./.public/script/'));
+    .pipe(gulp.dest('./.public/script/'))
+    .pipe($.livereload());
 });
 
 
 
 gulp.task('watch', function () {
-  var server = $.livereload();
-
-  // watch for changes
-
-  gulp.watch([
-    'public/*.html',
-    '.public/styles/**/*.css',
-    '.public/script/**/*.js',
-    'public/images/**/*'
-  ]).on('change', function (file) {
-    server.changed(file.path);
-  });
+  var server = $.livereload({start: true});
 
   gulp.watch('public/styles/**/*.scss', ['styles']);
   //gulp.watch('public/script/**/*.js', ['scripts']);
