@@ -40,16 +40,28 @@ module.exports = React.createClass
 
     <div className="Lobby">
       <div className="Panel-header">
-        {intro}
         <div className='container'>
-          <a href="/game/quick" className="Lobby-quickPlay btn btn-lg btn-white">Quick Play</a>
-          <a href="/game/new" className="Lobby-createGame btn btn-lg btn-white">Create Game</a>
+          <div className="row">
+            {intro}
+          </div>
+          <div className="Lobby-playControls row">
+            <div className="col-sm-6">
+              <a href="/game/quick" className="Lobby-quickPlay btn btn-lg btn-white">Quick Play</a>
+            </div>
+            <div className="col-sm-6">
+              <a href="/game/new" className="Lobby-createGame btn btn-lg btn-white">Create Game</a>
+            </div>
+          </div>
         </div>
       </div>
       <div className="container">
-        <Gamelist gamelist={@state.gamelist} />
-        <div className='Panel-right col-md-12 col-lg-4'>
-          <Chat channel='lobby' />
+        <div className="row">
+          <div className="col-sm-6 col-md-8">
+            <Gamelist gamelist={@state.gamelist} />
+          </div>
+          <div className='col-sm-6 col-md-4'>
+            <Chat channel='lobby' />
+          </div>
         </div>
       </div>
     </div>

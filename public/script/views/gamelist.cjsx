@@ -13,15 +13,15 @@ module.exports = React.createClass
         state = game.gameState
         id = game.id
         key = "game-#{id}"
-        body = if game.numPlayers == 0 then "no players" else "#{game.numPlayers} players"
+        playersStr = if game.numPlayers == 0 then "no players" else "#{game.numPlayers} players"
         if game.numPlayers == 1
-          body = '1 player'
+          playersStr = '1 player'
         if state == 'new'
           buttonText = 'Join'
-          body += ' - join now'
+          body = "JOIN GAME - #{playersStr}"
         if state == 'started'
           buttonText = 'Watch'
-          body = "Round #{game.roundNum+1}/#{game.numRounds}, with #{body}"
+          body = "WATCH GAME - Round #{game.roundNum+1}/#{game.numRounds}"
 
         gameProps = {state, buttonText, body, id, key}
         <GamelistItem {...gameProps}/>

@@ -17,7 +17,7 @@
 */
 
 $watch: $solarized-violet;
-$join: mix($solarized-magenta, black, 90%);
+$join: $solarized-cyan;
 
 .Gamelist-btn {
 
@@ -26,14 +26,40 @@ $join: mix($solarized-magenta, black, 90%);
 .Gamelist-game {
   cursor: pointer;
   width: 100%;
+  padding: 1rem 1.4rem;
   display: block;
   border: 1px solid $cBase7;
-  border-left: 0;
-  border-radius: 4px;
-  margin-bottom: 1rem;
+  border-radius: 6px;
+  margin-bottom: 2rem;
+
+  &[data-state="new"] {
+    border-color: $join;
+    color: $join;
+    &:hover {
+      border-color: darken($join, 10%);
+      color: darken($join, 10%);
+    }
+  }
+
+  &[data-state="started"] {
+    border-color: $watch;
+    color: $watch;
+    &:hover {
+      border-color: darken($watch, 20%);
+      color: darken($watch, 20%);
+    }
+  }
 
   &:hover {
     text-decoration: none;
+  }
+
+  [class^="icon-"],
+  [class*=" icon-"] {
+    vertical-align: middle;
+    font-size: 2.4rem;
+    margin-right: 1rem;
+    opacity: 0.8;
   }
 
 }
@@ -46,40 +72,42 @@ $join: mix($solarized-magenta, black, 90%);
     background: $brand-primary;
     color: rgba(#fff, 0.9);
 
-  .Gamelist-game[data-state="new"] & {
-    border-left-color: $join;
-    background: $join;
-  }
-
-  .Gamelist-game[data-state="started"] & {
-    border-left-color: $watch;
-    background: $watch;
-  }
 
 }
 
 .Gamelist-game-body {
-  font-size: 1.4rem;
-  line-height: 1.8rem;
-  color: $cBase2;
-  .Gamelist-game:hover & {
-    color: $brand-primary;
-  }
-  .Gamelist-game[data-state="new"]:hover & {
-    color: $join;
-  }
-  .Gamelist-game[data-state="started"]:hover & {
-    color: $watch;
-  }
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+  vertical-align: middle;
+  //color: $cBase2;
+  //.Gamelist-game:hover & {
+    //color: $brand-primary;
+  //}
+  //.Gamelist-game[data-state="new"]:hover & {
+    //color: $join;
+  //}
+  //.Gamelist-game[data-state="started"]:hover & {
+    //color: $watch;
+  //}
 }
 
 .Lobby-quickPlay,
 .Lobby-createGame {
-  display:inline-block;
-  width: 47%;
+  width: 100%;
   margin-bottom: 3rem;
 }
 
-.Lobby-createGame {
-  float: right;
+.Lobby-playControls {
+  max-width: $screen-md-min;
+}
+
+@media (min-width: $screen-lg-min) {
+  .Lobby-playControls {
+      margin-left: auto;
+      margin-right: auto;
+  }
+}
+
+.Lobby .Panel-header {
+  margin-bottom: 2rem;
 }
