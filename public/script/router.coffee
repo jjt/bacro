@@ -20,7 +20,7 @@ show = (component, title, props={})->
   React.render comp, $app
 
 
-lobbyFn = show.bind null, Lobby, 'Lobby',
+lobbyFn = show.bind null, Lobby, '',
   showIntro: window.showIntro
 
 page '/', lobbyFn
